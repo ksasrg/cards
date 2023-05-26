@@ -8,6 +8,8 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import App from "app/App";
 import Register from "features/auth/Register/Register";
 import Login from "features/auth/Login/Login";
+import { ThemeProvider } from "@mui/material";
+import { theme } from "features/common/theme";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
@@ -30,7 +32,9 @@ const router = createBrowserRouter([
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <ThemeProvider theme={theme}>
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </Provider>
   </React.StrictMode>
 );

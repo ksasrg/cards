@@ -7,12 +7,13 @@ import AppBar from "@mui/material/AppBar/AppBar";
 import Toolbar from "@mui/material/Toolbar/Toolbar";
 import IconButton from "@mui/material/IconButton/IconButton";
 import Typography from "@mui/material/Typography/Typography";
-import Button from "@mui/material/Button/Button";
 import Container from "@mui/material/Container/Container";
 import logo from "assets/logo.svg";
 import Card from "@mui/material/Card/Card";
 import Paper from "@mui/material/Paper/Paper";
 import Grid from "@mui/material/Grid/Grid";
+import Button from "@mui/material/Button/Button";
+import TextField from "@mui/material/TextField/TextField";
 
 function Register() {
   const dispatch = useAppDispatch();
@@ -35,7 +36,7 @@ function Register() {
                 News
               </Typography> */}
             <img src={logo} alt="" style={{}} />
-            <Button color="info">Sign in</Button>
+            <Button>Sign In</Button>
           </Toolbar>
         </Container>
       </AppBar>
@@ -43,18 +44,53 @@ function Register() {
       <Container fixed>
         <Grid container justifyContent={"center"}>
           <Grid item marginTop={"60px"}>
-            <Paper elevation={2} sx={{ padding: "33px", minWidth: "400px" }}>
-              fgdfg
+            <Paper
+              elevation={2}
+              sx={{
+                textAlign: "center",
+                padding: "42px 33px",
+                minWidth: "400px",
+                // width: "100%",
+              }}
+            >
+              <h1>Sign Up</h1>
+              <div>
+                <TextField
+                  label="Email"
+                  variant="standard"
+                  sx={{ marginTop: "42px", width: "100%" }}
+                />
+              </div>
+              <div>
+                <TextField
+                  label="Password"
+                  variant="standard"
+                  type="password"
+                  sx={{ marginTop: "24px", width: "100%" }}
+                />
+              </div>
+              <div>
+                <TextField
+                  label="Confirm password"
+                  variant="standard"
+                  type="password"
+                  sx={{ marginTop: "24px", width: "100%" }}
+                />
+              </div>
+
+              <Button
+                size="large"
+                onClick={registerHandler}
+                sx={{ marginTop: "68px" }}
+              >
+                Sign Up
+              </Button>
             </Paper>
-            {/* <Card>hjghj</Card> */}
           </Grid>
         </Grid>
       </Container>
+      <div className={s.container}></div>
     </>
-    // <div className={s.container}>
-    //   <h1>Register</h1>
-    //   <button onClick={registerHandler}>register</button>
-    // </div>
   );
 }
 
