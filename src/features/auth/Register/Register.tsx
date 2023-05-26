@@ -14,6 +14,7 @@ import Paper from "@mui/material/Paper/Paper";
 import Grid from "@mui/material/Grid/Grid";
 import Button from "@mui/material/Button/Button";
 import TextField from "@mui/material/TextField/TextField";
+import { Link } from "react-router-dom";
 
 function Register() {
   const dispatch = useAppDispatch();
@@ -77,7 +78,6 @@ function Register() {
                   sx={{ marginTop: "24px", width: "100%" }}
                 />
               </div>
-
               <Button
                 size="large"
                 onClick={registerHandler}
@@ -85,6 +85,18 @@ function Register() {
               >
                 Sign Up
               </Button>
+              <div style={{ marginTop: "31px" }}>Already have an account?</div>
+              <Link
+                to={"/"}
+                style={{
+                  color: "#366EFF",
+                  display: "block",
+                  marginTop: "11px",
+                  fontSize: "20px",
+                }}
+              >
+                Sign In
+              </Link>
             </Paper>
           </Grid>
         </Grid>
