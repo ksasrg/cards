@@ -6,9 +6,11 @@ import {
   LogoutType,
   ProfileType,
   authApi,
+  ArgUpdate,
 } from "./auth.api";
 import { createAppAsyncThunk } from "common/utils/create-app-async-thunk";
 import { appActions } from "app/app.slice";
+import axios, { AxiosError } from "axios";
 
 const register = createAppAsyncThunk<void, ArgRegister>(
   "auth/register",
@@ -26,6 +28,14 @@ const login = createAppAsyncThunk<{ profile: ProfileType }, ArgLogin>(
   }
 );
 
+const update = createAppAsyncThunk<{ profile: ProfileType }, ArgUpdate>(
+  "auth/update",
+  async (arg, thunkAPI) => {
+    const res = await authApi.update(arg);
+    return { profile: res.data.updatedUser };
+  }
+);
+
 const me = createAppAsyncThunk<{ profile: ProfileType }, void>(
   "auth/me",
   async (_, { dispatch, rejectWithValue }) => {
@@ -34,7 +44,10 @@ const me = createAppAsyncThunk<{ profile: ProfileType }, void>(
       dispatch(authActions.setIsAuthorized({ isAuthorized: true }));
       return { profile: res.data };
     } catch (error) {
-      return rejectWithValue(error);
+      if (axios.isAxiosError(error) && error.response) {
+        // console.log(error.response.data.error);
+      }
+      return rejectWithValue("error");
     } finally {
       dispatch(appActions.setIsAppInitialized({ isAppInitialized: true }));
     }
@@ -85,10 +98,13 @@ const slice = createSlice({
       .addCase(logout.fulfilled, (state, action) => {
         state.profile = null;
         state.isAuthorized = false;
+      })
+      .addCase(update.fulfilled, (state, action) => {
+        state.profile = action.payload.profile;
       });
   },
 });
 
 export const authReducer = slice.reducer;
 export const authActions = slice.actions;
-export const authThunks = { register, login, me, logout, forgot };
+export const authThunks = { register, login, me, logout, forgot, update };

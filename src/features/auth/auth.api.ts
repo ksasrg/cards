@@ -14,7 +14,7 @@ export const authApi = {
     return instance.delete<LogoutType>("auth/me");
   },
   update: (payload: ArgUpdate) => {
-    return instance.put<any>("auth/me", payload); // TODO any
+    return instance.put<UpdateType>("auth/me", payload);
   },
   forgot: (payload: ArgForgot) => {
     // {"info":"sent —ฅ/ᐠ.̫ .ᐟ\\ฅ—","success":true,"answer":false,"html":false}
@@ -66,4 +66,10 @@ export interface ProfileType {
 
 export interface LogoutType {
   info: string;
+}
+
+export interface UpdateType {
+  updatedUser: ProfileType;
+  token: string;
+  tokenDeathTime: number;
 }
