@@ -13,11 +13,19 @@ export const authApi = {
   logout: () => {
     return instance.delete<LogoutType>("auth/me");
   },
+  update: (payload: ArgUpdate) => {
+    return instance.put<any>("auth/me", payload);
+  },
 };
 
 export type ArgRegister = {
   email: string;
   password: string;
+};
+
+export type ArgUpdate = {
+  name?: string;
+  avatar?: string; // url or base64
 };
 
 export type ArgLogin = {
@@ -36,6 +44,7 @@ export interface ProfileType {
   rememberMe: boolean;
   isAdmin: boolean;
   name: string;
+  avatar?: string;
   verified: boolean;
   publicCardPacksCount: number;
   created: string;

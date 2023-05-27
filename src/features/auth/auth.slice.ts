@@ -27,11 +27,16 @@ const login = createAppAsyncThunk<{ profile: ProfileType }, ArgLogin>(
 
 const me = createAppAsyncThunk<{ profile: ProfileType }, void>(
   "auth/me",
-  async (_, { dispatch }) => {
-    const res = await authApi.me();
-    dispatch(authActions.setIsAuthorized({ isAuthorized: true }));
-    dispatch(appActions.setIsAppInitialized({ isAppInitialized: true }));
-    return { profile: res.data };
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      const res = await authApi.me();
+      dispatch(authActions.setIsAuthorized({ isAuthorized: true }));
+      return { profile: res.data };
+    } catch (error) {
+      return rejectWithValue(error);
+    } finally {
+      dispatch(appActions.setIsAppInitialized({ isAppInitialized: true }));
+    }
   }
 );
 

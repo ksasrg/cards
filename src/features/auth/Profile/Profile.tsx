@@ -8,8 +8,10 @@ import Button from "@mui/material/Button/Button";
 function Profile() {
   const dispatch = useAppDispatch();
 
-  const email = useAppSelector((state) => state.auth.profile?.email);
   const isAuthorized = useAppSelector((state) => state.auth.isAuthorized);
+  const email = useAppSelector((state) => state.auth.profile?.email);
+  const name = useAppSelector((state) => state.auth.profile?.name);
+  const avatar = useAppSelector((state) => state.auth.profile?.avatar);
 
   const logoutHandler = () => {
     dispatch(authThunks.logout());
@@ -34,8 +36,18 @@ function Profile() {
       </Link>
       <AuthCard>
         <h1>Personal Information</h1>
-        <div>{email}</div>
-        <Button sx={{ marginTop: "68px" }} onClick={logoutHandler}>
+        <div style={{ marginTop: "30px" }}>
+          <img
+            src={avatar}
+            alt=""
+            width="96px"
+            height="96px"
+            style={{ borderRadius: "50%" }}
+          />
+        </div>
+        <div style={{ marginTop: "17px" }}>{name}</div>
+        <div style={{ marginTop: "14px" }}>{email}</div>
+        <Button sx={{ marginTop: "29px" }} onClick={logoutHandler}>
           Log out
         </Button>
       </AuthCard>
