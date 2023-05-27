@@ -9,9 +9,9 @@ import { Link, Outlet } from "react-router-dom";
 import { RouterPaths } from "common/router/router";
 import { useEffect } from "react";
 import { authThunks } from "features/auth/auth.slice";
-import { authApi } from "features/auth/auth.api";
 import { Avatar } from "features/auth/Avatar/Avatar";
 import { Preloader } from "features/auth/Preloader/Preloader";
+import { AppSnackbar } from "features/AppSnackBar/AppSnackBar";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -57,6 +57,7 @@ function App() {
           </Toolbar>
         </Container>
       </AppBar>
+      <AppSnackbar />
       <Outlet />
     </div>
   );

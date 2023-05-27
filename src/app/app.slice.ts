@@ -13,6 +13,9 @@ const slice = createSlice({
     ) => {
       state.isAppInitialized = action.payload.isAppInitialized;
     },
+    setError: (state, action: PayloadAction<{ error: string | null }>) => {
+      state.error = action.payload.error;
+    },
   },
 });
 

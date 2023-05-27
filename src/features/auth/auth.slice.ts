@@ -10,7 +10,7 @@ import {
 } from "./auth.api";
 import { createAppAsyncThunk } from "common/utils/create-app-async-thunk";
 import { appActions } from "app/app.slice";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 
 const register = createAppAsyncThunk<void, ArgRegister>(
   "auth/register",
@@ -31,8 +31,20 @@ const login = createAppAsyncThunk<{ profile: ProfileType }, ArgLogin>(
 const update = createAppAsyncThunk<{ profile: ProfileType }, ArgUpdate>(
   "auth/update",
   async (arg, thunkAPI) => {
-    const res = await authApi.update(arg);
-    return { profile: res.data.updatedUser };
+    try {
+      const res = await authApi.update(arg);
+      return { profile: res.data.updatedUser };
+    } catch (error) {
+      let message = "";
+      if (axios.isAxiosError(error) && error.response) {
+        message = error.response.data.error;
+      } else {
+        message = "error";
+      }
+
+      thunkAPI.dispatch(appActions.setError({ error: message }));
+      return thunkAPI.rejectWithValue("error");
+    }
   }
 );
 
