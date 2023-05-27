@@ -6,7 +6,8 @@ import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 import { ThemeProvider } from "@mui/material";
 import { theme } from "common/theme";
-import App from "app/App";
+import { RouterProvider } from "react-router-dom";
+import { router } from "common/router/router";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
@@ -15,7 +16,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <App />
+        <RouterProvider router={router} />
       </ThemeProvider>
     </Provider>
   </React.StrictMode>

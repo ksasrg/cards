@@ -6,8 +6,8 @@ import Toolbar from "@mui/material/Toolbar/Toolbar";
 import Button from "@mui/material/Button/Button";
 
 import logo from "assets/logo.svg";
-import { RouterProvider } from "react-router-dom";
-import { router } from "common/router/router";
+import { Link, Outlet } from "react-router-dom";
+import { RouterPaths } from "common/router/router";
 
 function App() {
   const isLoading = useAppSelector((state) => state.app.isLoading);
@@ -18,12 +18,14 @@ function App() {
         <Container sx={{ maxWidth: "1000px" }}>
           <Toolbar sx={{ justifyContent: "space-between" }}>
             <img src={logo} alt="" style={{}} />
-            <Button>Sign In</Button>
+            <Button component={Link} to={RouterPaths.signin}>
+              Sign In
+            </Button>
           </Toolbar>
         </Container>
       </AppBar>
       {isLoading && <h1>Loader...</h1>}
-      <RouterProvider router={router} />
+      <Outlet />
     </div>
   );
 }
