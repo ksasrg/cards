@@ -1,5 +1,5 @@
 import { AuthCard } from "../AuthCard/AuthCard";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import { RouterPaths } from "common/router/router";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { authThunks } from "../auth.slice";
@@ -8,18 +8,18 @@ import { Avatar } from "../Avatar/Avatar";
 
 function Profile() {
   const dispatch = useAppDispatch();
+  const location = useLocation();
 
   const isAuthorized = useAppSelector((state) => state.auth.isAuthorized);
   const email = useAppSelector((state) => state.auth.profile?.email);
   const name = useAppSelector((state) => state.auth.profile?.name);
-  const avatar = useAppSelector((state) => state.auth.profile?.avatar);
 
   const logoutHandler = () => {
     dispatch(authThunks.logout());
   };
 
   if (!isAuthorized) {
-    return <Navigate to={RouterPaths.signin} />;
+    return <Navigate to={RouterPaths.signin} state={{ from: location }} />;
   }
 
   return (

@@ -1,4 +1,4 @@
-import { useAppDispatch } from "app/hooks";
+import { useAppDispatch, useAppSelector } from "app/hooks";
 import { authThunks } from "../auth.slice";
 import { ArgLogin } from "../auth.api";
 import { AuthCard } from "../AuthCard/AuthCard";
@@ -7,7 +7,7 @@ import { PassField } from "../PassField/PassField";
 import Button from "@mui/material/Button/Button";
 import { RouterPaths } from "common/router/router";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import FormControlLabel from "@mui/material/FormControlLabel/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox/Checkbox";
 
@@ -20,14 +20,20 @@ const defaultValues: ArgLogin = {
 
 export function SignIn() {
   const dispatch = useAppDispatch();
+  const location = useLocation();
+
+  const isAuthorized = useAppSelector((state) => state.auth.isAuthorized);
 
   const form = useForm<ArgLogin>({ defaultValues });
-
   const { handleSubmit, register } = form;
 
   const onSubmit: SubmitHandler<ArgLogin> = (data) => {
     dispatch(authThunks.login(data));
   };
+
+  if (isAuthorized) {
+    return <Navigate to={location.state?.from.pathname || RouterPaths.main} />;
+  }
 
   return (
     <AuthCard>
