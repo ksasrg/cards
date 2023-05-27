@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ArgLogin, ArgRegister, ProfileType, authApi } from "./auth.api";
-import { createAppAsyncThunk } from "features/common/utils/create-app-async-thunk";
+import { createAppAsyncThunk } from "common/utils/create-app-async-thunk";
 
 const register = createAppAsyncThunk<void, ArgRegister>(
   "auth/register",

@@ -1,4 +1,4 @@
-import { instance } from "features/common/api/common.api";
+import { instance } from "common/api/common.api";
 
 export const authApi = {
   register: (payload: ArgRegister) => {

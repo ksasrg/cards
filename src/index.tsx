@@ -4,36 +4,20 @@ import { Provider } from "react-redux";
 import { store } from "./app/store";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import App from "app/App";
-import Register from "features/auth/Register/Register";
-import Login from "features/auth/Login/Login";
+import { RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "@mui/material";
-import { theme } from "features/common/theme";
+import { theme } from "common/theme";
+import { router } from "common/router/router";
+import App from "app/App";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-  },
-  {
-    path: "/register",
-    element: <Register />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-]);
 
 root.render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <RouterProvider router={router} />
+        <App />
       </ThemeProvider>
     </Provider>
   </React.StrictMode>
