@@ -29,5 +29,3 @@ export const AuthCard: FC<PropsType> = ({ children }) => {
     </>
   );
 };
-
-export default AuthCard;
