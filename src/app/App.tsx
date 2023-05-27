@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { authThunks } from "features/auth/auth.slice";
 import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
 import { authApi } from "features/auth/auth.api";
+import { Avatar } from "features/auth/Avatar/Avatar";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -26,6 +27,9 @@ function App() {
     //   name: "ghfgh",
     //   avatar:
     //     "https://sun1-55.userapi.com/impg/GQ-N3w5RkqB2S1xckB489iiljNz96cZcEnvS9w/G6AQuF05GYA.jpg?size=1280x960&quality=95&sign=ff9b6d958d1ef5112869cf833001512c&type=album",
+    // });
+    // authApi.update({
+    //   avatar: "",
     // });
   }, [dispatch]);
 
@@ -55,13 +59,7 @@ function App() {
               {name ? (
                 <>
                   <Link to={RouterPaths.profile}>{name}</Link>
-                  <img
-                    src={avatar}
-                    alt=""
-                    width="36px"
-                    height="36px"
-                    style={{ borderRadius: "50%" }}
-                  />
+                  <Avatar size={36} />
                 </>
               ) : (
                 <Button component={Link} to={RouterPaths.signin}>

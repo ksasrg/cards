@@ -4,6 +4,7 @@ import { RouterPaths } from "common/router/router";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { authThunks } from "../auth.slice";
 import Button from "@mui/material/Button/Button";
+import { Avatar } from "../Avatar/Avatar";
 
 function Profile() {
   const dispatch = useAppDispatch();
@@ -36,15 +37,7 @@ function Profile() {
       </Link>
       <AuthCard>
         <h1>Personal Information</h1>
-        <div style={{ marginTop: "30px" }}>
-          <img
-            src={avatar}
-            alt=""
-            width="96px"
-            height="96px"
-            style={{ borderRadius: "50%" }}
-          />
-        </div>
+        <Avatar size={96} marginTop={30} />
         <div style={{ marginTop: "17px" }}>{name}</div>
         <div style={{ marginTop: "14px" }}>{email}</div>
         <Button sx={{ marginTop: "29px" }} onClick={logoutHandler}>
