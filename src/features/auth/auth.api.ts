@@ -7,6 +7,12 @@ export const authApi = {
   login: (payload: ArgLogin) => {
     return instance.post<ProfileType>("auth/login", payload);
   },
+  me: () => {
+    return instance.post<ProfileType>("auth/me", {});
+  },
+  logout: () => {
+    return instance.delete<LogoutType>("auth/me");
+  },
 };
 
 export type ArgRegister = {
@@ -19,8 +25,6 @@ export type ArgLogin = {
   password: string;
   rememberMe: boolean;
 };
-
-// {"addedUser":{"_id":"646f8122969d59cfd925cb76","email":"ksahtmlcss@gmail.com","rememberMe":false,"isAdmin":false,"name":"ksahtmlcss@gmail.com","verified":false,"publicCardPacksCount":0,"created":"2023-05-25T15:39:14.740Z","updated":"2023-05-25T15:39:14.740Z","__v":0}}
 
 export interface RegisterResponse {
   addedUser: Omit<ProfileType, "token" | "tokenDeathTime">;
@@ -39,4 +43,8 @@ export interface ProfileType {
   __v: number;
   token: string;
   tokenDeathTime: number;
+}
+
+export interface LogoutType {
+  info: string;
 }

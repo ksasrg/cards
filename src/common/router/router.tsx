@@ -4,12 +4,14 @@ import { Counter } from "features/counter/Counter";
 import { SignIn } from "features/auth/SignIn/SignIn";
 import ForgotPass from "features/auth/ForgotPass/ForgotPass";
 import App from "app/App";
+import Profile from "features/auth/Profile/Profile";
 
 export const RouterPaths = {
   main: "/",
   signup: "/signup",
   signin: "/signin",
   forgot: "/forgot",
+  profile: "/profile",
 };
 
 export const router = createBrowserRouter([
@@ -32,23 +34,10 @@ export const router = createBrowserRouter([
         path: RouterPaths.forgot,
         element: <ForgotPass />,
       },
+      {
+        path: RouterPaths.profile,
+        element: <Profile />,
+      },
     ],
   },
 ]);
-
-// const routers = createBrowserRouter([
-//   {
-//     element: <Layout />,
-//     children: [
-//       {
-//         path: "/",
-//         element: <Home />,
-//         loader: authLoader
-//       },
-//       {
-//         path: "/about",
-//         element: <About />
-//       }
-//     ]
-//   }
-// ]);
