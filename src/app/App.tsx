@@ -9,14 +9,13 @@ import { Link, Outlet } from "react-router-dom";
 import { RouterPaths } from "common/router/router";
 import { useEffect } from "react";
 import { authThunks } from "features/auth/auth.slice";
-import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
 import { authApi } from "features/auth/auth.api";
 import { Avatar } from "features/auth/Avatar/Avatar";
+import { Preloader } from "features/auth/Preloader/Preloader";
 
 function App() {
   const dispatch = useAppDispatch();
   const name = useAppSelector((state) => state.auth.profile?.name);
-  const avatar = useAppSelector((state) => state.auth.profile?.avatar);
   const isAppInitialized = useAppSelector(
     (state) => state.app.isAppInitialized
   );
@@ -34,19 +33,7 @@ function App() {
   }, [dispatch]);
 
   if (!isAppInitialized) {
-    return (
-      <div
-        style={{
-          width: "100%",
-          height: "100vh",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <CircularProgress size={150} />
-      </div>
-    );
+    return <Preloader />;
   }
 
   return (
@@ -54,7 +41,7 @@ function App() {
       <AppBar position="static" color="inherit">
         <Container sx={{ maxWidth: "1000px" }}>
           <Toolbar sx={{ justifyContent: "space-between" }}>
-            <img src={logo} alt="" style={{}} />
+            <img src={logo} alt="" />
             <div>
               {name ? (
                 <>

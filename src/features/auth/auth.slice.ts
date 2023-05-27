@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import {
   ArgLogin,
   ArgRegister,
+  ArgForgot,
   LogoutType,
   ProfileType,
   authApi,
@@ -48,6 +49,16 @@ const logout = createAppAsyncThunk<LogoutType, void>(
   }
 );
 
+const forgot = createAppAsyncThunk<void, ArgForgot>(
+  "auth/forgot",
+  async (arg) => {
+    const res = await authApi.forgot(arg);
+    console.log(res.data); // TODO
+
+    return res.data;
+  }
+);
+
 const slice = createSlice({
   name: "auth",
   initialState: {
@@ -80,4 +91,4 @@ const slice = createSlice({
 
 export const authReducer = slice.reducer;
 export const authActions = slice.actions;
-export const authThunks = { register, login, me, logout };
+export const authThunks = { register, login, me, logout, forgot };

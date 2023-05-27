@@ -18,7 +18,7 @@ export const AuthCard: FC<PropsType> = ({ children }) => {
               sx={{
                 textAlign: "center",
                 padding: "42px 33px",
-                minWidth: "400px",
+                width: "400px",
               }}
             >
               {children}

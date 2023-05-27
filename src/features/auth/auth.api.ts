@@ -14,7 +14,11 @@ export const authApi = {
     return instance.delete<LogoutType>("auth/me");
   },
   update: (payload: ArgUpdate) => {
-    return instance.put<any>("auth/me", payload);
+    return instance.put<any>("auth/me", payload); // TODO any
+  },
+  forgot: (payload: ArgForgot) => {
+    // {"info":"sent —ฅ/ᐠ.̫ .ᐟ\\ฅ—","success":true,"answer":false,"html":false}
+    return instance.post<any>("auth/forgot", payload); // TODO any
   },
 };
 
@@ -32,6 +36,12 @@ export type ArgLogin = {
   email: string;
   password: string;
   rememberMe: boolean;
+};
+
+export type ArgForgot = {
+  email: string;
+  from?: string;
+  message: string;
 };
 
 export interface RegisterResponse {
