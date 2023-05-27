@@ -8,36 +8,24 @@ import { AuthCard } from "../AuthCard/AuthCard";
 import { EmailField } from "../EmailField/EmailField";
 import { PassField } from "../PassField/PassField";
 import { ConfirmPassField } from "../ConfirmPassField/ConfirmPassField";
+import { ArgRegister } from "../auth.api";
 
-type Inputs = {
-  email: string;
-  password: string;
-  confirmPassword: string;
+// TODO delete default
+const defaultValues = {
+  email: process.env.REACT_APP_EMAIL || "",
+  password: process.env.REACT_APP_PASS || "",
+  confirmPassword: process.env.REACT_APP_PASS || "",
 };
 
 function Signup() {
   const dispatch = useAppDispatch();
 
-  const form = useForm<Inputs>();
+  const form = useForm<ArgRegister>({ defaultValues });
 
-  const {
-    // register,
-    handleSubmit,
-    // watch,
-    reset,
-    // formState: { errors },
-  } = form;
+  const { handleSubmit } = form;
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    // TODO
-    console.log(data);
-    const payload = {
-      email: "ksahtmlcss@gmail.com",
-      password: "1qazxcvBG",
-    };
-
-    dispatch(authThunks.register(payload));
-    reset();
+  const onSubmit: SubmitHandler<ArgRegister> = (data) => {
+    dispatch(authThunks.register(data));
   };
 
   return (

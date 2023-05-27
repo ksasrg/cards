@@ -4,7 +4,6 @@ import { useAppSelector } from "app/hooks";
 import Container from "@mui/material/Container/Container";
 import Toolbar from "@mui/material/Toolbar/Toolbar";
 import Button from "@mui/material/Button/Button";
-
 import logo from "assets/logo.svg";
 import { Link, Outlet } from "react-router-dom";
 import { RouterPaths } from "common/router/router";

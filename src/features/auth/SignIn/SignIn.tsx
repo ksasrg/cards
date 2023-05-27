@@ -11,28 +11,22 @@ import { Link } from "react-router-dom";
 import FormControlLabel from "@mui/material/FormControlLabel/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox/Checkbox";
 
-type Inputs = {
-  email: string;
-  password: string;
-  RememberMe: boolean;
+// TODO delete default
+const defaultValues: ArgLogin = {
+  email: process.env.REACT_APP_EMAIL || "",
+  password: process.env.REACT_APP_PASS || "",
+  rememberMe: false,
 };
 
 export function SignIn() {
   const dispatch = useAppDispatch();
 
-  const form = useForm<Inputs>();
+  const form = useForm<ArgLogin>({ defaultValues });
 
   const { handleSubmit, register } = form;
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data); // TODO delete console.log
-    const payload: ArgLogin = {
-      email: "ksahtmlcss@gmail.com",
-      password: "1qazxcvBG",
-      rememberMe: false,
-    };
-
-    dispatch(authThunks.login(payload));
+  const onSubmit: SubmitHandler<ArgLogin> = (data) => {
+    dispatch(authThunks.login(data));
   };
 
   return (
@@ -43,7 +37,7 @@ export function SignIn() {
         <PassField form={form} />
         <div>
           <FormControlLabel
-            control={<Checkbox {...register("RememberMe")} />}
+            control={<Checkbox {...register("rememberMe")} />}
             label="Remember me"
             style={{
               marginTop: "24px",
