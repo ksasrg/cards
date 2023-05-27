@@ -4,10 +4,8 @@ import { Provider } from "react-redux";
 import { store } from "./app/store";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
-import { RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "@mui/material";
 import { theme } from "common/theme";
-import { router } from "common/router/router";
 import App from "app/App";
 
 const container = document.getElementById("root")!;
