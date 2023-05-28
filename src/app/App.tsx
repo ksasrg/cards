@@ -1,21 +1,14 @@
-import AppBar from "@mui/material/AppBar/AppBar";
 import "./App.css";
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import Container from "@mui/material/Container/Container";
-import Toolbar from "@mui/material/Toolbar/Toolbar";
-import Button from "@mui/material/Button/Button";
-import logo from "assets/logo.svg";
-import { Link, Outlet } from "react-router-dom";
-import { RouterPaths } from "common/router/router";
+import { Outlet } from "react-router-dom";
 import { useEffect } from "react";
 import { authThunks } from "features/auth/auth.slice";
-import { Avatar } from "features/auth/Avatar/Avatar";
 import { Preloader } from "features/auth/Preloader/Preloader";
 import { AppSnackbar } from "features/AppSnackBar/AppSnackBar";
+import { Header } from "./Header/Header";
 
 function App() {
   const dispatch = useAppDispatch();
-  const name = useAppSelector((state) => state.auth.profile?.name);
   const isAppInitialized = useAppSelector(
     (state) => state.app.isAppInitialized
   );
@@ -38,25 +31,7 @@ function App() {
 
   return (
     <div className="App">
-      <AppBar position="static" color="inherit">
-        <Container sx={{ maxWidth: "1000px" }}>
-          <Toolbar sx={{ justifyContent: "space-between" }}>
-            <img src={logo} alt="" />
-            <div>
-              {name ? (
-                <>
-                  <Link to={RouterPaths.profile}>{name}</Link>
-                  <Avatar size={36} />
-                </>
-              ) : (
-                <Button component={Link} to={RouterPaths.signin}>
-                  Sign In
-                </Button>
-              )}
-            </div>
-          </Toolbar>
-        </Container>
-      </AppBar>
+      <Header />
       <AppSnackbar />
       <Outlet />
     </div>
