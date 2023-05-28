@@ -1,13 +1,24 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { AuthCard } from "../AuthCard/AuthCard";
 import mailsvg from "assets/mail.svg";
 import Button from "@mui/material/Button/Button";
 import { RouterPaths } from "common/router/router";
-import { Link } from "react-router-dom";
+import { useAppDispatch } from "app/hooks";
+import { useEffect } from "react";
+import { authActions } from "../auth.slice";
 
 export function CheckEmail() {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(authActions.setCheckEmail({ checkEmail: "" }));
+  }, [dispatch]);
+
+  if (!location.state?.email) {
+    return <Navigate to={RouterPaths.forgot} />;
+  }
 
   return (
     <AuthCard>

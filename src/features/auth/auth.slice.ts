@@ -138,6 +138,9 @@ const slice = createSlice({
     ) => {
       state.isAuthorized = action.payload.isAuthorized;
     },
+    setCheckEmail: (state, action: PayloadAction<{ checkEmail: string }>) => {
+      state.checkEmail = action.payload.checkEmail;
+    },
   },
   extraReducers(builder) {
     builder
