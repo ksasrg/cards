@@ -8,6 +8,7 @@ import {
   authApi,
   ArgUpdate,
   ForgotType,
+  ArgSetPass,
 } from "./auth.api";
 import { createAppAsyncThunk } from "common/utils/create-app-async-thunk";
 import { appActions } from "app/app.slice";
@@ -49,6 +50,23 @@ const update = createAppAsyncThunk<{ profile: ProfileType }, ArgUpdate>(
     thunkAPI.dispatch(appActions.setIsLoading({ isLoading: true }));
     try {
       const res = await authApi.update(arg);
+      return { profile: res.data.updatedUser };
+    } catch (error) {
+      return setAppError(error, thunkAPI);
+    } finally {
+      thunkAPI.dispatch(appActions.setIsLoading({ isLoading: false }));
+    }
+  }
+);
+
+const setPass = createAppAsyncThunk<{ profile: ProfileType }, ArgSetPass>(
+  "auth/set-pass",
+  async (arg, thunkAPI) => {
+    thunkAPI.dispatch(appActions.setIsLoading({ isLoading: true }));
+    try {
+      const res = await authApi.setPass(arg);
+      console.log(res.data);
+
       return { profile: res.data.updatedUser };
     } catch (error) {
       return setAppError(error, thunkAPI);
@@ -145,4 +163,12 @@ const slice = createSlice({
 
 export const authReducer = slice.reducer;
 export const authActions = slice.actions;
-export const authThunks = { register, login, me, logout, forgot, update };
+export const authThunks = {
+  register,
+  login,
+  me,
+  logout,
+  forgot,
+  update,
+  setPass,
+};

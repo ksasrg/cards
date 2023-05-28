@@ -19,11 +19,19 @@ export const authApi = {
   forgot: (payload: ArgForgot) => {
     return instance.post<ForgotType>("auth/forgot", payload);
   },
+  setPass: (payload: ArgSetPass) => {
+    return instance.post<any>("auth/set-new-password", payload); // TODO any
+  },
 };
 
 export type ArgRegister = {
   email: string;
   password: string;
+};
+
+export type ArgSetPass = {
+  password: string;
+  resetPasswordToken: string;
 };
 
 export type ArgUpdate = {
