@@ -6,6 +6,7 @@ import { authThunks } from "features/auth/auth.slice";
 import { Preloader } from "features/auth/Preloader/Preloader";
 import { AppSnackbar } from "features/AppSnackBar/AppSnackBar";
 import { Header } from "./Header/Header";
+import { ProgressLine } from "./ProgressLine/ProgressLine";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -32,6 +33,7 @@ function App() {
   return (
     <div className="App">
       <Header />
+      <ProgressLine />
       <AppSnackbar />
       <Outlet />
     </div>

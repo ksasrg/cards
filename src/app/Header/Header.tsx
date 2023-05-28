@@ -24,6 +24,10 @@ export function Header() {
                     borderBottom: "1px dashed #000000",
                     lineHeight: "24px",
                     marginRight: "12px",
+                    maxWidth: "300px",
+                    overflow: "hidden",
+                    display: "inline-block",
+                    verticalAlign: "middle",
                   }}
                 >
                   <Link

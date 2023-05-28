@@ -6,10 +6,6 @@ import { authThunks } from "../auth.slice";
 import Button from "@mui/material/Button/Button";
 import { Avatar } from "../Avatar/Avatar";
 import { Editable } from "../Editable/Editable";
-import TextField from "@mui/material/TextField/TextField";
-import InputAdornment from "@mui/material/InputAdornment/InputAdornment";
-import IconButton from "@mui/material/IconButton/IconButton";
-import { VisibilityOff } from "@mui/icons-material";
 
 function Profile() {
   const dispatch = useAppDispatch();

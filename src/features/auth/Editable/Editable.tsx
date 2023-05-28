@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  KeyboardEvent,
-  FocusEvent,
-  ChangeEvent,
-  MouseEvent,
-} from "react";
+import React, { useState, KeyboardEvent, ChangeEvent } from "react";
 import editIcon from "assets/editIcon.svg";
 import TextField from "@mui/material/TextField/TextField";
 import InputAdornment from "@mui/material/InputAdornment/InputAdornment";
@@ -26,15 +20,17 @@ export function Editable(props: PropsType) {
   };
 
   const onCloseHandler = () => {
-    // if (event.key === "Enter" || event.type === "blur") {
     setEdit(false);
-    props.onChange(text);
-    // }
+    if (text !== props.text) props.onChange(text);
+  };
+
+  const onKeyHandler = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Enter") {
+      onCloseHandler();
+    }
   };
 
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log(event);
-
     setText(event.target.value);
   };
 
@@ -46,6 +42,8 @@ export function Editable(props: PropsType) {
           variant="standard"
           value={text}
           onChange={onChangeHandler}
+          onKeyDown={onKeyHandler}
+          autoFocus
           sx={{
             width: "100%",
           }}

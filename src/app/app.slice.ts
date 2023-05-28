@@ -5,6 +5,7 @@ const slice = createSlice({
   initialState: {
     error: null as string | null,
     isAppInitialized: false,
+    isLoading: false,
   },
   reducers: {
     setIsAppInitialized: (
@@ -15,6 +16,9 @@ const slice = createSlice({
     },
     setError: (state, action: PayloadAction<{ error: string | null }>) => {
       state.error = action.payload.error;
+    },
+    setIsLoading: (state, action: PayloadAction<{ isLoading: boolean }>) => {
+      state.isLoading = action.payload.isLoading;
     },
   },
 });
