@@ -11,20 +11,15 @@ import {
   ArgSetPass,
 } from "./auth.api";
 import { createAppAsyncThunk } from "common/utils/create-app-async-thunk";
-import { appActions } from "app/app.slice";
-import { setAppError } from "common/utils/setAppError";
+import axios from "axios";
 
 const register = createAppAsyncThunk<void, ArgRegister>(
   "auth/register",
   async (arg, thunkAPI) => {
-    thunkAPI.dispatch(appActions.setIsLoading({ isLoading: true }));
     try {
-      const res = await authApi.register(arg);
-      console.log(res.data); // TODO
+      const res = await authApi.register(arg); // TODO  return
     } catch (error) {
-      return setAppError(error, thunkAPI);
-    } finally {
-      thunkAPI.dispatch(appActions.setIsLoading({ isLoading: false }));
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );
@@ -32,14 +27,11 @@ const register = createAppAsyncThunk<void, ArgRegister>(
 const login = createAppAsyncThunk<{ profile: ProfileType }, ArgLogin>(
   "auth/login",
   async (arg, thunkAPI) => {
-    thunkAPI.dispatch(appActions.setIsLoading({ isLoading: true }));
     try {
       const res = await authApi.login(arg);
       return { profile: res.data };
     } catch (error) {
-      return setAppError(error, thunkAPI);
-    } finally {
-      thunkAPI.dispatch(appActions.setIsLoading({ isLoading: false }));
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );
@@ -47,14 +39,11 @@ const login = createAppAsyncThunk<{ profile: ProfileType }, ArgLogin>(
 const update = createAppAsyncThunk<{ profile: ProfileType }, ArgUpdate>(
   "auth/update",
   async (arg, thunkAPI) => {
-    thunkAPI.dispatch(appActions.setIsLoading({ isLoading: true }));
     try {
       const res = await authApi.update(arg);
       return { profile: res.data.updatedUser };
     } catch (error) {
-      return setAppError(error, thunkAPI);
-    } finally {
-      thunkAPI.dispatch(appActions.setIsLoading({ isLoading: false }));
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );
@@ -62,16 +51,11 @@ const update = createAppAsyncThunk<{ profile: ProfileType }, ArgUpdate>(
 const setPass = createAppAsyncThunk<{ profile: ProfileType }, ArgSetPass>(
   "auth/set-pass",
   async (arg, thunkAPI) => {
-    thunkAPI.dispatch(appActions.setIsLoading({ isLoading: true }));
     try {
       const res = await authApi.setPass(arg);
-      console.log(res.data);
-
       return { profile: res.data.updatedUser };
     } catch (error) {
-      return setAppError(error, thunkAPI);
-    } finally {
-      thunkAPI.dispatch(appActions.setIsLoading({ isLoading: false }));
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );
@@ -81,14 +65,12 @@ const me = createAppAsyncThunk<{ profile: ProfileType }, void>(
   async (_, thunkAPI) => {
     try {
       const res = await authApi.me();
-      thunkAPI.dispatch(authActions.setIsAuthorized({ isAuthorized: true }));
       return { profile: res.data };
     } catch (error) {
-      return thunkAPI.rejectWithValue("error");
-    } finally {
-      thunkAPI.dispatch(
-        appActions.setIsAppInitialized({ isAppInitialized: true })
-      );
+      if (axios.isAxiosError(error) && error.response?.status === 401) {
+        return thunkAPI.rejectWithValue("");
+      }
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );
@@ -96,14 +78,11 @@ const me = createAppAsyncThunk<{ profile: ProfileType }, void>(
 const logout = createAppAsyncThunk<LogoutType, void>(
   "auth/logout",
   async (_, thunkAPI) => {
-    thunkAPI.dispatch(appActions.setIsLoading({ isLoading: true }));
     try {
       const res = await authApi.logout();
       return res.data;
     } catch (error) {
-      return setAppError(error, thunkAPI);
-    } finally {
-      thunkAPI.dispatch(appActions.setIsLoading({ isLoading: false }));
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );
@@ -112,15 +91,11 @@ const forgot = createAppAsyncThunk<
   { data: ForgotType; email: string },
   ArgForgot
 >("auth/forgot", async (arg, thunkAPI) => {
-  thunkAPI.dispatch(appActions.setIsLoading({ isLoading: true }));
   try {
     const res = await authApi.forgot(arg);
-    console.log(res.data); // TODO
     return { data: res.data, email: arg.email };
   } catch (error) {
-    return setAppError(error, thunkAPI);
-  } finally {
-    thunkAPI.dispatch(appActions.setIsLoading({ isLoading: false }));
+    return thunkAPI.rejectWithValue(error);
   }
 });
 
@@ -132,12 +107,6 @@ const slice = createSlice({
     checkEmail: "" as string,
   },
   reducers: {
-    setIsAuthorized: (
-      state,
-      action: PayloadAction<{ isAuthorized: boolean }>
-    ) => {
-      state.isAuthorized = action.payload.isAuthorized;
-    },
     setCheckEmail: (state, action: PayloadAction<{ checkEmail: string }>) => {
       state.checkEmail = action.payload.checkEmail;
     },
@@ -149,6 +118,7 @@ const slice = createSlice({
         state.isAuthorized = true;
       })
       .addCase(me.fulfilled, (state, action) => {
+        state.isAuthorized = true;
         state.profile = action.payload.profile;
       })
       .addCase(logout.fulfilled, (state, action) => {
