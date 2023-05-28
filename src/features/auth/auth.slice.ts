@@ -7,6 +7,7 @@ import {
   ProfileType,
   authApi,
   ArgUpdate,
+  ForgotType,
 } from "./auth.api";
 import { createAppAsyncThunk } from "common/utils/create-app-async-thunk";
 import { appActions } from "app/app.slice";
@@ -89,27 +90,28 @@ const logout = createAppAsyncThunk<LogoutType, void>(
   }
 );
 
-const forgot = createAppAsyncThunk<void, ArgForgot>(
-  "auth/forgot",
-  async (arg, thunkAPI) => {
-    thunkAPI.dispatch(appActions.setIsLoading({ isLoading: true }));
-    try {
-      const res = await authApi.forgot(arg);
-      console.log(res.data); // TODO
-      return res.data;
-    } catch (error) {
-      return setAppError(error, thunkAPI);
-    } finally {
-      thunkAPI.dispatch(appActions.setIsLoading({ isLoading: false }));
-    }
+const forgot = createAppAsyncThunk<
+  { data: ForgotType; email: string },
+  ArgForgot
+>("auth/forgot", async (arg, thunkAPI) => {
+  thunkAPI.dispatch(appActions.setIsLoading({ isLoading: true }));
+  try {
+    const res = await authApi.forgot(arg);
+    console.log(res.data); // TODO
+    return { data: res.data, email: arg.email };
+  } catch (error) {
+    return setAppError(error, thunkAPI);
+  } finally {
+    thunkAPI.dispatch(appActions.setIsLoading({ isLoading: false }));
   }
-);
+});
 
 const slice = createSlice({
   name: "auth",
   initialState: {
     profile: null as ProfileType | null,
     isAuthorized: false,
+    checkEmail: "" as string,
   },
   reducers: {
     setIsAuthorized: (
@@ -134,6 +136,9 @@ const slice = createSlice({
       })
       .addCase(update.fulfilled, (state, action) => {
         state.profile = action.payload.profile;
+      })
+      .addCase(forgot.fulfilled, (state, action) => {
+        state.checkEmail = action.payload.email;
       });
   },
 });

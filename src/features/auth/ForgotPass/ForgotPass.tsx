@@ -4,22 +4,23 @@ import { EmailField } from "../EmailField/EmailField";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ArgForgot } from "../auth.api";
 import Button from "@mui/material/Button/Button";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { RouterPaths } from "common/router/router";
-import { useAppDispatch } from "app/hooks";
+import { useAppDispatch, useAppSelector } from "app/hooks";
 import { authThunks } from "../auth.slice";
 
 const defaultValues = {
   email: "ksahtmlcss@gmail.com",
   message: `<div style="background-color: lime; padding: 15px">
   password recovery link: 
-  <a href='http://localhost:3000/#/set-new-password/$token$'>
+  <a href='http://localhost:3000/set-new-password/$token$'>
   link</a>
   </div>`,
 };
 
 function ForgotPass() {
   const dispatch = useAppDispatch();
+  const checkEmail = useAppSelector((state) => state.auth.checkEmail);
 
   const form = useForm<ArgForgot>({ defaultValues });
   const { handleSubmit } = form;
@@ -27,6 +28,12 @@ function ForgotPass() {
   const onSubmit: SubmitHandler<ArgForgot> = (data) => {
     dispatch(authThunks.forgot(data));
   };
+
+  if (checkEmail) {
+    return (
+      <Navigate to={RouterPaths.checkemail} state={{ email: checkEmail }} />
+    );
+  }
 
   return (
     <AuthCard>

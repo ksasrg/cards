@@ -5,6 +5,7 @@ import { SignIn } from "features/auth/SignIn/SignIn";
 import ForgotPass from "features/auth/ForgotPass/ForgotPass";
 import App from "app/App";
 import Profile from "features/auth/Profile/Profile";
+import { CheckEmail } from "features/auth/CheckEmail/CheckEmail";
 
 export const RouterPaths = {
   main: "/",
@@ -12,6 +13,7 @@ export const RouterPaths = {
   signin: "/signin",
   forgot: "/forgot",
   profile: "/profile",
+  checkemail: "/checkemail",
 };
 
 export const router = createBrowserRouter([
@@ -37,6 +39,10 @@ export const router = createBrowserRouter([
       {
         path: RouterPaths.profile,
         element: <Profile />,
+      },
+      {
+        path: RouterPaths.checkemail,
+        element: <CheckEmail />,
       },
     ],
   },

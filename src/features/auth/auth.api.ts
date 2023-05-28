@@ -17,8 +17,7 @@ export const authApi = {
     return instance.put<UpdateType>("auth/me", payload);
   },
   forgot: (payload: ArgForgot) => {
-    // {"info":"sent —ฅ/ᐠ.̫ .ᐟ\\ฅ—","success":true,"answer":false,"html":false}
-    return instance.post<any>("auth/forgot", payload); // TODO any
+    return instance.post<ForgotType>("auth/forgot", payload);
   },
 };
 
@@ -72,4 +71,11 @@ export interface UpdateType {
   updatedUser: ProfileType;
   token: string;
   tokenDeathTime: number;
+}
+
+export interface ForgotType {
+  info: string;
+  success: boolean;
+  answer: boolean;
+  html: boolean;
 }

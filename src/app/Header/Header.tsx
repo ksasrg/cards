@@ -6,16 +6,19 @@ import { RouterPaths } from "common/router/router";
 import { Avatar } from "features/auth/Avatar/Avatar";
 import AppBar from "@mui/material/AppBar/AppBar";
 import { useAppSelector } from "app/hooks";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export function Header() {
+  const navigate = useNavigate();
   const name = useAppSelector((state) => state.auth.profile?.name);
 
   return (
     <AppBar position="static" color="inherit">
       <Container sx={{ maxWidth: "1000px" }}>
         <Toolbar sx={{ justifyContent: "space-between" }}>
-          <img src={logo} alt="" />
+          <Link to={RouterPaths.main}>
+            <img src={logo} alt="" />
+          </Link>
           <div>
             {name ? (
               <>
@@ -50,7 +53,7 @@ export function Header() {
                 </span>
               </>
             ) : (
-              <Button component={Link} to={RouterPaths.signin}>
+              <Button onClick={() => navigate(RouterPaths.signin)}>
                 Sign In
               </Button>
             )}
