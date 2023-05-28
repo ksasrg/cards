@@ -6,6 +6,10 @@ import { authThunks } from "../auth.slice";
 import Button from "@mui/material/Button/Button";
 import { Avatar } from "../Avatar/Avatar";
 import { Editable } from "../Editable/Editable";
+import TextField from "@mui/material/TextField/TextField";
+import InputAdornment from "@mui/material/InputAdornment/InputAdornment";
+import IconButton from "@mui/material/IconButton/IconButton";
+import { VisibilityOff } from "@mui/icons-material";
 
 function Profile() {
   const dispatch = useAppDispatch();
@@ -20,7 +24,6 @@ function Profile() {
   };
 
   const onEditableChange = (name: string) => {
-    console.log(name);
     dispatch(authThunks.update({ name }));
   };
 
@@ -51,8 +54,8 @@ function Profile() {
             style={{ marginTop: "17px" }}
           />
         )}
-        <div style={{ marginTop: "17px" }}>{name}</div>
-        <div style={{ marginTop: "14px" }}>{email}</div>
+        {/* <div style={{ marginTop: "17px" }}>{name}</div> */}
+        <div style={{ marginTop: "14px", lineHeight: "24px" }}>{email}</div>
         <Button sx={{ marginTop: "29px" }} onClick={logoutHandler}>
           Log out
         </Button>

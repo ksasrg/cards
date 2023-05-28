@@ -10,21 +10,29 @@ import {
 } from "./auth.api";
 import { createAppAsyncThunk } from "common/utils/create-app-async-thunk";
 import { appActions } from "app/app.slice";
-import axios from "axios";
+import { setAppError } from "common/utils/setAppError";
 
 const register = createAppAsyncThunk<void, ArgRegister>(
   "auth/register",
   async (arg, thunkAPI) => {
-    const res = await authApi.register(arg);
-    console.log(res.data);
+    try {
+      const res = await authApi.register(arg);
+      console.log(res.data); // TODO
+    } catch (error) {
+      return setAppError(error, thunkAPI);
+    }
   }
 );
 
 const login = createAppAsyncThunk<{ profile: ProfileType }, ArgLogin>(
   "auth/login",
   async (arg, thunkAPI) => {
-    const res = await authApi.login(arg);
-    return { profile: res.data };
+    try {
+      const res = await authApi.login(arg);
+      return { profile: res.data };
+    } catch (error) {
+      return setAppError(error, thunkAPI);
+    }
   }
 );
 
@@ -35,52 +43,50 @@ const update = createAppAsyncThunk<{ profile: ProfileType }, ArgUpdate>(
       const res = await authApi.update(arg);
       return { profile: res.data.updatedUser };
     } catch (error) {
-      let message = "";
-      if (axios.isAxiosError(error) && error.response) {
-        message = error.response.data.error;
-      } else {
-        message = "error";
-      }
-
-      thunkAPI.dispatch(appActions.setError({ error: message }));
-      return thunkAPI.rejectWithValue("error");
+      return setAppError(error, thunkAPI);
     }
   }
 );
 
 const me = createAppAsyncThunk<{ profile: ProfileType }, void>(
   "auth/me",
-  async (_, { dispatch, rejectWithValue }) => {
+  async (_, thunkAPI) => {
     try {
       const res = await authApi.me();
-      dispatch(authActions.setIsAuthorized({ isAuthorized: true }));
+      thunkAPI.dispatch(authActions.setIsAuthorized({ isAuthorized: true }));
       return { profile: res.data };
     } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        // console.log(error.response.data.error);
-      }
-      return rejectWithValue("error");
+      return thunkAPI.rejectWithValue("error");
     } finally {
-      dispatch(appActions.setIsAppInitialized({ isAppInitialized: true }));
+      thunkAPI.dispatch(
+        appActions.setIsAppInitialized({ isAppInitialized: true })
+      );
     }
   }
 );
 
 const logout = createAppAsyncThunk<LogoutType, void>(
   "auth/logout",
-  async () => {
-    const res = await authApi.logout();
-    return res.data;
+  async (_, thunkAPI) => {
+    try {
+      const res = await authApi.logout();
+      return res.data;
+    } catch (error) {
+      return setAppError(error, thunkAPI);
+    }
   }
 );
 
 const forgot = createAppAsyncThunk<void, ArgForgot>(
   "auth/forgot",
-  async (arg) => {
-    const res = await authApi.forgot(arg);
-    console.log(res.data); // TODO
-
-    return res.data;
+  async (arg, thunkAPI) => {
+    try {
+      const res = await authApi.forgot(arg);
+      console.log(res.data); // TODO
+      return res.data;
+    } catch (error) {
+      return setAppError(error, thunkAPI);
+    }
   }
 );
 
