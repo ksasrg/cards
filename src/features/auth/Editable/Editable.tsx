@@ -7,7 +7,7 @@ import Button from "@mui/material/Button/Button";
 type PropsType = {
   text: string;
   style: React.CSSProperties | undefined;
-  onChange: (text: string) => void;
+  onSubmit: (text: string) => void;
 };
 
 export function Editable(props: PropsType) {
@@ -19,14 +19,14 @@ export function Editable(props: PropsType) {
     setText(props.text);
   };
 
-  const onCloseHandler = () => {
+  const onSubmitHandler = () => {
     setEdit(false);
-    if (text !== props.text) props.onChange(text);
+    if (text !== props.text) props.onSubmit(text);
   };
 
   const onKeyHandler = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key === "Enter") {
-      onCloseHandler();
+      onSubmitHandler();
     }
   };
 
@@ -53,7 +53,7 @@ export function Editable(props: PropsType) {
                 <Button
                   variant="contained"
                   size="small"
-                  onClick={onCloseHandler}
+                  onClick={onSubmitHandler}
                 >
                   SAVE
                 </Button>

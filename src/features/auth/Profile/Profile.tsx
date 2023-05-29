@@ -46,7 +46,7 @@ function Profile() {
         {name && (
           <Editable
             text={name}
-            onChange={onEditableChange}
+            onSubmit={onEditableChange}
             style={{ marginTop: "17px" }}
           />
         )}

@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from "app/hooks";
 import { authThunks } from "../auth.slice";
 
 const defaultValues = {
-  email: "ksahtmlcss@gmail.com",
+  email: process.env.REACT_APP_EMAIL || "",
   message: `<div style="background-color: lime; padding: 15px">
   password recovery link: 
   <a href='http://localhost:3000/set-new-password/$token$'>
