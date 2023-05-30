@@ -14,7 +14,7 @@ export function PacksList() {
   const [searchParams, setSearchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams);
   const [page, setPage] = useState<number>();
-  const [pageCount, setPageCount] = useState<number>();
+  const [pageCount, setPageCount] = useState<number>(4);
 
   useEffect(() => {
     dispatch(packsThunks.get(params));
@@ -86,6 +86,7 @@ export function PacksList() {
       <PacksPagination
         onPageChange={onPageChangeHandler}
         onPageCountChange={onPageCountChangeHandler}
+        pageCount={pageCount}
       />
       <PacksTable />
       <div

@@ -5,11 +5,18 @@ import teacher from "assets/teacher.svg";
 import editIconMini from "assets/editIconMini.svg";
 import trash from "assets/trash.svg";
 import { packsThunks } from "../packs.slice";
+import { useSearchParams } from "react-router-dom";
 
 export function PacksTable() {
   const dispatch = useAppDispatch();
   const packs = useAppSelector((state) => state.packs.packs.cardPacks);
   const userId = useAppSelector((state) => state.auth.profile?._id);
+  const [searchParams] = useSearchParams();
+  const params = Object.fromEntries(searchParams);
+
+  const deleteHandler = (packId: string) => {
+    dispatch(packsThunks.deletePack({ packId, params }));
+  };
 
   const mappedRows = packs.map((p) => {
     const updated = new Date(p.updated);
@@ -26,13 +33,7 @@ export function PacksTable() {
           {userId === p.user_id && (
             <>
               <img src={editIconMini} alt="" />
-              <img
-                src={trash}
-                alt=""
-                onClick={() =>
-                  dispatch(packsThunks.deletePack({ packId: p._id }))
-                }
-              />
+              <img src={trash} alt="" onClick={() => deleteHandler(p._id)} />
             </>
           )}
         </div>

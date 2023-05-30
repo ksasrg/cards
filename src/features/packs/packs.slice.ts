@@ -40,20 +40,18 @@ const get = createAppAsyncThunk<GetCardPack, ArgGetPacks>(
 );
 
 // TODO types GetCardPack
-const deletePack = createAppAsyncThunk<GetCardPack, { packId: string }>(
-  "packs/delete-pack",
-  async (arg, thunkAPI) => {
-    try {
-      const res = await packsApi.delete(arg.packId);
-
-      await thunkAPI.dispatch(get({})); // TODO query
-
-      return res.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
+const deletePack = createAppAsyncThunk<
+  GetCardPack,
+  { packId: string; params: ArgGetPacks }
+>("packs/delete-pack", async (arg, thunkAPI) => {
+  try {
+    const res = await packsApi.delete(arg.packId);
+    await thunkAPI.dispatch(get(arg.params));
+    return res.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
   }
-);
+});
 
 // TODO types GetCardPack
 const create = createAppAsyncThunk<GetCardPack, void>(

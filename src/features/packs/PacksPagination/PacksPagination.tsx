@@ -5,11 +5,11 @@ import { ChangeEvent } from "react";
 type PropsType = {
   onPageChange: (event: ChangeEvent<unknown>, page: number) => void;
   onPageCountChange: (event: ChangeEvent<HTMLSelectElement>) => void;
+  pageCount: number;
 };
 
 export const PacksPagination = (props: PropsType) => {
-  const { onPageChange, onPageCountChange } = props;
-  const pageCount = useAppSelector((state) => state.packs.packs.pageCount);
+  const { onPageChange, onPageCountChange, pageCount } = props;
   const page = useAppSelector((state) => state.packs.packs.page);
   const cardPacksTotalCount = useAppSelector(
     (state) => state.packs.packs.cardPacksTotalCount
