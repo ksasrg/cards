@@ -1,12 +1,12 @@
 import Signup from "features/auth/Signup/Signup";
 import { createBrowserRouter } from "react-router-dom";
-import { Counter } from "features/counter/Counter";
 import { SignIn } from "features/auth/SignIn/SignIn";
 import ForgotPass from "features/auth/ForgotPass/ForgotPass";
 import App from "app/App";
 import Profile from "features/auth/Profile/Profile";
 import { CheckEmail } from "features/auth/CheckEmail/CheckEmail";
 import { SetPass } from "features/auth/SetPass/SetPass";
+import { PacksList } from "features/packs/PacksList/PacksList";
 
 export const RouterPaths = {
   main: "/",
@@ -24,7 +24,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: RouterPaths.main,
-        element: <Counter />,
+        element: <PacksList />,
       },
       {
         path: RouterPaths.signup,

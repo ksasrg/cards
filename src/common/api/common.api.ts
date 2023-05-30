@@ -1,7 +1,7 @@
 import axios from "axios";
 
 let url = "";
-url = "https://neko-back.herokuapp.com/2.0/";
+// url = "https://neko-back.herokuapp.com/2.0/";
 
 export const instance = axios.create({
   baseURL:

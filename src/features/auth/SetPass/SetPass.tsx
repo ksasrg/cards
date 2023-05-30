@@ -19,7 +19,6 @@ export function SetPass() {
 
   const { handleSubmit } = form;
 
-  // TODO any
   const onSubmit: SubmitHandler<ArgSetPass> = (data) => {
     data.resetPasswordToken = token || "";
     dispatch(authThunks.setPass(data));
