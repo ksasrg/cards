@@ -1,28 +1,21 @@
 import Button from "@mui/material/Button/Button";
 import Container from "@mui/material/Container/Container";
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { RouterPaths } from "common/router/router";
-import {
-  Navigate,
-  useLocation,
-  useParams,
-  useSearchParams,
-} from "react-router-dom";
+import { Navigate, useLocation, useSearchParams } from "react-router-dom";
 
 import { ChangeEvent, useEffect } from "react";
 import { packsThunks } from "../packs.slice";
 import { PacksTable } from "../PacksTable/PacksTable";
 import Pagination from "@mui/material/Pagination/Pagination";
+import { RouterPaths } from "common/router/router";
 
 export function PacksList() {
   const dispatch = useAppDispatch();
-  const location = useLocation();
-  const [searchParams, setParams] = useSearchParams();
-
+  const [searchParams, setSearchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams);
-  console.log(params);
-
+  const location = useLocation();
   const isAuthorized = useAppSelector((state) => state.auth.isAuthorized);
+
   const pageCount = useAppSelector((state) => state.packs.packs.pageCount);
   const page = useAppSelector((state) => state.packs.packs.page);
   const cardPacksTotalCount = useAppSelector(
@@ -32,11 +25,15 @@ export function PacksList() {
   const totalPages = Math.ceil(cardPacksTotalCount / pageCount);
 
   useEffect(() => {
-    dispatch(packsThunks.get({}));
-  }, []);
+    if (isAuthorized) dispatch(packsThunks.get(params));
+  }, [dispatch]);
 
   const onPageChangeHandler = (event: ChangeEvent<unknown>, page: number) => {
-    dispatch(packsThunks.get({ page }));
+    setSearchParams((prev) => {
+      prev.set("page", page.toString());
+      return prev;
+    });
+    dispatch(packsThunks.get({ ...params, page }));
   };
 
   if (!isAuthorized) {

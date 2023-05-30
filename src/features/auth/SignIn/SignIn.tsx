@@ -32,7 +32,14 @@ export function SignIn() {
   };
 
   if (isAuthorized) {
-    return <Navigate to={location.state?.from.pathname || RouterPaths.main} />;
+    return (
+      <Navigate
+        to={
+          location.state?.from.pathname + location.state?.from.search ||
+          RouterPaths.main
+        }
+      />
+    );
   }
 
   return (
