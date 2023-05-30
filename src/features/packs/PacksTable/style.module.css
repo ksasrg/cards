@@ -1,3 +1,12 @@
+.packsTable {
+  margin-top: 24px;
+  text-align: left;
+  background: white;
+  border: 1px solid #d9d9d9;
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.1))
+    drop-shadow(-1px -1px 2px rgba(0, 0, 0, 0.1));
+}
+
 .hrow {
   display: flex;
   justify-content: space-between;
@@ -34,25 +43,34 @@
 
 .nameCol {
   padding-left: 36px;
-  width: 262px;
+  width: 350px;
+  overflow: hidden;
 }
 
 .cardsCol {
   padding-left: 10px;
-  width: 230px;
+  width: 100px;
+  overflow: hidden;
 }
 
 .updatedCol {
   padding-left: 10px;
-  width: 217px;
+  width: 150px;
+  overflow: hidden;
 }
 
 .createdCol {
   padding-left: 10px;
-  width: 155px;
+  width: 250px;
+  overflow: hidden;
 }
 
 .actionsCol {
   padding-left: 10px;
   width: 108px;
+  overflow: hidden;
+}
+.actionsCol img {
+  margin-right: 15px;
+  cursor: pointer;
 }

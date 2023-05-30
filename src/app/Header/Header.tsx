@@ -13,9 +13,16 @@ export function Header() {
   const name = useAppSelector((state) => state.auth.profile?.name);
 
   return (
-    <AppBar position="static" color="inherit" >
-      <Container style={{ maxWidth: "1000px" }}>
-        <Toolbar sx={{ justifyContent: "space-between" }}>
+    <AppBar position="static" color="inherit">
+      <Container style={{ maxWidth: "1048px" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            height: "60px",
+            alignItems: "center",
+          }}
+        >
           <Link to={RouterPaths.main}>
             <img src={logo} alt="" />
           </Link>
@@ -58,7 +65,7 @@ export function Header() {
               </Button>
             )}
           </div>
-        </Toolbar>
+        </div>
       </Container>
     </AppBar>
   );
