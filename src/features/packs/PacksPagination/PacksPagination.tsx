@@ -5,12 +5,13 @@ import { ChangeEvent } from "react";
 type PropsType = {
   onPageChange: (event: ChangeEvent<unknown>, page: number) => void;
   onPageCountChange: (event: ChangeEvent<HTMLSelectElement>) => void;
-  pageCount: number;
 };
 
 export const PacksPagination = (props: PropsType) => {
-  const { onPageChange, onPageCountChange, pageCount } = props;
+  const { onPageChange, onPageCountChange } = props;
   const page = useAppSelector((state) => state.packs.packs.page);
+  const pageCount = useAppSelector((state) => state.packs.packs.pageCount);
+  const isLoading = useAppSelector((state) => state.app.isLoading);
   const cardPacksTotalCount = useAppSelector(
     (state) => state.packs.packs.cardPacksTotalCount
   );
@@ -33,6 +34,7 @@ export const PacksPagination = (props: PropsType) => {
         style={{ margin: "0 15px" }}
         onChange={onPageCountChange}
         value={pageCount}
+        disabled={isLoading}
       >
         <option value="4">4</option>
         <option value="10">10</option>

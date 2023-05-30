@@ -26,7 +26,7 @@ export function Header() {
           <Link to={RouterPaths.main}>
             <img src={logo} alt="" />
           </Link>
-          <div>
+          <div style={{ display: "flex", alignItems: "center" }}>
             {name ? (
               <>
                 <span
