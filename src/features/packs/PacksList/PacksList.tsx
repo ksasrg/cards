@@ -1,44 +1,46 @@
 import Button from "@mui/material/Button/Button";
 import Container from "@mui/material/Container/Container";
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { Navigate, useLocation, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
-import { ChangeEvent, useEffect } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { packsThunks } from "../packs.slice";
 import { PacksTable } from "../PacksTable/PacksTable";
-import Pagination from "@mui/material/Pagination/Pagination";
-import { RouterPaths } from "common/router/router";
+import { PacksPagination } from "../PacksPagination/PacksPagination";
+import resetIcon from "assets/resetfilter.svg";
 
 export function PacksList() {
   const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams);
-  const location = useLocation();
-  const isAuthorized = useAppSelector((state) => state.auth.isAuthorized);
-
-  const pageCount = useAppSelector((state) => state.packs.packs.pageCount);
-  const page = useAppSelector((state) => state.packs.packs.page);
-  const cardPacksTotalCount = useAppSelector(
-    (state) => state.packs.packs.cardPacksTotalCount
-  );
-
-  const totalPages = Math.ceil(cardPacksTotalCount / pageCount);
+  const [page, setPage] = useState<number>();
+  const [pageCount, setPageCount] = useState<number>();
 
   useEffect(() => {
-    if (isAuthorized) dispatch(packsThunks.get(params));
-  }, [dispatch]);
+    dispatch(packsThunks.get(params));
+  }, [dispatch, page, pageCount]);
 
   const onPageChangeHandler = (event: ChangeEvent<unknown>, page: number) => {
     setSearchParams((prev) => {
       prev.set("page", page.toString());
       return prev;
     });
-    dispatch(packsThunks.get({ ...params, page }));
+    setPage(page);
   };
 
-  if (!isAuthorized) {
-    return <Navigate to={RouterPaths.signin} state={{ from: location }} />;
-  }
+  const onPageCountChangeHandler = (event: ChangeEvent<HTMLSelectElement>) => {
+    const pageCount = event.currentTarget.value;
+    setSearchParams((prev) => {
+      prev.set("pageCount", pageCount.toString());
+      return prev;
+    });
+    setPageCount(+pageCount);
+  };
+
+  const resetFilterHandler = () => {
+    setSearchParams();
+    setPage(1);
+  };
 
   return (
     <Container style={{ maxWidth: "1048px" }}>
@@ -74,8 +76,17 @@ export function PacksList() {
         <div>search</div>
         <div>filter</div>
         <div>number of cards</div>
-        <div>reset</div>
+        <img
+          src={resetIcon}
+          alt="Reset filter"
+          onClick={resetFilterHandler}
+          style={{ cursor: "pointer" }}
+        />
       </div>
+      <PacksPagination
+        onPageChange={onPageChangeHandler}
+        onPageCountChange={onPageCountChangeHandler}
+      />
       <PacksTable />
       <div
         style={{
@@ -83,15 +94,7 @@ export function PacksList() {
           // display: 'flex',
           // justifyContent: 'space-between'
         }}
-      >
-        <Pagination
-          count={totalPages || 0}
-          variant="outlined"
-          shape="rounded"
-          page={page}
-          onChange={onPageChangeHandler}
-        />
-      </div>
+      ></div>
     </Container>
   );
 }

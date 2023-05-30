@@ -7,6 +7,7 @@ import Profile from "features/auth/Profile/Profile";
 import { CheckEmail } from "features/auth/CheckEmail/CheckEmail";
 import { SetPass } from "features/auth/SetPass/SetPass";
 import { PacksList } from "features/packs/PacksList/PacksList";
+import { AuthRedirect } from "features/auth/AuthRedirect/AuthRedirect";
 
 export const RouterPaths = {
   main: "/",
@@ -24,7 +25,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: RouterPaths.main,
-        element: <PacksList />,
+        element: (
+          <AuthRedirect>
+            <PacksList />
+          </AuthRedirect>
+        ),
       },
       {
         path: RouterPaths.signup,
@@ -40,7 +45,11 @@ export const router = createBrowserRouter([
       },
       {
         path: RouterPaths.profile,
-        element: <Profile />,
+        element: (
+          <AuthRedirect>
+            <Profile />
+          </AuthRedirect>
+        ),
       },
       {
         path: RouterPaths.checkemail,
