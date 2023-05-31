@@ -3,11 +3,12 @@ import Container from "@mui/material/Container/Container";
 import { useAppDispatch } from "app/hooks";
 import { useSearchParams } from "react-router-dom";
 
-import { ChangeEvent, useEffect } from "react";
+import { ChangeEvent, useEffect, useMemo } from "react";
 import { packsThunks } from "../packs.slice";
 import { PacksTable } from "../PacksTable/PacksTable";
 import { PacksPagination } from "../PacksPagination/PacksPagination";
 import resetIcon from "assets/resetfilter.svg";
+import { Search } from "../Search/Search";
 
 export function PacksList() {
   const dispatch = useAppDispatch();
@@ -27,12 +28,13 @@ export function PacksList() {
   };
 
   const onPageCountChangeHandler = (event: ChangeEvent<HTMLSelectElement>) => {
-    const pageCount = +event.currentTarget.value;
+    const pageCount = event.currentTarget.value;
     setSearchParams((prev) => {
+      prev.delete("page");
       prev.set("pageCount", pageCount.toString());
       return prev;
     });
-    dispatch(packsThunks.get({ ...params, pageCount }));
+    dispatch(packsThunks.get({ ...params, pageCount: +pageCount }));
   };
 
   const onAddPackHandler = () => {
@@ -40,16 +42,22 @@ export function PacksList() {
     dispatch(packsThunks.create(payload))
       .unwrap()
       .then(() => {
-        setSearchParams((prev) => {
-          prev.delete("page");
-          return prev;
-        });
+        setSearchParams({ pageCount: params.pageCount });
       });
   };
 
+  const onSearchHandler = (packName: string) => {
+    setSearchParams((prev) => {
+      prev.delete("page");
+      prev.set("packName", packName);
+      return prev;
+    });
+    dispatch(packsThunks.get({ ...params, packName, page: undefined }));
+  };
+
   const resetFilterHandler = () => {
-    setSearchParams();
-    dispatch(packsThunks.get({}));
+    setSearchParams({ pageCount: params.pageCount });
+    dispatch(packsThunks.get({ pageCount: +params.pageCount }));
   };
 
   return (
@@ -81,7 +89,9 @@ export function PacksList() {
           justifyContent: "space-between",
         }}
       >
-        <div>search</div>
+        <div>
+          <Search onSearch={onSearchHandler} value={params.packName || ""} />
+        </div>
         <div>filter</div>
         <div>number of cards</div>
         <img

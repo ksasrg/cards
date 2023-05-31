@@ -1,5 +1,4 @@
 import Container from "@mui/material/Container/Container";
-import Toolbar from "@mui/material/Toolbar/Toolbar";
 import Button from "@mui/material/Button/Button";
 import logo from "assets/logo.svg";
 import { RouterPaths } from "common/router/router";
@@ -8,7 +7,7 @@ import AppBar from "@mui/material/AppBar/AppBar";
 import { useAppSelector } from "app/hooks";
 import { Link, useNavigate } from "react-router-dom";
 
-export function Header() {
+export const Header = () => {
   const navigate = useNavigate();
   const name = useAppSelector((state) => state.auth.profile?.name);
 
@@ -69,4 +68,4 @@ export function Header() {
       </Container>
     </AppBar>
   );
-}
+};

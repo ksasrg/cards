@@ -16,7 +16,7 @@ export const PacksPagination = (props: PropsType) => {
     (state) => state.packs.list.cardPacksTotalCount
   );
 
-  const totalPages = Math.ceil(cardPacksTotalCount / pageCount);
+  const totalPages = Math.ceil(cardPacksTotalCount / +pageCount);
 
   return (
     <div style={{ display: "flex", alignItems: "center", marginTop: "20px" }}>
