@@ -14,7 +14,14 @@ export function Avatar(props: PropsType) {
     <img
       src={avatar || noavatar}
       alt="avatar"
-      style={{ borderRadius: "50%", width: size, height: size, marginTop }}
+      style={{
+        borderRadius: "50%",
+        width: size,
+        height: size,
+        margin: "0 auto",
+        marginTop,
+        display: "block",
+      }}
     />
   );
 }
