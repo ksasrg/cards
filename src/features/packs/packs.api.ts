@@ -2,23 +2,11 @@ import { instance } from "common/api/common.api";
 
 export const packsApi = {
   getPacks: (payload: ArgGetPacks) => {
-    const queries = [];
-    let query = "";
-
-    for (const key in payload) {
-      queries.push(`${key}=${payload[key as keyof ArgGetPacks]}`);
-    }
-
-    if (queries.length) {
-      query = "?" + queries.join("&");
-    }
-
-    console.log(query); // TODO  console.log
-    return instance.get(`cards/pack${query}`);
+    return instance.get(`cards/pack`, { params: { ...payload } });
   },
-  create: () => {
+  create: (payload: ArgCreateCardPack) => {
     return instance.post("cards/pack", {
-      cardsPack: { name: "test1234", deckCover: "", private: false },
+      cardsPack: payload,
     });
   },
   delete: (packId: string) => {
@@ -27,6 +15,17 @@ export const packsApi = {
 };
 
 export type ArgGetPacks = {
-  page?: number;
-  pageCount?: string;
+  page?: string | number;
+  pageCount?: number;
+  packName?: string;
+  min?: number;
+  max?: number;
+  sortPacks?: string;
+  user_id?: string;
 };
+
+export interface ArgCreateCardPack {
+  name: string;
+  deckCover: string;
+  private: boolean;
+}

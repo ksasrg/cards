@@ -16,25 +16,40 @@ export function PacksList() {
 
   useEffect(() => {
     dispatch(packsThunks.get(params));
-  }, [dispatch, params.page, params.pageCount]);
+  }, [dispatch]);
 
   const onPageChangeHandler = (event: ChangeEvent<unknown>, page: number) => {
     setSearchParams((prev) => {
       prev.set("page", page.toString());
       return prev;
     });
+    dispatch(packsThunks.get({ ...params, page }));
   };
 
   const onPageCountChangeHandler = (event: ChangeEvent<HTMLSelectElement>) => {
-    const pageCount = event.currentTarget.value;
+    const pageCount = +event.currentTarget.value;
     setSearchParams((prev) => {
       prev.set("pageCount", pageCount.toString());
       return prev;
     });
+    dispatch(packsThunks.get({ ...params, pageCount }));
+  };
+
+  const onAddPackHandler = () => {
+    const payload = { name: "test1234", deckCover: "", private: false };
+    dispatch(packsThunks.create(payload))
+      .unwrap()
+      .then(() => {
+        setSearchParams((prev) => {
+          prev.delete("page");
+          return prev;
+        });
+      });
   };
 
   const resetFilterHandler = () => {
     setSearchParams();
+    dispatch(packsThunks.get({}));
   };
 
   return (
@@ -56,9 +71,7 @@ export function PacksList() {
         >
           Packs list
         </div>
-        <Button onClick={() => dispatch(packsThunks.create())}>
-          Add new pack
-        </Button>
+        <Button onClick={onAddPackHandler}>Add new pack</Button>
       </div>
 
       <div
@@ -83,13 +96,6 @@ export function PacksList() {
         onPageCountChange={onPageCountChangeHandler}
       />
       <PacksTable />
-      <div
-        style={{
-          marginTop: "36px",
-          // display: 'flex',
-          // justifyContent: 'space-between'
-        }}
-      ></div>
     </Container>
   );
 }

@@ -9,13 +9,13 @@ import { useSearchParams } from "react-router-dom";
 
 export function PacksTable() {
   const dispatch = useAppDispatch();
-  const packs = useAppSelector((state) => state.packs.packs.cardPacks);
+  const packs = useAppSelector((state) => state.packs.list.cardPacks);
   const userId = useAppSelector((state) => state.auth.profile?._id);
   const [searchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams);
 
   const deleteHandler = (packId: string) => {
-    dispatch(packsThunks.deletePack({ packId, params }));
+    dispatch(packsThunks.deletePack({ packId }));
   };
 
   const mappedRows = packs.map((p) => {

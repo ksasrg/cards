@@ -1,26 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAppAsyncThunk } from "common/utils/create-app-async-thunk";
-import { ArgGetPacks, packsApi } from "./packs.api";
+import { ArgCreateCardPack, ArgGetPacks, packsApi } from "./packs.api";
+
+const initialState = {
+  list: {
+    cardPacks: [] as CardPack[],
+    page: 0,
+    pageCount: 0,
+    cardPacksTotalCount: 0,
+    minCardsCount: 0,
+    maxCardsCount: 0,
+    token: "",
+    tokenDeathTime: 0,
+  },
+};
 
 export const slice = createSlice({
   name: "packs",
-  initialState: {
-    packs: {
-      cardPacks: [] as CardPack[],
-      page: 0,
-      pageCount: 0,
-      cardPacksTotalCount: 0,
-      minCardsCount: 0,
-      maxCardsCount: 0,
-      token: "",
-      tokenDeathTime: 0,
-    },
-  },
-
+  initialState,
   reducers: {},
   extraReducers(builder) {
     builder.addCase(get.fulfilled, (state, action) => {
-      state.packs = { ...action.payload };
+      state.list = { ...action.payload };
     });
   },
 });
@@ -30,7 +31,21 @@ const get = createAppAsyncThunk<GetCardPack, ArgGetPacks>(
   async (arg, thunkAPI) => {
     try {
       const res = await packsApi.getPacks(arg);
-      console.log(res.data); // TODO
+      return res.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+const deletePack = createAppAsyncThunk<DeleteCardPack, { packId: string }>(
+  "packs/delete-pack",
+  async (arg, thunkAPI) => {
+    try {
+      const res = await packsApi.delete(arg.packId);
+
+      const { pageCount } = thunkAPI.getState().packs.list;
+      await thunkAPI.dispatch(get({ pageCount }));
 
       return res.data;
     } catch (error) {
@@ -39,28 +54,14 @@ const get = createAppAsyncThunk<GetCardPack, ArgGetPacks>(
   }
 );
 
-// TODO types GetCardPack
-const deletePack = createAppAsyncThunk<
-  GetCardPack,
-  { packId: string; params: ArgGetPacks }
->("packs/delete-pack", async (arg, thunkAPI) => {
-  try {
-    const res = await packsApi.delete(arg.packId);
-    await thunkAPI.dispatch(get(arg.params));
-    return res.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error);
-  }
-});
-
-// TODO types GetCardPack
-const create = createAppAsyncThunk<GetCardPack, void>(
+const create = createAppAsyncThunk<CreateCardPack, ArgCreateCardPack>(
   "packs/create-pack",
   async (arg, thunkAPI) => {
     try {
-      const res = await packsApi.create();
+      const res = await packsApi.create(arg);
 
-      await thunkAPI.dispatch(get({})); // TODO query
+      const { pageCount } = thunkAPI.getState().packs.list;
+      await thunkAPI.dispatch(get({ pageCount }));
 
       return res.data;
     } catch (error) {
@@ -76,6 +77,18 @@ export interface GetCardPack {
   cardPacksTotalCount: number;
   minCardsCount: number;
   maxCardsCount: number;
+  token: string;
+  tokenDeathTime: number;
+}
+
+export interface CreateCardPack {
+  newCardsPack: CardPack;
+  token: string;
+  tokenDeathTime: number;
+}
+
+export interface DeleteCardPack {
+  deletedCardsPack: CardPack;
   token: string;
   tokenDeathTime: number;
 }

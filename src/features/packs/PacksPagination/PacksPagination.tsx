@@ -9,12 +9,13 @@ type PropsType = {
 
 export const PacksPagination = (props: PropsType) => {
   const { onPageChange, onPageCountChange } = props;
-  const page = useAppSelector((state) => state.packs.packs.page);
-  const pageCount = useAppSelector((state) => state.packs.packs.pageCount);
+  const page = useAppSelector((state) => state.packs.list.page);
+  const pageCount = useAppSelector((state) => state.packs.list.pageCount);
   const isLoading = useAppSelector((state) => state.app.isLoading);
   const cardPacksTotalCount = useAppSelector(
-    (state) => state.packs.packs.cardPacksTotalCount
+    (state) => state.packs.list.cardPacksTotalCount
   );
+
   const totalPages = Math.ceil(cardPacksTotalCount / pageCount);
 
   return (
