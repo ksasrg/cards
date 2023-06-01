@@ -25,49 +25,41 @@ export function PacksList() {
 
   useEffect(() => {
     dispatch(packsThunks.get());
-  }, [dispatch, page, pageCount, packName, min, max, user_id, sortPacks]);
+
+    const searchParams = {} as Record<string, string>;
+    min && (searchParams["min"] = min.toString());
+    max && (searchParams["max"] = max.toString());
+    page && (searchParams["page"] = page.toString());
+    user_id && (searchParams["user_id"] = user_id.toString());
+    packName && (searchParams["packName"] = packName.toString());
+    pageCount && (searchParams["pageCount"] = pageCount.toString());
+    sortPacks && (searchParams["sortPacks"] = sortPacks.toString());
+    setSearchParams(searchParams);
+  }, [dispatch, min, max, page, pageCount, packName, user_id, sortPacks]);
 
   const onPageChangeHandler = (event: ChangeEvent<unknown>, page: number) => {
-    setSearchParams((prev) => {
-      prev.set("page", page.toString());
-      return prev;
-    });
     dispatch(packsActions.setQuery({ query: { page } }));
   };
 
   const onPageCountChangeHandler = (event: ChangeEvent<HTMLSelectElement>) => {
     const pageCount = +event.currentTarget.value;
-    setSearchParams((prev) => {
-      prev.delete("page");
-      prev.set("pageCount", pageCount.toString());
-      return prev;
-    });
     dispatch(packsActions.setQuery({ query: { pageCount } }));
   };
 
   const onAddPackHandler = () => {
     const payload = { name: "test1234", deckCover: "", private: false };
-    dispatch(packsThunks.create(payload))
-      .unwrap()
-      .then(() => {
-        setSearchParams({ pageCount: params.pageCount });
-      });
+    dispatch(packsThunks.create(payload));
   };
 
   const onSearchHandler = (packName: string) => {
-    setSearchParams((prev) => {
-      prev.delete("page");
-      prev.set("packName", packName);
-      return prev;
-    });
-    dispatch(packsActions.setQuery({ query: { packName } }));
+    dispatch(packsActions.setQuery({ query: { packName, page: 1 } }));
   };
 
   const resetFilterHandler = () => {
-    setSearchParams({ pageCount: params.pageCount });
     dispatch(
       packsActions.setQuery({
         query: {
+          // pageCount not modifying
           page: undefined,
           packName: undefined,
           sortPacks: undefined,

@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { createAppAsyncThunk } from "common/utils/create-app-async-thunk";
 import { ArgCreateCardPack, ArgGetPacks, packsApi } from "./packs.api";
 
-type PackListQuery = {
+export type PackListQuery = {
   page?: number | undefined;
   pageCount?: number | undefined;
   packName?: string | undefined;
@@ -33,17 +33,15 @@ export const slice = createSlice({
     setQuery: (state, action: PayloadAction<{ query: PackListQuery }>) => {
       state.query = { ...state.query, ...action.payload.query };
     },
-    resetQuery: (state, action: PayloadAction<void>) => {
-      state.query = {};
-    },
   },
   extraReducers(builder) {
     builder
       .addCase(get.fulfilled, (state, action) => {
         state.list = { ...action.payload };
+        state.query.page && (state.query.page = action.payload.page); // TODO remember why
       })
       .addCase(create.fulfilled, (state, action) => {
-        state.query.page = 1;
+        state.query = { pageCount: state.query.pageCount };
       });
   },
 });
@@ -80,7 +78,7 @@ const create = createAppAsyncThunk<CreateCardPack, ArgCreateCardPack>(
     try {
       const res = await packsApi.create(arg);
 
-      const page = thunkAPI.getState().packs.query.page;
+      const page = thunkAPI.getState().packs.list.page;
       if (page === 1) await thunkAPI.dispatch(get({ page: 1 }));
 
       return res.data;
