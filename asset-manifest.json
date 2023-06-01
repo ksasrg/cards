@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/cards/static/css/main.1fc37399.css",
-    "main.js": "/cards/static/js/main.eed3a827.js",
+    "main.css": "/cards/static/css/main.dde6d8ae.css",
+    "main.js": "/cards/static/js/main.e9a557c6.js",
     "static/js/787.8517b185.chunk.js": "/cards/static/js/787.8517b185.chunk.js",
     "static/media/noavatar.png": "/cards/static/media/noavatar.fbfe03c21b01b8a17b01.png",
     "static/media/mail.svg": "/cards/static/media/mail.836e246556dd50d082cf05d8309583a6.svg",
@@ -9,16 +9,15 @@
     "static/media/resetfilter.svg": "/cards/static/media/resetfilter.c4793bbcf90fe29bcb7331d236d7b6de.svg",
     "static/media/trash.svg": "/cards/static/media/trash.bd70db32d2cf2e85278850c42a045cbc.svg",
     "static/media/editIconMini.svg": "/cards/static/media/editIconMini.80237abf8b3a40342bca9b516ae5808a.svg",
-    "static/media/editIcon.svg": "/cards/static/media/editIcon.11c8e1c42f9a4eae81897d68e091eb42.svg",
     "static/media/teacher.svg": "/cards/static/media/teacher.98ddc8f9376c79b05bb474310295b927.svg",
     "static/media/search-icon.svg": "/cards/static/media/search-icon.d2a207e7c31b526abf1c956eb4630f96.svg",
     "index.html": "/cards/index.html",
-    "main.1fc37399.css.map": "/cards/static/css/main.1fc37399.css.map",
-    "main.eed3a827.js.map": "/cards/static/js/main.eed3a827.js.map",
+    "main.dde6d8ae.css.map": "/cards/static/css/main.dde6d8ae.css.map",
+    "main.e9a557c6.js.map": "/cards/static/js/main.e9a557c6.js.map",
     "787.8517b185.chunk.js.map": "/cards/static/js/787.8517b185.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.1fc37399.css",
-    "static/js/main.eed3a827.js"
+    "static/css/main.dde6d8ae.css",
+    "static/js/main.e9a557c6.js"
   ]
 }
