@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useMemo, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 type Props = {
   onSearch: (text: string) => void;
@@ -9,11 +9,7 @@ export const Search = (props: Props) => {
   const [text, setText] = useState("");
   const [timerId, setTimerId] = useState<NodeJS.Timeout>();
 
-  //   useEffect(() => {
-  //     setText(props.value);
-  //   }, [props.value]);
-
-  useMemo(() => {
+  useEffect(() => {
     setText(props.value);
   }, [props.value]);
 

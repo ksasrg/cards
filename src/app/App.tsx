@@ -9,16 +9,15 @@ import { Header } from "./Header/Header";
 import { ProgressLine } from "./ProgressLine/ProgressLine";
 import { PackListQuery, packsActions } from "features/packs/packs.slice";
 
-function App() {
+export function App() {
   const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
-  const params = Object.fromEntries(searchParams);
-  const isAppInitialized = useAppSelector(
-    (state) => state.app.isAppInitialized
-  );
 
-  // TODO delete authApi.update
+  const isAppInit = useAppSelector((state) => state.app.isAppInitialized);
+
   useEffect(() => {
+    const params = Object.fromEntries(searchParams);
+
     const query: PackListQuery = {};
     params.min && (query["min"] = Number(params.min));
     params.max && (query["max"] = Number(params.max));
@@ -29,30 +28,19 @@ function App() {
 
     dispatch(packsActions.setQuery({ query }));
 
-    dispatch(authThunks.me()); // TODO delete authApi.update
+    dispatch(authThunks.me());
+  }, [dispatch]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    // authApi.update({
-    //   name: "ghfgh",
-    //   avatar:
-    //     "https://sun1-55.userapi.com/impg/GQ-N3w5RkqB2S1xckB489iiljNz96cZcEnvS9w/G6AQuF05GYA.jpg?size=1280x960&quality=95&sign=ff9b6d958d1ef5112869cf833001512c&type=album",
-    // });
-    // authApi.update({
-    //   avatar: "",
-    // });
-  }, [dispatch]);
-
-  if (!isAppInitialized) {
+  if (isAppInit) {
+    return (
+      <div className="App">
+        <Header />
+        <ProgressLine />
+        <AppSnackbar />
+        <Outlet />
+      </div>
+    );
+  } else {
     return <Preloader />;
   }
-
-  return (
-    <div className="App">
-      <Header />
-      <ProgressLine />
-      <AppSnackbar />
-      <Outlet />
-    </div>
-  );
 }
-
-export default App;

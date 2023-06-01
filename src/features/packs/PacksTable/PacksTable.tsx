@@ -5,14 +5,11 @@ import teacher from "assets/teacher.svg";
 import editIconMini from "assets/editIconMini.svg";
 import trash from "assets/trash.svg";
 import { packsThunks } from "../packs.slice";
-import { useSearchParams } from "react-router-dom";
 
 export function PacksTable() {
   const dispatch = useAppDispatch();
   const packs = useAppSelector((state) => state.packs.list.cardPacks);
   const userId = useAppSelector((state) => state.auth.profile?._id);
-  const [searchParams] = useSearchParams();
-  const params = Object.fromEntries(searchParams);
 
   const deleteHandler = (packId: string) => {
     dispatch(packsThunks.deletePack({ packId }));

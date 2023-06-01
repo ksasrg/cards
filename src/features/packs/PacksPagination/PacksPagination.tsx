@@ -1,14 +1,10 @@
 import Pagination from "@mui/material/Pagination/Pagination";
-import { useAppSelector } from "app/hooks";
+import { useAppDispatch, useAppSelector } from "app/hooks";
 import { ChangeEvent } from "react";
+import { packsActions } from "../packs.slice";
 
-type PropsType = {
-  onPageChange: (event: ChangeEvent<unknown>, page: number) => void;
-  onPageCountChange: (event: ChangeEvent<HTMLSelectElement>) => void;
-};
-
-export const PacksPagination = (props: PropsType) => {
-  const { onPageChange, onPageCountChange } = props;
+export const PacksPagination = () => {
+  const dispatch = useAppDispatch();
   const page = useAppSelector((state) => state.packs.list.page);
   const pageCount = useAppSelector((state) => state.packs.list.pageCount);
   const isLoading = useAppSelector((state) => state.app.isLoading);
@@ -18,6 +14,15 @@ export const PacksPagination = (props: PropsType) => {
 
   const totalPages = Math.ceil(cardPacksTotalCount / +pageCount);
 
+  const onPageChangeHandler = (event: ChangeEvent<unknown>, page: number) => {
+    dispatch(packsActions.setQuery({ query: { page } }));
+  };
+
+  const onPageCountChangeHandler = (event: ChangeEvent<HTMLSelectElement>) => {
+    const pageCount = +event.currentTarget.value;
+    dispatch(packsActions.setQuery({ query: { pageCount } }));
+  };
+
   return (
     <div style={{ display: "flex", alignItems: "center", marginTop: "20px" }}>
       <Pagination
@@ -25,7 +30,7 @@ export const PacksPagination = (props: PropsType) => {
         variant="outlined"
         shape="rounded"
         page={page}
-        onChange={onPageChange}
+        onChange={onPageChangeHandler}
         sx={{ marginRight: "15px" }}
       />
       Show
@@ -33,7 +38,7 @@ export const PacksPagination = (props: PropsType) => {
         name=""
         id=""
         style={{ margin: "0 15px" }}
-        onChange={onPageCountChange}
+        onChange={onPageCountChangeHandler}
         value={pageCount}
         disabled={isLoading}
       >
