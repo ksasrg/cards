@@ -22,6 +22,7 @@ export function App() {
     params.min && (query["min"] = Number(params.min));
     params.max && (query["max"] = Number(params.max));
     params.page && (query["page"] = Number(params.page));
+    params.user_id && (query["user_id"] = params.user_id);
     params.packName && (query["packName"] = params.packName);
     params.sortPacks && (query["sortPacks"] = params.sortPacks);
     params.pageCount && (query["pageCount"] = Number(params.pageCount));
