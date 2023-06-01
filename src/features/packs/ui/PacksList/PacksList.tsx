@@ -7,6 +7,7 @@ import { PacksPagination } from "../../components/PacksPagination/PacksPaginatio
 import resetIcon from "assets/resetfilter.svg";
 import { useFetchPackList } from "../../hooks/useFetchPackList";
 import { SearchPacks } from "../../components/SearchPacks/SearchPacks";
+import { PackFilter } from "features/packs/components/PackFilter/PackFilter";
 
 export function PacksList() {
   const dispatch = useAppDispatch();
@@ -66,7 +67,7 @@ export function PacksList() {
         <div>
           <SearchPacks />
         </div>
-        <div>filter</div>
+        <PackFilter />
         <div>number of cards</div>
         <img
           src={resetIcon}
