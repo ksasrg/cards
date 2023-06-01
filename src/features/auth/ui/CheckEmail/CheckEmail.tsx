@@ -24,16 +24,7 @@ export function CheckEmail() {
     <AuthCard>
       <h1>Check Email</h1>
       <img src={mailsvg} alt="" style={{ marginTop: "28px" }} />
-      <div
-        style={{
-          fontWeight: "400",
-          fontSize: "14px",
-          lineHeight: "24px",
-          color: "#000000",
-          opacity: "0.5",
-          marginTop: "31px",
-        }}
-      >
+      <div className="auth_text">
         We’ve sent an Email with instructions to{" "}
         {location.state?.email || "<no_email>"}
       </div>

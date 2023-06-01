@@ -1,4 +1,3 @@
-import React from "react";
 import { AuthCard } from "../../components/AuthCard/AuthCard";
 import { EmailField } from "../../components/EmailField/EmailField";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -21,7 +20,7 @@ const defaultValues = {
   </div>`,
 };
 
-function ForgotPass() {
+export function ForgotPass() {
   const dispatch = useAppDispatch();
   const checkEmail = useAppSelector((state) => state.auth.checkEmail);
 
@@ -43,27 +42,15 @@ function ForgotPass() {
       <h1>Forgot your password?</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <EmailField form={form} />
-        <p style={{ marginTop: "31px" }}>
+        <div className="auth_text">
           Enter your email address and we will send you further instructions
-        </p>
+        </div>
         <Button size="large" type="submit" sx={{ marginTop: "68px" }}>
           Send Instructions
         </Button>
-        <div style={{ marginTop: "31px" }}>Did you remember your password?</div>
-        <Link
-          to={RouterPaths.signin}
-          style={{
-            color: "#366EFF",
-            display: "block",
-            marginTop: "11px",
-            fontSize: "20px",
-          }}
-        >
-          Try logging in
-        </Link>
+        <div className="auth_text">Did you remember your password?</div>
+        <Link to={RouterPaths.signin}>Try logging in</Link>
       </form>
     </AuthCard>
   );
 }
-
-export default ForgotPass;

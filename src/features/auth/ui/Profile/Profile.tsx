@@ -7,7 +7,7 @@ import Button from "@mui/material/Button/Button";
 import { Avatar } from "../../../../common/components/Avatar/Avatar";
 import { Editable } from "../../components/Editable/Editable";
 
-function Profile() {
+export function Profile() {
   const dispatch = useAppDispatch();
 
   const email = useAppSelector((state) => state.auth.profile?.email);
@@ -52,5 +52,3 @@ function Profile() {
     </>
   );
 }
-
-export default Profile;

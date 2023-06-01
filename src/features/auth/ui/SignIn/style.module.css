@@ -1,0 +1,7 @@
+.checkbox {
+  margin-top: 24px;
+}
+.checkbox label {
+  cursor: pointer;
+  vertical-align: middle;
+}

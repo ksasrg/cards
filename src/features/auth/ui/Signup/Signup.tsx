@@ -17,7 +17,7 @@ const defaultValues = {
   confirmPassword: process.env.REACT_APP_PASS || "",
 };
 
-function Signup() {
+export function Signup() {
   const dispatch = useAppDispatch();
 
   const form = useForm<ArgRegister>({ defaultValues });
@@ -39,20 +39,8 @@ function Signup() {
           Sign Up
         </Button>
       </form>
-      <div style={{ marginTop: "31px" }}>Already have an account?</div>
-      <Link
-        to={RouterPaths.signin}
-        style={{
-          color: "#366EFF",
-          display: "block",
-          marginTop: "11px",
-          fontSize: "20px",
-        }}
-      >
-        Sign In
-      </Link>
+      <div className="auth_text">Already have an account?</div>
+      <Link to={RouterPaths.signin}>Sign In</Link>
     </AuthCard>
   );
 }
-
-export default Signup;

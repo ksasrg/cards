@@ -8,8 +8,8 @@ import Button from "@mui/material/Button/Button";
 import { RouterPaths } from "common/router/router";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, Navigate, useLocation } from "react-router-dom";
-import FormControlLabel from "@mui/material/FormControlLabel/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox/Checkbox";
+import s from "./style.module.css";
 
 // TODO delete default
 const defaultValues: ArgLogin = {
@@ -31,15 +31,12 @@ export function SignIn() {
     dispatch(authThunks.login(data));
   };
 
+  const backlink =
+    location.state?.from.pathname + location.state?.from.search ||
+    RouterPaths.main;
+
   if (isAuthorized) {
-    return (
-      <Navigate
-        to={
-          location.state?.from.pathname + location.state?.from.search ||
-          RouterPaths.main
-        }
-      />
-    );
+    return <Navigate to={backlink} />;
   }
 
   return (
@@ -48,44 +45,17 @@ export function SignIn() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <EmailField form={form} />
         <PassField form={form} />
-        <div>
-          <FormControlLabel
-            control={<Checkbox {...register("rememberMe")} />}
-            label="Remember me"
-            style={{
-              marginTop: "24px",
-              // float: "left"
-            }}
-          />
+        <div className={s.checkbox}>
+          <Checkbox {...register("rememberMe")} id="rememberMe" />
+          <label htmlFor="rememberMe">Remember me</label>
         </div>
-
-        <Link
-          to={RouterPaths.forgot}
-          style={{
-            color: "#366EFF",
-            display: "block",
-            marginTop: "11px",
-            fontSize: "20px",
-          }}
-        >
-          Forgot Password?
-        </Link>
+        <Link to={RouterPaths.forgot}>Forgot Password?</Link>
         <Button size="large" type="submit" sx={{ marginTop: "68px" }}>
           Sign In
         </Button>
       </form>
-      <div style={{ marginTop: "31px" }}>Don't have an account?</div>
-      <Link
-        to={RouterPaths.signup}
-        style={{
-          color: "#366EFF",
-          display: "block",
-          marginTop: "11px",
-          fontSize: "20px",
-        }}
-      >
-        Sign Up
-      </Link>
+      <div className="auth_text">Don't have an account?</div>
+      <Link to={RouterPaths.signup}>Sign Up</Link>
     </AuthCard>
   );
 }
