@@ -1,5 +1,5 @@
 import Signup from "features/auth/ui/Signup/Signup";
-import { createBrowserRouter } from "react-router-dom";
+import { createHashRouter } from "react-router-dom";
 import { SignIn } from "features/auth/ui/SignIn/SignIn";
 import ForgotPass from "features/auth/ui/ForgotPass/ForgotPass";
 import { App } from "app/App";
@@ -19,7 +19,8 @@ export const RouterPaths = {
   setpass: "/set-new-password/:token",
 };
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
+  // export const router = createBrowserRouter([
   {
     element: <App />,
     children: [
