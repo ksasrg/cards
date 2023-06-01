@@ -4,7 +4,7 @@ import s from "./style.module.css";
 import teacher from "assets/teacher.svg";
 import editIconMini from "assets/editIconMini.svg";
 import trash from "assets/trash.svg";
-import { packsThunks } from "../packs.slice";
+import { packsThunks } from "../../packs.slice";
 
 export function PacksTable() {
   const dispatch = useAppDispatch();

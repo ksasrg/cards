@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { packsActions } from "../packs.slice";
-import { Search } from "../Search/Search";
+import { packsActions } from "../../packs.slice";
+import { Search } from "../../../../common/components/Search/Search";
 
 export const SearchPacks = () => {
   const dispatch = useAppDispatch();

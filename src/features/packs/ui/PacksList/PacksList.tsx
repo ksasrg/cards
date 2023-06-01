@@ -1,26 +1,17 @@
 import Button from "@mui/material/Button/Button";
 import Container from "@mui/material/Container/Container";
 import { useAppDispatch } from "app/hooks";
-import { packsActions, packsThunks } from "../packs.slice";
-import { PacksTable } from "../PacksTable/PacksTable";
-import { PacksPagination } from "../PacksPagination/PacksPagination";
+import { packsActions, packsThunks } from "../../packs.slice";
+import { PacksTable } from "../../components/PacksTable/PacksTable";
+import { PacksPagination } from "../../components/PacksPagination/PacksPagination";
 import resetIcon from "assets/resetfilter.svg";
-import { useFetchPackList } from "../hooks/useFetchPackList";
-import { SearchPacks } from "../SearchPacks/SearchPacks";
+import { useFetchPackList } from "../../hooks/useFetchPackList";
+import { SearchPacks } from "../../components/SearchPacks/SearchPacks";
 
 export function PacksList() {
   const dispatch = useAppDispatch();
 
   useFetchPackList();
-
-  // const onPageChangeHandler = (event: ChangeEvent<unknown>, page: number) => {
-  //   dispatch(packsActions.setQuery({ query: { page } }));
-  // };
-
-  // const onPageCountChangeHandler = (event: ChangeEvent<HTMLSelectElement>) => {
-  //   const pageCount = +event.currentTarget.value;
-  //   dispatch(packsActions.setQuery({ query: { pageCount } }));
-  // };
 
   const onAddPackHandler = () => {
     const payload = { name: "test1234", deckCover: "", private: false };

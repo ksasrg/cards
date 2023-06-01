@@ -1,11 +1,11 @@
-import { AuthCard } from "../AuthCard/AuthCard";
+import { AuthCard } from "../../components/AuthCard/AuthCard";
 import { Link } from "react-router-dom";
 import { RouterPaths } from "common/router/router";
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { authThunks } from "../auth.slice";
+import { authThunks } from "../../auth.slice";
 import Button from "@mui/material/Button/Button";
-import { Avatar } from "../Avatar/Avatar";
-import { Editable } from "../Editable/Editable";
+import { Avatar } from "../../../../common/components/Avatar/Avatar";
+import { Editable } from "../../components/Editable/Editable";
 
 function Profile() {
   const dispatch = useAppDispatch();

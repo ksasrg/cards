@@ -5,7 +5,7 @@ import { store } from "./app/store";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 import { ThemeProvider } from "@mui/material";
-import { theme } from "common/theme";
+import { theme } from "common/themes/theme";
 import { RouterProvider } from "react-router-dom";
 import { router } from "common/router/router";
 

@@ -1,14 +1,14 @@
-import { authThunks } from "../auth.slice";
+import { authThunks } from "../../auth.slice";
 import { useAppDispatch } from "app/hooks";
 import Button from "@mui/material/Button/Button";
 import { Link } from "react-router-dom";
 import { RouterPaths } from "common/router/router";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { AuthCard } from "../AuthCard/AuthCard";
-import { EmailField } from "../EmailField/EmailField";
-import { PassField } from "../PassField/PassField";
-import { ConfirmPassField } from "../ConfirmPassField/ConfirmPassField";
-import { ArgRegister } from "../auth.api";
+import { AuthCard } from "../../components/AuthCard/AuthCard";
+import { EmailField } from "../../components/EmailField/EmailField";
+import { PassField } from "../../components/PassField/PassField";
+import { ConfirmPassField } from "../../components/ConfirmPassField/ConfirmPassField";
+import { ArgRegister } from "../../auth.api";
 
 // TODO delete default
 const defaultValues = {

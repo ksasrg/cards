@@ -1,11 +1,11 @@
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import { AuthCard } from "../AuthCard/AuthCard";
+import { AuthCard } from "../../components/AuthCard/AuthCard";
 import mailsvg from "assets/mail.svg";
 import Button from "@mui/material/Button/Button";
 import { RouterPaths } from "common/router/router";
 import { useAppDispatch } from "app/hooks";
 import { useEffect } from "react";
-import { authActions } from "../auth.slice";
+import { authActions } from "../../auth.slice";
 
 export function CheckEmail() {
   const location = useLocation();

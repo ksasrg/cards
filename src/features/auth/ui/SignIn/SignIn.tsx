@@ -1,9 +1,9 @@
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { authThunks } from "../auth.slice";
-import { ArgLogin } from "../auth.api";
-import { AuthCard } from "../AuthCard/AuthCard";
-import { EmailField } from "../EmailField/EmailField";
-import { PassField } from "../PassField/PassField";
+import { authThunks } from "../../auth.slice";
+import { ArgLogin } from "../../auth.api";
+import { AuthCard } from "../../components/AuthCard/AuthCard";
+import { EmailField } from "../../components/EmailField/EmailField";
+import { PassField } from "../../components/PassField/PassField";
 import Button from "@mui/material/Button/Button";
 import { RouterPaths } from "common/router/router";
 import { SubmitHandler, useForm } from "react-hook-form";

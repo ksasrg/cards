@@ -1,13 +1,13 @@
-import Signup from "features/auth/Signup/Signup";
+import Signup from "features/auth/ui/Signup/Signup";
 import { createBrowserRouter } from "react-router-dom";
-import { SignIn } from "features/auth/SignIn/SignIn";
-import ForgotPass from "features/auth/ForgotPass/ForgotPass";
+import { SignIn } from "features/auth/ui/SignIn/SignIn";
+import ForgotPass from "features/auth/ui/ForgotPass/ForgotPass";
 import { App } from "app/App";
-import Profile from "features/auth/Profile/Profile";
-import { CheckEmail } from "features/auth/CheckEmail/CheckEmail";
-import { SetPass } from "features/auth/SetPass/SetPass";
-import { PacksList } from "features/packs/PacksList/PacksList";
-import { AuthRedirect } from "features/auth/AuthRedirect/AuthRedirect";
+import Profile from "features/auth/ui/Profile/Profile";
+import { CheckEmail } from "features/auth/ui/CheckEmail/CheckEmail";
+import { SetPass } from "features/auth/ui/SetPass/SetPass";
+import { PacksList } from "features/packs/ui/PacksList/PacksList";
+import { AuthRedirect } from "common/components/AuthRedirect/AuthRedirect";
 
 export const RouterPaths = {
   main: "/",

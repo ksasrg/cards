@@ -1,13 +1,13 @@
 import React from "react";
-import { AuthCard } from "../AuthCard/AuthCard";
-import { EmailField } from "../EmailField/EmailField";
+import { AuthCard } from "../../components/AuthCard/AuthCard";
+import { EmailField } from "../../components/EmailField/EmailField";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { ArgForgot } from "../auth.api";
+import { ArgForgot } from "../../auth.api";
 import Button from "@mui/material/Button/Button";
 import { Link, Navigate } from "react-router-dom";
 import { RouterPaths } from "common/router/router";
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { authThunks } from "../auth.slice";
+import { authThunks } from "../../auth.slice";
 
 const defaultValues = {
   email: process.env.REACT_APP_EMAIL || "",

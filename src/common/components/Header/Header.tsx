@@ -2,7 +2,7 @@ import Container from "@mui/material/Container/Container";
 import Button from "@mui/material/Button/Button";
 import logo from "assets/logo.svg";
 import { RouterPaths } from "common/router/router";
-import { Avatar } from "features/auth/Avatar/Avatar";
+import { Avatar } from "common/components/Avatar/Avatar";
 import AppBar from "@mui/material/AppBar/AppBar";
 import { useAppSelector } from "app/hooks";
 import { Link, useNavigate } from "react-router-dom";
