@@ -3,6 +3,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 type Props = {
   onSearch: (text: string) => void;
   value: string;
+  placeholder: string;
 };
 
 export const Search = (props: Props) => {
@@ -32,7 +33,12 @@ export const Search = (props: Props) => {
 
   return (
     <>
-      <input type="text" value={text} onChange={onChangeHandler} />
+      <input
+        type="text"
+        value={text}
+        onChange={onChangeHandler}
+        placeholder={props.placeholder}
+      />
     </>
   );
 };

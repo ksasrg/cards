@@ -64,9 +64,7 @@ export function PacksList() {
           justifyContent: "space-between",
         }}
       >
-        <div>
-          <SearchPacks />
-        </div>
+        <SearchPacks />
         <PackFilter />
         <div>number of cards</div>
         <img
