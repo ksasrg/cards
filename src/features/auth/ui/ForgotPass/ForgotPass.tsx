@@ -18,7 +18,7 @@ export function ForgotPass() {
     email: process.env.REACT_APP_EMAIL || "",
     message: `<div style="background-color: lime; padding: 15px">
   password recovery link: 
-  <a href='${href}set-new-password/$token$'>link</a>
+  <a href='${href}/set-new-password/$token$'>link</a>
   </div>`,
   };
 
