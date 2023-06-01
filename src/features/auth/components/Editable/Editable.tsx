@@ -1,16 +1,17 @@
 import React, { useState, KeyboardEvent, ChangeEvent } from "react";
-import editIcon from "assets/editIcon.svg";
+import { editIcon } from "./icon";
 import TextField from "@mui/material/TextField/TextField";
 import InputAdornment from "@mui/material/InputAdornment/InputAdornment";
 import Button from "@mui/material/Button/Button";
+import s from "./style.module.css";
 
-type PropsType = {
+type Props = {
   text: string;
   style: React.CSSProperties | undefined;
   onSubmit: (text: string) => void;
 };
 
-export function Editable(props: PropsType) {
+export function Editable(props: Props) {
   const [edit, setEdit] = useState(false);
   const [text, setText] = useState("");
 
@@ -34,56 +35,40 @@ export function Editable(props: PropsType) {
     setText(event.target.value);
   };
 
-  return (
-    <div style={props.style}>
-      {edit ? (
-        <TextField
-          label="Nickname"
-          variant="standard"
-          value={text}
-          onChange={onChangeHandler}
-          onKeyDown={onKeyHandler}
-          autoFocus
-          sx={{
-            width: "100%",
-          }}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="start">
-                <Button
-                  variant="contained"
-                  size="small"
-                  onClick={onSubmitHandler}
-                >
-                  SAVE
-                </Button>
-              </InputAdornment>
-            ),
-          }}
-        />
-      ) : (
-        <div style={{ height: "48px", lineHeight: "48px" }}>
-          <span
-            onDoubleClick={onClickHandler}
-            style={{
-              display: "inline-block",
-              maxWidth: "300px",
-              overflow: "hidden",
-              fontSize: "20px",
-              fontWeight: "500",
-              lineHeight: "24px",
-            }}
-          >
-            {props.text}
-          </span>{" "}
-          <img
-            src={editIcon}
-            alt={"edit"}
-            style={{ verticalAlign: "baseline", cursor: "pointer" }}
-            onClick={onClickHandler}
-          />
-        </div>
-      )}
+  const input = (
+    <TextField
+      label="Nickname"
+      variant="standard"
+      value={text}
+      onChange={onChangeHandler}
+      onKeyDown={onKeyHandler}
+      autoFocus
+      sx={{ width: "100%" }}
+      InputProps={{
+        endAdornment: (
+          <InputAdornment position="start">
+            <Button variant="contained" size="small" onClick={onSubmitHandler}>
+              SAVE
+            </Button>
+          </InputAdornment>
+        ),
+      }}
+    />
+  );
+
+  const username = (
+    <div style={{ height: "48px" }}>
+      <span onDoubleClick={onClickHandler} className={s.nick}>
+        {props.text}
+      </span>
+      <img
+        src={editIcon}
+        alt="edit"
+        className={s.icon}
+        onClick={onClickHandler}
+      />
     </div>
   );
+
+  return <div style={props.style}>{edit ? input : username}</div>;
 }

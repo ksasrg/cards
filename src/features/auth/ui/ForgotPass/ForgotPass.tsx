@@ -5,12 +5,13 @@ import { ArgForgot } from "../../auth.api";
 import Button from "@mui/material/Button/Button";
 import { Link, Navigate } from "react-router-dom";
 import { RouterPaths } from "common/router/router";
-import { useAppDispatch, useAppSelector } from "app/hooks";
+import { useAppDispatch } from "app/hooks";
 import { authThunks } from "../../auth.slice";
+import { useState } from "react";
 
 export function ForgotPass() {
   const dispatch = useAppDispatch();
-  const checkEmail = useAppSelector((state) => state.auth.checkEmail);
+  const [email, setEmail] = useState<string>();
 
   const href = window.location.href.replace(RouterPaths.forgot, "");
 
@@ -26,13 +27,15 @@ export function ForgotPass() {
   const { handleSubmit } = form;
 
   const onSubmit: SubmitHandler<ArgForgot> = (data) => {
-    dispatch(authThunks.forgot(data));
+    dispatch(authThunks.forgot(data))
+      .unwrap()
+      .then(() => {
+        setEmail(data.email);
+      });
   };
 
-  if (checkEmail) {
-    return (
-      <Navigate to={RouterPaths.checkemail} state={{ email: checkEmail }} />
-    );
+  if (email) {
+    return <Navigate to={RouterPaths.checkemail} state={{ email }} />;
   }
 
   return (

@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import {
   ArgLogin,
   ArgRegister,
@@ -17,7 +17,7 @@ const register = createAppAsyncThunk<void, ArgRegister>(
   "auth/register",
   async (arg, thunkAPI) => {
     try {
-      const res = await authApi.register(arg); // TODO  return
+      await authApi.register(arg); // TODO  return
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -87,30 +87,25 @@ const logout = createAppAsyncThunk<LogoutType, void>(
   }
 );
 
-const forgot = createAppAsyncThunk<
-  { data: ForgotType; email: string },
-  ArgForgot
->("auth/forgot", async (arg, thunkAPI) => {
-  try {
-    const res = await authApi.forgot(arg);
-    return { data: res.data, email: arg.email };
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error);
+const forgot = createAppAsyncThunk<ForgotType, ArgForgot>(
+  "auth/forgot",
+  async (arg, thunkAPI) => {
+    try {
+      const res = await authApi.forgot(arg);
+      return res.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
   }
-});
+);
 
 const slice = createSlice({
   name: "auth",
   initialState: {
     profile: null as ProfileType | null,
     isAuthorized: false,
-    checkEmail: "" as string,
   },
-  reducers: {
-    setCheckEmail: (state, action: PayloadAction<{ checkEmail: string }>) => {
-      state.checkEmail = action.payload.checkEmail;
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
       .addCase(login.fulfilled, (state, action) => {
@@ -127,9 +122,6 @@ const slice = createSlice({
       })
       .addCase(update.fulfilled, (state, action) => {
         state.profile = action.payload.profile;
-      })
-      .addCase(forgot.fulfilled, (state, action) => {
-        state.checkEmail = action.payload.email;
       });
   },
 });
