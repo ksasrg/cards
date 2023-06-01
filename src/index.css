@@ -27,3 +27,15 @@ h1 {
   font-size: 26px;
   line-height: 32px;
 }
+
+.container {
+  padding: 0 24px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1048px;
+}
+
+.page {
+  padding-top: 36px;
+  padding-bottom: 70px;
+}

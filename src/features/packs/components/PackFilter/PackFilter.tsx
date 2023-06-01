@@ -23,7 +23,7 @@ export const PackFilter = () => {
 
   return (
     <div>
-      <div className={s.title}>Show packs cards</div>
+      <div className={s.title}>Show card packs</div>
       <div className={s.filter}>
         <div onClick={onMyFilter} className={`${s.button} ${isMy && s.active}`}>
           My

@@ -1,0 +1,17 @@
+.up {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 27px;
+  color: #000000;
+}
+
+.filters {
+  margin-top: 42px;
+  display: flex;
+  justify-content: space-between;
+}

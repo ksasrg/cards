@@ -63,6 +63,7 @@
   padding-left: 10px;
   width: 250px;
   overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .actionsCol {
