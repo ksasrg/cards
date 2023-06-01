@@ -8,21 +8,19 @@ import { RouterPaths } from "common/router/router";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { authThunks } from "../../auth.slice";
 
-const origin = window.location.origin;
-const hash = window.location.hash ? "/#" : "";
-
-const defaultValues = {
-  email: process.env.REACT_APP_EMAIL || "",
-  message: `<div style="background-color: lime; padding: 15px">
-  password recovery link: 
-  <a href='${origin}${hash}/set-new-password/$token$'>
-  link</a>
-  </div>`,
-};
-
 export function ForgotPass() {
   const dispatch = useAppDispatch();
   const checkEmail = useAppSelector((state) => state.auth.checkEmail);
+
+  const href = window.location.href.replace(RouterPaths.forgot, "");
+
+  const defaultValues = {
+    email: process.env.REACT_APP_EMAIL || "",
+    message: `<div style="background-color: lime; padding: 15px">
+  password recovery link: 
+  <a href='${href}set-new-password/$token$'>link</a>
+  </div>`,
+  };
 
   const form = useForm<ArgForgot>({ defaultValues });
   const { handleSubmit } = form;
