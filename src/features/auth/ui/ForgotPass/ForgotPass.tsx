@@ -3,15 +3,14 @@ import { EmailField } from "../../components/EmailField/EmailField";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ArgForgot } from "../../auth.api";
 import Button from "@mui/material/Button/Button";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RouterPaths } from "common/router/router";
 import { useAppDispatch } from "app/hooks";
 import { authThunks } from "../../auth.slice";
-import { useState } from "react";
 
 export function ForgotPass() {
   const dispatch = useAppDispatch();
-  const [email, setEmail] = useState<string>();
+  const navigate = useNavigate();
 
   const href = window.location.href.replace(RouterPaths.forgot, "");
 
@@ -30,13 +29,10 @@ export function ForgotPass() {
     dispatch(authThunks.forgot(data))
       .unwrap()
       .then(() => {
-        setEmail(data.email);
-      });
+        navigate(RouterPaths.checkemail, { state: { email: data.email } });
+      })
+      .catch(() => {});
   };
-
-  if (email) {
-    return <Navigate to={RouterPaths.checkemail} state={{ email }} />;
-  }
 
   return (
     <AuthCard>

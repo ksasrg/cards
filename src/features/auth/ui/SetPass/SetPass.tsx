@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AuthCard } from "../../components/AuthCard/AuthCard";
 import Button from "@mui/material/Button/Button";
 import { PassField } from "../../components/PassField/PassField";
@@ -6,6 +6,7 @@ import { useAppDispatch } from "app/hooks";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { authThunks } from "../../auth.slice";
 import { ArgSetPass } from "../../auth.api";
+import { RouterPaths } from "common/router/router";
 
 const defaultValues = {
   password: process.env.REACT_APP_PASS,
@@ -13,6 +14,7 @@ const defaultValues = {
 
 export function SetPass() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { token } = useParams();
 
   const form = useForm<ArgSetPass>({ defaultValues });
@@ -20,7 +22,12 @@ export function SetPass() {
 
   const onSubmit: SubmitHandler<ArgSetPass> = (data) => {
     data.resetPasswordToken = token || "";
-    dispatch(authThunks.setPass(data));
+    dispatch(authThunks.setPass(data))
+      .unwrap()
+      .then(() => {
+        navigate(RouterPaths.signin);
+      })
+      .catch(() => {});
   };
 
   return (

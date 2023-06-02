@@ -1,7 +1,7 @@
 import { authThunks } from "../../auth.slice";
 import { useAppDispatch } from "app/hooks";
 import Button from "@mui/material/Button/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RouterPaths } from "common/router/router";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { AuthCard } from "../../components/AuthCard/AuthCard";
@@ -19,13 +19,19 @@ const defaultValues = {
 
 export function Signup() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const form = useForm<ArgRegister>({ defaultValues });
 
   const { handleSubmit } = form;
 
   const onSubmit: SubmitHandler<ArgRegister> = (data) => {
-    dispatch(authThunks.register(data));
+    dispatch(authThunks.register(data))
+      .unwrap()
+      .then(() => {
+        navigate(RouterPaths.signin);
+      })
+      .catch(() => {});
   };
 
   return (
