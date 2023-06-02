@@ -5,6 +5,7 @@ import { Avatar } from "common/components/Avatar/Avatar";
 import { useAppSelector } from "app/hooks";
 import { Link, useNavigate } from "react-router-dom";
 import s from "./style.module.css";
+import { ProgressLine } from "../ProgressLine/ProgressLine";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ export const Header = () => {
 
   return (
     <header className={s.appbar}>
+      <ProgressLine className={s.progress} />
       <div className="container">
         <div className={s.header}>
           <Link to={RouterPaths.main}>

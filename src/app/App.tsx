@@ -36,7 +36,6 @@ export function App() {
     return (
       <div className="App">
         <Header />
-        <ProgressLine />
         <AppSnackbar />
         <Outlet />
       </div>

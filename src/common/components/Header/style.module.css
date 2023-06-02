@@ -41,6 +41,13 @@
   width: 100%;
 }
 
+.progress {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  margin-bottom: -4px;
+}
+
 /* 
 ^[ ]*?([a-z]*)([A-Za-z]*):.*?\"(.*)\"(,)
 \1-\2: \3; 
