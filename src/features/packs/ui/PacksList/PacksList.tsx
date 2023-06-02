@@ -7,6 +7,7 @@ import { PacksTable } from "features/packs/components/PacksTable/PacksTable";
 import { SearchPacks } from "features/packs/components/SearchPacks/SearchPacks";
 import { PackFilter } from "features/packs/components/PackFilter/PackFilter";
 import { ResetFilters } from "features/packs/components/ResetFilters/ResetFilters";
+import { SliderPacks } from "features/packs/components/SliderPacks/SliderPacks";
 import s from "./style.module.css";
 
 export function PacksList() {
@@ -29,7 +30,7 @@ export function PacksList() {
       <div className={s.filters}>
         <SearchPacks />
         <PackFilter />
-        <div>number of cards</div>
+        <SliderPacks />
         <ResetFilters />
       </div>
 
