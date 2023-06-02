@@ -16,7 +16,7 @@ export function PacksTable() {
     dispatch(packsThunks.deletePack({ packId }));
   };
 
-  const onSortHandler = (sortPacks: string) => {
+  const onSort = (sortPacks: string) => {
     dispatch(packsActions.setQuery({ query: { sortPacks } }));
   };
 
@@ -47,35 +47,11 @@ export function PacksTable() {
     <table className={s.table}>
       <thead>
         <tr>
-          <Th
-            name="Name"
-            width="360px"
-            sort={sort}
-            query="name"
-            onSort={onSortHandler}
-          />
-          <Th
-            name="Cards"
-            sort={sort}
-            query="cardsCount"
-            width="110px"
-            onSort={onSortHandler}
-          />
-          <Th
-            name="Last Updated"
-            sort={sort}
-            query="updated"
-            width="160px"
-            onSort={onSortHandler}
-          />
-          <Th
-            name="Created by"
-            sort={sort}
-            query="user_name"
-            width="260px"
-            onSort={onSortHandler}
-          />
-          <th style={{ width: "108px" }}>Actions</th>
+          <Th name="Name" sort={sort} query="name" onSort={onSort} />
+          <Th name="Cards" sort={sort} query="cardsCount" onSort={onSort} />
+          <Th name="Last Updated" sort={sort} query="updated" onSort={onSort} />
+          <Th name="Created by" sort={sort} query="user_name" onSort={onSort} />
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>{mappedRows}</tbody>

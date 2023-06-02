@@ -2,13 +2,11 @@ type Props = {
   name: string;
   sort: string | undefined;
   query: string;
-  className?: string;
-  width?: string;
   onSort: (sortPacks: string) => void;
 };
 
 export const Th = (props: Props) => {
-  const { name, sort, query, className, width, onSort } = props;
+  const { name, sort, query, onSort } = props;
   const up = "1" + query;
   const down = "0" + query;
 
@@ -20,7 +18,7 @@ export const Th = (props: Props) => {
   };
 
   return (
-    <th onClick={() => sortCol(query)} className={className} style={{ width }}>
+    <th onClick={() => sortCol(query)}>
       {name} {sort === up ? "▲" : sort === down ? "▼" : ""}
     </th>
   );
