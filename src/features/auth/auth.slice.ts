@@ -9,15 +9,17 @@ import {
   ArgUpdate,
   ForgotType,
   ArgSetPass,
+  RegisterResponse,
 } from "./auth.api";
 import { createAppAsyncThunk } from "common/utils/create-app-async-thunk";
 import axios from "axios";
 
-const register = createAppAsyncThunk<void, ArgRegister>(
+const register = createAppAsyncThunk<RegisterResponse, ArgRegister>(
   "auth/register",
   async (arg, thunkAPI) => {
     try {
-      await authApi.register(arg); // TODO  return
+      const res = await authApi.register(arg);
+      return res.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
