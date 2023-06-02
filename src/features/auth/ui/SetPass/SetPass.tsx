@@ -16,7 +16,6 @@ export function SetPass() {
   const { token } = useParams();
 
   const form = useForm<ArgSetPass>({ defaultValues });
-
   const { handleSubmit } = form;
 
   const onSubmit: SubmitHandler<ArgSetPass> = (data) => {
@@ -29,16 +28,7 @@ export function SetPass() {
       <h1>Create new password</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <PassField form={form} />
-        <div
-          style={{
-            fontWeight: "400",
-            fontSize: "14px",
-            lineHeight: "24px",
-            color: "#000000",
-            opacity: "0.5",
-            marginTop: "31px",
-          }}
-        >
+        <div className="auth_text">
           Create new password and we will send you further instructions to email
         </div>
         <Button size="large" type="submit" sx={{ marginTop: "41px" }}>

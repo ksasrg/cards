@@ -22,9 +22,7 @@ export const Search = (props: Props) => {
 
     setTimerId(
       setTimeout(() => {
-        if (input.trim() === text) {
-          return;
-        } else {
+        if (input.trim() !== text) {
           props.onSearch(input.trim());
         }
       }, 1000)
