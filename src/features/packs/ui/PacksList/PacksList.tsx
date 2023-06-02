@@ -1,10 +1,10 @@
 import Button from "@mui/material/Button/Button";
 import { useAppDispatch } from "app/hooks";
-import { packsThunks } from "../../packs.slice";
-import { PacksTable } from "../../components/PacksTable/PacksTable";
-import { PacksPagination } from "../../components/PacksPagination/PacksPagination";
-import { useFetchPackList } from "../../hooks/useFetchPackList";
-import { SearchPacks } from "../../components/SearchPacks/SearchPacks";
+import { useFetchPackList } from "features/packs/hooks/useFetchPackList";
+import { packsThunks } from "features/packs/packs.slice";
+import { PacksPagination } from "features/packs/components/PacksPagination/PacksPagination";
+import { PacksTable } from "features/packs/components/PacksTable/PacksTable";
+import { SearchPacks } from "features/packs/components/SearchPacks/SearchPacks";
 import { PackFilter } from "features/packs/components/PackFilter/PackFilter";
 import { ResetFilters } from "features/packs/components/ResetFilters/ResetFilters";
 import s from "./style.module.css";

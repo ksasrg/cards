@@ -1,12 +1,12 @@
-import { AuthCard } from "../../components/AuthCard/AuthCard";
-import { EmailField } from "../../components/EmailField/EmailField";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { ArgForgot } from "../../auth.api";
 import Button from "@mui/material/Button/Button";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { RouterPaths } from "common/router/router";
 import { useAppDispatch } from "app/hooks";
-import { authThunks } from "../../auth.slice";
+import { ArgForgot } from "features/auth/auth.api";
+import { authThunks } from "features/auth/auth.slice";
+import { AuthCard } from "features/auth/components/AuthCard/AuthCard";
+import { EmailField } from "features/auth/components/EmailField/EmailField";
 
 export function ForgotPass() {
   const dispatch = useAppDispatch();

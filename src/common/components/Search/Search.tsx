@@ -30,13 +30,11 @@ export const Search = (props: Props) => {
   };
 
   return (
-    <>
-      <input
-        type="text"
-        value={text}
-        onChange={onChangeHandler}
-        placeholder={props.placeholder}
-      />
-    </>
+    <input
+      type="text"
+      value={text}
+      onChange={onChangeHandler}
+      placeholder={props.placeholder}
+    />
   );
 };

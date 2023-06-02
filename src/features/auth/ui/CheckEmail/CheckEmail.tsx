@@ -1,5 +1,5 @@
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import { AuthCard } from "../../components/AuthCard/AuthCard";
+import { AuthCard } from "features/auth/components/AuthCard/AuthCard";
 import mailsvg from "assets/mail.svg";
 import Button from "@mui/material/Button/Button";
 import { RouterPaths } from "common/router/router";

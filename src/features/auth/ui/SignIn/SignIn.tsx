@@ -1,14 +1,14 @@
-import { useAppDispatch, useAppSelector } from "app/hooks";
-import { authThunks } from "../../auth.slice";
-import { ArgLogin } from "../../auth.api";
-import { AuthCard } from "../../components/AuthCard/AuthCard";
-import { EmailField } from "../../components/EmailField/EmailField";
-import { PassField } from "../../components/PassField/PassField";
 import Button from "@mui/material/Button/Button";
+import Checkbox from "@mui/material/Checkbox/Checkbox";
+import { useAppDispatch, useAppSelector } from "app/hooks";
 import { RouterPaths } from "common/router/router";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, Navigate, useLocation } from "react-router-dom";
-import Checkbox from "@mui/material/Checkbox/Checkbox";
+import { ArgLogin } from "features/auth/auth.api";
+import { authThunks } from "features/auth/auth.slice";
+import { AuthCard } from "features/auth/components/AuthCard/AuthCard";
+import { EmailField } from "features/auth/components/EmailField/EmailField";
+import { PassField } from "features/auth/components/PassField/PassField";
 import s from "./style.module.css";
 
 // TODO delete default

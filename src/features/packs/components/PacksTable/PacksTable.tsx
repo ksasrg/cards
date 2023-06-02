@@ -1,10 +1,10 @@
 import { useAppDispatch, useAppSelector } from "app/hooks";
+import { packsActions, packsThunks } from "features/packs/packs.slice";
+import { Th } from "../Th/Th";
 import s from "./style.module.css";
 import teacher from "assets/teacher.svg";
 import editIconMini from "assets/editIconMini.svg";
 import trash from "assets/trash.svg";
-import { packsActions, packsThunks } from "../../packs.slice";
-import { Th } from "../Th/Th";
 
 export function PacksTable() {
   const dispatch = useAppDispatch();

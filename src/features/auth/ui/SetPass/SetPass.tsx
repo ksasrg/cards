@@ -1,12 +1,12 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { AuthCard } from "../../components/AuthCard/AuthCard";
 import Button from "@mui/material/Button/Button";
-import { PassField } from "../../components/PassField/PassField";
 import { useAppDispatch } from "app/hooks";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { authThunks } from "../../auth.slice";
-import { ArgSetPass } from "../../auth.api";
 import { RouterPaths } from "common/router/router";
+import { AuthCard } from "features/auth/components/AuthCard/AuthCard";
+import { PassField } from "features/auth/components/PassField/PassField";
+import { authThunks } from "features/auth/auth.slice";
+import { ArgSetPass } from "features/auth/auth.api";
 
 const defaultValues = {
   password: process.env.REACT_APP_PASS,

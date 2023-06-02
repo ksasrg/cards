@@ -1,7 +1,7 @@
 import Pagination from "@mui/material/Pagination/Pagination";
 import { useAppDispatch, useAppSelector } from "app/hooks";
+import { packsActions } from "features/packs/packs.slice";
 import { ChangeEvent } from "react";
-import { packsActions } from "../../packs.slice";
 
 export const PacksPagination = () => {
   const dispatch = useAppDispatch();
