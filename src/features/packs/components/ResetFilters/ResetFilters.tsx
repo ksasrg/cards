@@ -7,7 +7,9 @@ export const ResetFilters = () => {
   const params = Object.fromEntries(searchParams);
 
   const resetFilterHandler = () => {
-    setSearchParams({ pageCount: params.pageCount });
+    const query = {} as Record<string, string>;
+    params.pageCount && (query["pageCount"] = params.pageCount);
+    setSearchParams(query);
   };
 
   return (
