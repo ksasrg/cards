@@ -6,7 +6,6 @@ import { authThunks } from "features/auth/auth.slice";
 import { Preloader } from "common/components/Preloader/Preloader";
 import { AppSnackbar } from "common/components/AppSnackBar/AppSnackBar";
 import { Header } from "common/components/Header/Header";
-import { ProgressLine } from "common/components/ProgressLine/ProgressLine";
 import { PackListQuery, packsActions } from "features/packs/packs.slice";
 
 export function App() {

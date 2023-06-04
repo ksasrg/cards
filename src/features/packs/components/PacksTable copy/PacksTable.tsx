@@ -1,11 +1,10 @@
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { packsActions, packsThunks } from "features/packs/packs.slice";
-import { Th } from "common/components/Th/Th";
+import { Th } from "../../../../common/components/Th/Th";
 import s from "./style.module.css";
 import teacher from "assets/teacher.svg";
 import editIconMini from "assets/editIconMini.svg";
 import trash from "assets/trash.svg";
-import { Link } from "react-router-dom";
 
 export function PacksTable() {
   const dispatch = useAppDispatch();
@@ -27,9 +26,7 @@ export function PacksTable() {
 
     return (
       <tr key={p._id}>
-        <td>
-          <Link to={`cards/?cardsPack_id=${p._id}`}>{p.name}</Link>
-        </td>
+        <td>{p.name}</td>
         <td>{p.cardsCount}</td>
         <td>{date}</td>
         <td>{p.user_name}</td>
