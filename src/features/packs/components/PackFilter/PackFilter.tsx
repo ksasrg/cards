@@ -1,23 +1,24 @@
-import { useAppDispatch, useAppSelector } from "app/hooks";
+import { useAppSelector } from "app/hooks";
 import s from "./style.module.css";
-import { packsActions } from "features/packs/packs.slice";
+import { useSearchParams } from "react-router-dom";
 
 export const PackFilter = () => {
-  const dispatch = useAppDispatch();
-  const user_id = useAppSelector((state) => state.auth.profile?._id);
-  const queryUserId = useAppSelector((state) => state.packs.query.user_id);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const params = Object.fromEntries(searchParams);
+  const user_id = useAppSelector((state) => state.auth.profile?._id) as string;
 
-  const isMy = queryUserId === user_id;
+  const isMy = params.user_id === user_id;
 
   const onMyFilter = () => {
     if (!isMy) {
-      dispatch(packsActions.setQuery({ query: { user_id } }));
+      setSearchParams({ ...params, user_id });
     }
   };
 
   const onALLFilter = () => {
     if (isMy) {
-      dispatch(packsActions.setQuery({ query: { user_id: undefined } }));
+      delete params["user_id"];
+      setSearchParams({ ...params });
     }
   };
 

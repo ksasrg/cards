@@ -1,15 +1,15 @@
-import { useAppDispatch, useAppSelector } from "app/hooks";
 import { Search } from "common/components";
-import { packsActions } from "features/packs/packs.slice";
 import s from "./style.module.css";
 import search from "assets/search-icon.svg";
+import { useSearchParams } from "react-router-dom";
 
 export const SearchPacks = () => {
-  const dispatch = useAppDispatch();
-  const packName = useAppSelector((state) => state.packs.query.packName);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const params = Object.fromEntries(searchParams);
+  const packName = params.packName;
 
   const onSearchHandler = (packName: string) => {
-    dispatch(packsActions.setQuery({ query: { packName, page: 1 } }));
+    setSearchParams({ ...params, packName });
   };
 
   return (

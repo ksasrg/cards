@@ -1,25 +1,13 @@
-import { useAppDispatch } from "app/hooks";
+import { useSearchParams } from "react-router-dom";
 import resetIcon from "assets/resetfilter.svg";
-import { packsActions } from "features/packs/packs.slice";
 import s from "./style.module.css";
 
 export const ResetFilters = () => {
-  const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const params = Object.fromEntries(searchParams);
 
   const resetFilterHandler = () => {
-    dispatch(
-      packsActions.setQuery({
-        query: {
-          // pageCount not modifying
-          page: undefined,
-          packName: undefined,
-          sortPacks: undefined,
-          user_id: undefined,
-          max: undefined,
-          min: undefined,
-        },
-      })
-    );
+    setSearchParams({ pageCount: params.pageCount });
   };
 
   return (

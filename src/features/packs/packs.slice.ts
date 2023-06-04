@@ -1,16 +1,6 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { createAppAsyncThunk } from "common/utils/create-app-async-thunk";
 import { ArgCreateCardPack, ArgGetPacks, packsApi } from "./packs.api";
-
-export type PackListQuery = {
-  page?: number | undefined;
-  pageCount?: number | undefined;
-  packName?: string | undefined;
-  min?: number | undefined;
-  max?: number | undefined;
-  sortPacks?: string | undefined;
-  user_id?: string | undefined;
-};
 
 const initialState = {
   list: {
@@ -23,35 +13,24 @@ const initialState = {
     token: "",
     tokenDeathTime: 0,
   },
-  query: {} as PackListQuery,
 };
 
 export const slice = createSlice({
   name: "packs",
   initialState,
-  reducers: {
-    setQuery: (state, action: PayloadAction<{ query: PackListQuery }>) => {
-      state.query = { ...state.query, ...action.payload.query };
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
-    builder
-      .addCase(get.fulfilled, (state, action) => {
-        state.list = { ...action.payload };
-        state.query.page && (state.query.page = action.payload.page); // TODO remember why
-      })
-      .addCase(create.fulfilled, (state, action) => {
-        state.query = { pageCount: state.query.pageCount };
-      });
+    builder.addCase(get.fulfilled, (state, action) => {
+      state.list = { ...action.payload };
+    });
   },
 });
 
-const get = createAppAsyncThunk<GetCardPack, ArgGetPacks | undefined>(
+const get = createAppAsyncThunk<GetCardPack, ArgGetPacks>(
   "packs/get-packs",
   async (arg, thunkAPI) => {
     try {
-      const query = { ...thunkAPI.getState().packs.query, ...arg };
-      const res = await packsApi.getPacks(query);
+      const res = await packsApi.getPacks(arg);
       return res.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -64,7 +43,7 @@ const deletePack = createAppAsyncThunk<DeleteCardPack, { packId: string }>(
   async (arg, thunkAPI) => {
     try {
       const res = await packsApi.delete(arg.packId);
-      await thunkAPI.dispatch(get());
+      await thunkAPI.dispatch(get({}));
       return res.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

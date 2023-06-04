@@ -1,10 +1,11 @@
 import Pagination from "@mui/material/Pagination/Pagination";
-import { useAppDispatch, useAppSelector } from "app/hooks";
-import { packsActions } from "features/packs/packs.slice";
+import { useAppSelector } from "app/hooks";
 import { ChangeEvent } from "react";
+import { useSearchParams } from "react-router-dom";
 
 export const PacksPagination = () => {
-  const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const params = Object.fromEntries(searchParams);
   const page = useAppSelector((state) => state.packs.list.page);
   const pageCount = useAppSelector((state) => state.packs.list.pageCount);
   const isLoading = useAppSelector((state) => state.app.isLoading);
@@ -15,12 +16,12 @@ export const PacksPagination = () => {
   const totalPages = Math.ceil(cardPacksTotalCount / +pageCount);
 
   const onPageChangeHandler = (event: ChangeEvent<unknown>, page: number) => {
-    dispatch(packsActions.setQuery({ query: { page } }));
+    setSearchParams({ ...params, page: page.toString() });
   };
 
   const onPageCountChangeHandler = (event: ChangeEvent<HTMLSelectElement>) => {
-    const pageCount = +event.currentTarget.value;
-    dispatch(packsActions.setQuery({ query: { pageCount } }));
+    const pageCount = event.currentTarget.value;
+    setSearchParams({ ...params, pageCount });
   };
 
   return (
