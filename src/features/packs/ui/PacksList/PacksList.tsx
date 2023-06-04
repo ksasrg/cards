@@ -25,8 +25,9 @@ export function PacksList() {
 
   const onAddPackHandler = () => {
     const payload = { name: "test1234", deckCover: "", private: false };
-    setSearchParams({ ...params, page: "1" });
-    dispatch(packsThunks.create({ payload, query: params }));
+    const query = { pageCount: pageCount.toString(), page: "1" };
+    setSearchParams(query);
+    dispatch(packsThunks.create({ payload, query }));
   };
 
   const onChange = (query: PaginationQuery) => {
