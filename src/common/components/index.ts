@@ -2,6 +2,7 @@ export * from "./AppPagination/AppPagination";
 export * from "./AppSnackBar/AppSnackBar";
 export * from "./AuthRedirect/AuthRedirect";
 export * from "./Avatar/Avatar";
+export * from "./BackLink/BackLink";
 export * from "./Header/Header";
 export * from "./Preloader/Preloader";
 export * from "./ProgressLine/ProgressLine";

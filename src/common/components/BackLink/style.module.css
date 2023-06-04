@@ -1,0 +1,12 @@
+.link {
+  display: block;
+  /* margin-top: 24px; */
+
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  text-decoration: none;
+  text-align: left;
+
+  color: #000000;
+}

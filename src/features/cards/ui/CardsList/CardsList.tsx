@@ -2,7 +2,7 @@ import Button from "@mui/material/Button/Button";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { CardsTable } from "features/cards/components/CardsTable/CardsTable";
 import { cardsActions } from "features/cards/cards.slice";
-import { AppPagination, PaginationQuery } from "common/components";
+import { AppPagination, BackLink, PaginationQuery } from "common/components";
 import { useCardsFetch } from "features/cards/hooks/useCardsFetch";
 import { useCardsSetSearchParams } from "features/cards/hooks/useCardsSetSearchParams";
 import s from "./style.module.css";
@@ -24,6 +24,7 @@ export const CardsList = () => {
 
   return (
     <div className="container page">
+      <BackLink />
       <div className={s.up}>
         <div className={s.title}>Friend’s Pack</div>
         <Button>Learn</Button>

@@ -1,4 +1,5 @@
 .up {
+  margin-top: 27px;
   display: flex;
   justify-content: space-between;
 }

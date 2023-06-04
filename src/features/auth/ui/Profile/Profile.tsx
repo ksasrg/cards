@@ -1,10 +1,8 @@
 import Button from "@mui/material/Button/Button";
-import { Link } from "react-router-dom";
-import { RouterPaths } from "common/router/router";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { authThunks } from "features/auth/auth.slice";
 import { AuthCard } from "features/auth/components/AuthCard/AuthCard";
-import { Avatar } from "common/components";
+import { Avatar, BackLink } from "common/components";
 import { Editable } from "features/auth/components/Editable/Editable";
 
 export function Profile() {
@@ -23,17 +21,7 @@ export function Profile() {
 
   return (
     <>
-      <Link
-        to={RouterPaths.main} // TODO Back to Packs List
-        style={{
-          color: "#366EFF",
-          display: "block",
-          marginTop: "11px",
-          fontSize: "20px",
-        }}
-      >
-        Back to Packs List
-      </Link>
+      <BackLink />
       <AuthCard>
         <h1>Personal Information</h1>
         <Avatar size={96} marginTop={30} />
