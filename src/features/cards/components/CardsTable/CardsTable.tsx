@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { packsActions } from "features/packs/packs.slice";
+import { cardsActions } from "features/cards/cards.slice";
 import { Th } from "common/components";
 import s from "./style.module.css";
 
@@ -8,8 +8,8 @@ export function CardsTable() {
   const cards = useAppSelector((state) => state.cards.list.cards);
   const sort = useAppSelector((state) => state.cards.query.sortCards);
 
-  const onSort = (sortPacks: string) => {
-    dispatch(packsActions.setQuery({ query: { sortPacks } }));
+  const onSort = (sortCards: string) => {
+    dispatch(cardsActions.setQuery({ query: { sortCards } }));
   };
 
   const mappedRows = cards.map((card) => {

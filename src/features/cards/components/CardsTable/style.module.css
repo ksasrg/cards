@@ -12,8 +12,6 @@
   height: 48px;
   background: #efefef;
   border: none;
-
-  cursor: pointer;
 }
 
 .table tr {
@@ -31,13 +29,12 @@
   font-size: 14px;
   line-height: 17px;
   color: #000000;
-}
 
-.table th:first-child {
-  padding-left: 36px;
+  cursor: pointer;
 }
 
 .table th:nth-child(1) {
+  padding-left: 36px;
   width: 360px;
 }
 .table th:nth-child(2) {
@@ -71,9 +68,4 @@
 
 .table td:last-child {
   padding-right: 0;
-}
-
-.table td:last-child img {
-  margin-right: 15px;
-  cursor: pointer;
 }

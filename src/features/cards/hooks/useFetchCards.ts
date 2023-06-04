@@ -12,9 +12,9 @@ export const useFetchCards = () => {
 
   const page = useAppSelector((state) => state.cards.query.page);
   const pageCount = useAppSelector((state) => state.cards.query.pageCount);
+  const sortCards = useAppSelector((state) => state.cards.query.sortCards);
 
   useEffect(() => {
     cardsPack_id && dispatch(cardsThunks.get({ cardsPack_id }));
-    console.log("fhfg");
-  }, [dispatch, cardsPack_id, page, pageCount]);
+  }, [dispatch, cardsPack_id, page, pageCount, sortCards]);
 };
