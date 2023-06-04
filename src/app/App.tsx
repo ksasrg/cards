@@ -3,9 +3,9 @@ import { useAppDispatch, useAppSelector } from "app/hooks";
 import { Outlet, useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import { authThunks } from "features/auth/auth.slice";
-import { Preloader } from "common/components/Preloader/Preloader";
-import { AppSnackbar } from "common/components/AppSnackBar/AppSnackBar";
-import { Header } from "common/components/Header/Header";
+import { Preloader } from "common/components";
+import { AppSnackbar } from "common/components";
+import { Header } from "common/components";
 import { PackListQuery, packsActions } from "features/packs/packs.slice";
 
 export function App() {

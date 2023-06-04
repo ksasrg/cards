@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button/Button";
 import logo from "assets/logo.svg";
 import { RouterPaths } from "common/router/router";
-import { Avatar } from "common/components/Avatar/Avatar";
+import { Avatar } from "common/components";
 import { useAppSelector } from "app/hooks";
 import { Link, useNavigate } from "react-router-dom";
 import s from "./style.module.css";

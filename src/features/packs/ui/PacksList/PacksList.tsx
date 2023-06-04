@@ -7,11 +7,8 @@ import { SearchPacks } from "features/packs/components/SearchPacks/SearchPacks";
 import { PackFilter } from "features/packs/components/PackFilter/PackFilter";
 import { ResetFilters } from "features/packs/components/ResetFilters/ResetFilters";
 import { SliderPacks } from "features/packs/components/SliderPacks/SliderPacks";
+import { AppPagination, PaginationQuery } from "common/components";
 import s from "./style.module.css";
-import {
-  AppPagination,
-  PaginationQuery,
-} from "common/components/AppPagination/AppPagination";
 
 export function PacksList() {
   const dispatch = useAppDispatch();

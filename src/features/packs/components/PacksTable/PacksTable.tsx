@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { packsActions, packsThunks } from "features/packs/packs.slice";
-import { Th } from "common/components/Th/Th";
+import { Th } from "common/components";
 import s from "./style.module.css";
 import teacher from "assets/teacher.svg";
 import editIconMini from "assets/editIconMini.svg";

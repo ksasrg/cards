@@ -3,10 +3,7 @@ import { useAppDispatch, useAppSelector } from "app/hooks";
 import s from "./style.module.css";
 import { CardsTable } from "features/cards/components/CardsTable/CardsTable";
 import { cardsActions } from "features/cards/cards.slice";
-import {
-  AppPagination,
-  PaginationQuery,
-} from "common/components/AppPagination/AppPagination";
+import { AppPagination, PaginationQuery } from "common/components";
 import { useFetchCards } from "features/cards/hooks/useFetchCards";
 
 export const CardsList = () => {

@@ -4,7 +4,7 @@ import { RouterPaths } from "common/router/router";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { authThunks } from "features/auth/auth.slice";
 import { AuthCard } from "features/auth/components/AuthCard/AuthCard";
-import { Avatar } from "common/components/Avatar/Avatar";
+import { Avatar } from "common/components";
 import { Editable } from "features/auth/components/Editable/Editable";
 
 export function Profile() {

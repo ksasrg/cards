@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { Search } from "common/components/Search/Search";
+import { Search } from "common/components";
 import { packsActions } from "features/packs/packs.slice";
 import s from "./style.module.css";
 import search from "assets/search-icon.svg";

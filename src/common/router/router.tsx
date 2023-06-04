@@ -7,7 +7,7 @@ import { Profile } from "features/auth/ui/Profile/Profile";
 import { CheckEmail } from "features/auth/ui/CheckEmail/CheckEmail";
 import { SetPass } from "features/auth/ui/SetPass/SetPass";
 import { PacksList } from "features/packs/ui/PacksList/PacksList";
-import { AuthRedirect } from "common/components/AuthRedirect/AuthRedirect";
+import { AuthRedirect } from "common/components";
 import { CardsList } from "features/cards/ui/CardsList/CardsList";
 
 export const RouterPaths = {

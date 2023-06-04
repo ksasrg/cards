@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { packsActions } from "features/packs/packs.slice";
-import { Th } from "common/components/Th/Th";
+import { Th } from "common/components";
 import s from "./style.module.css";
 
 export function CardsTable() {
