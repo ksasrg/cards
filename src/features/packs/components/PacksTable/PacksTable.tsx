@@ -1,12 +1,10 @@
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { AppLink, Th } from "common/components";
-import s from "./style.module.css";
-import teacher from "assets/teacher.svg";
-import editIconMini from "assets/editIconMini.svg";
-import trash from "assets/trash.svg";
 import { useSearchParams } from "react-router-dom";
-import { RouterPaths } from "common/router/router";
 import { packsThunks } from "features/packs/packs.slice";
+import { ActionIcons } from "../ActionsIcons/ActionsIcons";
+import { PackCell } from "../PackCell/PackCell";
+import { Th } from "common/components";
+import s from "./style.module.css";
 
 export function PacksTable() {
   const dispatch = useAppDispatch();
@@ -16,7 +14,7 @@ export function PacksTable() {
   const userId = useAppSelector((state) => state.auth.profile?._id);
   const packs = useAppSelector((state) => state.packs.list.cardPacks);
 
-  const deleteHandler = (packId: string) => {
+  const onDelete = (packId: string) => {
     dispatch(packsThunks.deletePack({ packId, query: params }));
   };
 
@@ -25,45 +23,21 @@ export function PacksTable() {
   };
 
   const mappedRows = packs.map((p) => {
-    const updated = new Date(p.updated);
-    const date = updated.toLocaleString("ru-RU");
-
-    let packName;
-    let teachIcon = <img src={teacher} alt="learn" />;
-    if (p.cardsCount) {
-      packName = (
-        <AppLink to={`${RouterPaths.cards}/?cardsPack_id=${p._id}`}>
-          {p.name}
-        </AppLink>
-      );
-      teachIcon = (
-        <AppLink to={`${RouterPaths.cards}/?cardsPack_id=${p._id}`}>
-          {teachIcon}
-        </AppLink>
-      );
-    } else {
-      packName = p.name;
-      teachIcon = <img src={teacher} alt="learn" style={{ opacity: "0.5" }} />;
-    }
-
-    let editIcon, trashIcon;
-    if (userId === p.user_id) {
-      editIcon = <img src={editIconMini} alt="edit" />;
-      trashIcon = (
-        <img src={trash} alt="delete" onClick={() => deleteHandler(p._id)} />
-      );
-    }
+    const date = new Date(p.updated).toLocaleString("ru-RU");
+    const { _id: packId, name } = p;
+    const isActive = Boolean(p.cardsCount);
+    const isMy = userId === p.user_id;
 
     return (
-      <tr key={p._id}>
-        <td>{packName}</td>
+      <tr key={packId}>
+        <td>
+          <PackCell {...{ packId, name, isActive }} />
+        </td>
         <td>{p.cardsCount}</td>
         <td>{date}</td>
         <td>{p.user_name}</td>
         <td>
-          {teachIcon}
-          {editIcon}
-          {trashIcon}
+          <ActionIcons {...{ isMy, packId, isActive, onDelete }} />
         </td>
       </tr>
     );
