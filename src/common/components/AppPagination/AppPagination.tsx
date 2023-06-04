@@ -10,12 +10,12 @@ export type PaginationQuery = {
 type Props = {
   page: number;
   pageCount: number;
-  cardsTotalCount: number;
+  totalCount: number;
   onChange: (query: PaginationQuery) => void;
 };
 
-export const CardsPagination = (props: Props) => {
-  const { page, pageCount, cardsTotalCount, onChange } = props;
+export const AppPagination = (props: Props) => {
+  const { page, pageCount, totalCount: cardsTotalCount, onChange } = props;
   const isLoading = useAppSelector((state) => state.app.isLoading);
 
   const totalPages = Math.ceil(cardsTotalCount / +pageCount);
@@ -26,7 +26,7 @@ export const CardsPagination = (props: Props) => {
 
   const onPageCountChangeHandler = (event: ChangeEvent<HTMLSelectElement>) => {
     const pageCount = +event.currentTarget.value;
-    onChange({ pageCount });
+    onChange({ page: 1, pageCount });
   };
 
   return (
