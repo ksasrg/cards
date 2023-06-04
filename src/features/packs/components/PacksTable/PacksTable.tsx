@@ -1,10 +1,10 @@
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { Th } from "common/components";
+import { AppLink, Th } from "common/components";
 import s from "./style.module.css";
 import teacher from "assets/teacher.svg";
 import editIconMini from "assets/editIconMini.svg";
 import trash from "assets/trash.svg";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { RouterPaths } from "common/router/router";
 import { packsThunks } from "features/packs/packs.slice";
 
@@ -32,12 +32,14 @@ export function PacksTable() {
     let teachIcon = <img src={teacher} alt="learn" />;
     if (p.cardsCount) {
       packName = (
-        <Link to={`${RouterPaths.cards}/?cardsPack_id=${p._id}`}>{p.name}</Link>
+        <AppLink to={`${RouterPaths.cards}/?cardsPack_id=${p._id}`}>
+          {p.name}
+        </AppLink>
       );
       teachIcon = (
-        <Link to={`${RouterPaths.cards}/?cardsPack_id=${p._id}`}>
+        <AppLink to={`${RouterPaths.cards}/?cardsPack_id=${p._id}`}>
           {teachIcon}
-        </Link>
+        </AppLink>
       );
     } else {
       packName = p.name;
