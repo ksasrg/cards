@@ -14,6 +14,4 @@ export const useFetchPackList = () => {
     dispatch(packsThunks.get(params));
   }, [dispatch, min, max, page, pageCount, packName, user_id, sortPacks]); // eslint-disable-line react-hooks/exhaustive-deps
   // ignore setSearchParams
-
-  return { min, max, page, pageCount, packName, user_id, sortPacks };
 };

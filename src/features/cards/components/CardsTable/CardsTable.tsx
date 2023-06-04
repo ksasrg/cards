@@ -1,15 +1,16 @@
-import { useAppDispatch, useAppSelector } from "app/hooks";
-import { cardsActions } from "features/cards/cards.slice";
+import { useAppSelector } from "app/hooks";
 import { Th } from "common/components";
 import s from "./style.module.css";
+import { useSearchParams } from "react-router-dom";
 
 export function CardsTable() {
-  const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const params = Object.fromEntries(searchParams);
+  const sort = params.sortCards;
   const cards = useAppSelector((state) => state.cards.list.cards);
-  const sort = useAppSelector((state) => state.cards.query.sortCards);
 
   const onSort = (sortCards: string) => {
-    dispatch(cardsActions.setQuery({ query: { sortCards } }));
+    setSearchParams({ ...params, sortCards });
   };
 
   const mappedRows = cards.map((card) => {

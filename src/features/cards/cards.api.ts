@@ -9,7 +9,7 @@ export const cardsApi = {
 export type ArgGetCards = {
   cardAnswer?: string;
   cardQuestion?: string;
-  cardsPack_id: string;
+  cardsPack_id?: string;
   min?: number;
   max?: number;
   sortCards?: string;

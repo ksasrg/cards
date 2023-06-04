@@ -1,25 +1,24 @@
 import Button from "@mui/material/Button/Button";
-import { useAppDispatch, useAppSelector } from "app/hooks";
+import { useAppSelector } from "app/hooks";
 import { CardsTable } from "features/cards/components/CardsTable/CardsTable";
-import { cardsActions } from "features/cards/cards.slice";
 import { AppPagination, BackLink, PaginationQuery } from "common/components";
 import { useCardsFetch } from "features/cards/hooks/useCardsFetch";
-import { useCardsSetSearchParams } from "features/cards/hooks/useCardsSetSearchParams";
+import { useSearchParams } from "react-router-dom";
 import s from "./style.module.css";
 
 export const CardsList = () => {
-  const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const params = Object.fromEntries(searchParams);
   const page = useAppSelector((state) => state.cards.list.page);
   const pageCount = useAppSelector((state) => state.cards.list.pageCount);
   const totalCount = useAppSelector(
     (state) => state.cards.list.cardsTotalCount
   );
 
-  useCardsSetSearchParams();
   useCardsFetch();
 
   const onChange = (query: PaginationQuery) => {
-    dispatch(cardsActions.setQuery({ query }));
+    setSearchParams({ ...params, ...(query as Record<string, string>) });
   };
 
   return (

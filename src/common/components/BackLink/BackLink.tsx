@@ -4,7 +4,6 @@ import s from "./style.module.css";
 
 export const BackLink = () => {
   const location = useLocation();
-  console.log(location);
 
   const backlink =
     location.state?.from.pathname + location.state?.from.search ||
