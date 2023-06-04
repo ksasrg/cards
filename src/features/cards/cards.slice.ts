@@ -17,6 +17,9 @@ export const slice = createSlice({
     ) => {
       state.query = { ...state.query, ...action.payload.query };
     },
+    resetList: (state, action: PayloadAction<void>) => {
+      state.list = { cards: [] as Card[] } as GetResponse;
+    },
   },
   extraReducers(builder) {
     builder.addCase(get.fulfilled, (state, action) => {

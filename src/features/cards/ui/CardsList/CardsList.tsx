@@ -1,10 +1,11 @@
 import Button from "@mui/material/Button/Button";
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import s from "./style.module.css";
 import { CardsTable } from "features/cards/components/CardsTable/CardsTable";
 import { cardsActions } from "features/cards/cards.slice";
 import { AppPagination, PaginationQuery } from "common/components";
-import { useFetchCards } from "features/cards/hooks/useFetchCards";
+import { useCardsFetch } from "features/cards/hooks/useCardsFetch";
+import { useCardsSetSearchParams } from "features/cards/hooks/useCardsSetSearchParams";
+import s from "./style.module.css";
 
 export const CardsList = () => {
   const dispatch = useAppDispatch();
@@ -14,7 +15,8 @@ export const CardsList = () => {
     (state) => state.cards.list.cardsTotalCount
   );
 
-  useFetchCards();
+  useCardsSetSearchParams();
+  useCardsFetch();
 
   const onChange = (query: PaginationQuery) => {
     dispatch(cardsActions.setQuery({ query }));
