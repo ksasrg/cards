@@ -17,7 +17,7 @@ export function PacksTable() {
   const packs = useAppSelector((state) => state.packs.list.cardPacks);
 
   const deleteHandler = (packId: string) => {
-    dispatch(packsThunks.deletePack({ packId }));
+    dispatch(packsThunks.deletePack({ packId, query: params }));
   };
 
   const onSort = (sortPacks: string) => {
