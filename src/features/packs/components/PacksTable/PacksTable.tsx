@@ -1,20 +1,23 @@
-import { useAppSelector } from "app/hooks";
+import { useAppDispatch, useAppSelector } from "app/hooks";
 import { Th } from "common/components";
 import s from "./style.module.css";
 import teacher from "assets/teacher.svg";
 import editIconMini from "assets/editIconMini.svg";
 import trash from "assets/trash.svg";
 import { Link, useSearchParams } from "react-router-dom";
+import { RouterPaths } from "common/router/router";
+import { packsThunks } from "features/packs/packs.slice";
 
 export function PacksTable() {
+  const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams);
-  const packs = useAppSelector((state) => state.packs.list.cardPacks);
   const sort = params.sortPacks;
   const userId = useAppSelector((state) => state.auth.profile?._id);
+  const packs = useAppSelector((state) => state.packs.list.cardPacks);
 
   const deleteHandler = (packId: string) => {
-    setSearchParams({ ...params, packId });
+    dispatch(packsThunks.deletePack({ packId }));
   };
 
   const onSort = (sortPacks: string) => {
@@ -25,22 +28,40 @@ export function PacksTable() {
     const updated = new Date(p.updated);
     const date = updated.toLocaleString("ru-RU");
 
+    let packName;
+    let teachIcon = <img src={teacher} alt="learn" />;
+    if (p.cardsCount) {
+      packName = (
+        <Link to={`${RouterPaths.cards}/?cardsPack_id=${p._id}`}>{p.name}</Link>
+      );
+      teachIcon = (
+        <Link to={`${RouterPaths.cards}/?cardsPack_id=${p._id}`}>
+          {teachIcon}
+        </Link>
+      );
+    } else {
+      packName = p.name;
+      teachIcon = <img src={teacher} alt="learn" style={{ opacity: "0.5" }} />;
+    }
+
+    let editIcon, trashIcon;
+    if (userId === p.user_id) {
+      editIcon = <img src={editIconMini} alt="edit" />;
+      trashIcon = (
+        <img src={trash} alt="delete" onClick={() => deleteHandler(p._id)} />
+      );
+    }
+
     return (
       <tr key={p._id}>
-        <td>
-          <Link to={`cards/?cardsPack_id=${p._id}`}>{p.name}</Link>
-        </td>
+        <td>{packName}</td>
         <td>{p.cardsCount}</td>
         <td>{date}</td>
         <td>{p.user_name}</td>
         <td>
-          <img src={teacher} alt="" />
-          {userId === p.user_id && (
-            <>
-              <img src={editIconMini} alt="" />
-              <img src={trash} alt="" onClick={() => deleteHandler(p._id)} />
-            </>
-          )}
+          {teachIcon}
+          {editIcon}
+          {trashIcon}
         </td>
       </tr>
     );
