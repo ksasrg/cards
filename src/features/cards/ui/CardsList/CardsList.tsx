@@ -5,9 +5,10 @@ import { AppPagination, BackLink, PaginationQuery } from "common/components";
 import { useCardsFetch } from "features/cards/hooks/useCardsFetch";
 import { useSearchParams } from "react-router-dom";
 import extraIcon from "assets/extra.svg";
-import s from "./style.module.css";
 import { cardsThunks } from "features/cards/cards.slice";
 import { ArgPostCard } from "features/cards/cards.api";
+import { SearchCards } from "features/cards/components/SearchCards/SearchCards";
+import s from "./style.module.css";
 
 export const CardsList = () => {
   const dispatch = useAppDispatch();
@@ -56,14 +57,16 @@ export const CardsList = () => {
           </>
         ) : (
           <>
-            <div className={s.title}>Friend’s Pack</div>
+            <div className={s.title}>{packName}</div>
             <Button>Learn</Button>
           </>
         )}
       </div>
 
       <AppPagination onChange={onChange} {...{ page, pageCount, totalCount }} />
-      <div className={s.filters}>{/* <SearchPacks /> */}</div>
+      <div className={s.filters}>
+        <SearchCards />
+      </div>
 
       <CardsTable />
     </div>
