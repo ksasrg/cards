@@ -4,6 +4,7 @@ import {
   ArgGetCards,
   ArgPostCard,
   Card,
+  DeleteResponse,
   GetResponse,
   PostResponse,
   cardsApi,
@@ -48,8 +49,21 @@ const create = createAppAsyncThunk<
     const res = await cardsApi.createCard(arg.payload);
 
     const page = thunkAPI.getState().cards.list.page;
-    if (page === 1) await thunkAPI.dispatch(get({ ...arg.query }));
+    if (page === 1) await thunkAPI.dispatch(get(arg.query));
 
+    return res.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
+const deleteCard = createAppAsyncThunk<
+  DeleteResponse,
+  { packId: string; query: ArgGetCards }
+>("cards/delete", async (arg, thunkAPI) => {
+  try {
+    const res = await cardsApi.deleteCard(arg.packId);
+    await thunkAPI.dispatch(get(arg.query));
     return res.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
@@ -58,4 +72,4 @@ const create = createAppAsyncThunk<
 
 export const cardsReducers = slice.reducer;
 export const cardsActions = slice.actions;
-export const cardsThunks = { get, create };
+export const cardsThunks = { get, create, deleteCard };

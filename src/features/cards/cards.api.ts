@@ -7,6 +7,9 @@ export const cardsApi = {
   createCard: (payload: ArgPostCard) => {
     return instance.post<PostResponse>(`cards/card`, { card: payload });
   },
+  deleteCard: (cardId: string) => {
+    return instance.delete<DeleteResponse>(`cards/card/?id=${cardId}`);
+  },
 };
 
 export type ArgGetCards = {
@@ -51,6 +54,12 @@ export interface GetResponse {
 
 export interface PostResponse {
   newCard: Card;
+  token: string;
+  tokenDeathTime: number;
+}
+
+export interface DeleteResponse {
+  deletedCard: Card;
   token: string;
   tokenDeathTime: number;
 }

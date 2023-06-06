@@ -1,9 +1,13 @@
-import { useAppSelector } from "app/hooks";
+import { useAppDispatch, useAppSelector } from "app/hooks";
 import { Th } from "common/components";
 import s from "./style.module.css";
 import { useSearchParams } from "react-router-dom";
+import editIconMini from "assets/editIconMini.svg";
+import trash from "assets/trash.svg";
+import { cardsThunks } from "features/cards/cards.slice";
 
 export function CardsTable() {
+  const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams);
   const sort = params.sortCards;
@@ -22,7 +26,19 @@ export function CardsTable() {
         <td>{card.question}</td>
         <td>{card.answer}</td>
         <td>{date}</td>
-        <td>{card.grade}</td>
+        <td>
+          {card.grade}
+          <img src={editIconMini} alt="edit" />
+          <img
+            src={trash}
+            alt="delete"
+            onClick={() =>
+              dispatch(
+                cardsThunks.deleteCard({ packId: card._id, query: params })
+              )
+            }
+          />
+        </td>
       </tr>
     );
   });
