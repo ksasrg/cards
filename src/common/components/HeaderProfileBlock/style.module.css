@@ -1,0 +1,78 @@
+.block {
+  display: flex;
+  align-items: center;
+}
+
+.name {
+  border-bottom: 1px dashed #000000;
+  line-height: 24px;
+  margin-right: 12px;
+  max-width: 300px;
+  overflow: hidden;
+  display: inline-block;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #000000;
+  width: 100%;
+
+  cursor: pointer;
+}
+
+.popover {
+  visibility: hidden;
+  position: absolute;
+  top: 50px;
+  right: 0;
+  padding: 20px;
+
+  white-space: nowrap;
+  text-align-last: left;
+
+  background: #ffffff;
+  border: 1px solid #cfcfcf;
+  border-radius: 2px;
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.06);
+
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+  color: #0d0c0b;
+
+  cursor: default;
+}
+
+.popover div {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.popover::before {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  right: 11px;
+  top: -6px;
+  z-index: 1;
+  transform: rotate(45deg);
+  border: 1px solid #cfcfcf;
+  border-width: 1px 0 0 1px;
+  background: #ffffff;
+}
+
+.popover div:nth-child(2) {
+  margin-top: 20px;
+}
+
+.popover img {
+  display: inline;
+  margin-right: 10px;
+}
