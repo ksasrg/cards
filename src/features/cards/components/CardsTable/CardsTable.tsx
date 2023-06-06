@@ -20,6 +20,7 @@ export function CardsTable() {
   const mappedRows = cards.map((card) => {
     const updated = new Date(card.updated);
     const date = updated.toLocaleString("ru-RU");
+    const width = (card.grade / 5) * 100 + "%";
 
     return (
       <tr key={card._id}>
@@ -27,7 +28,10 @@ export function CardsTable() {
         <td>{card.answer}</td>
         <td>{date}</td>
         <td>
-          {card.grade}
+          <p className={s.rating}>
+            ★★★★★
+            <p style={{ width }}>★★★★★</p>
+          </p>
           <img src={editIconMini} alt="edit" />
           <img
             src={trash}
