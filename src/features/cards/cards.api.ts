@@ -4,6 +4,9 @@ export const cardsApi = {
   getCards: (payload: ArgGetCards) => {
     return instance.get<GetResponse>(`cards/card`, { params: { ...payload } });
   },
+  createCard: (payload: ArgPostCard) => {
+    return instance.post<PostResponse>(`cards/card`, { card: payload });
+  },
 };
 
 export type ArgGetCards = {
@@ -15,6 +18,18 @@ export type ArgGetCards = {
   sortCards?: string;
   page?: string | number;
   pageCount?: number;
+};
+
+export type ArgPostCard = {
+  cardsPack_id: string;
+  question?: string;
+  answer?: string;
+  grade?: number;
+  shots?: number;
+  answerImg?: string;
+  questionImg?: string;
+  questionVideo?: string;
+  answerVideo?: string;
 };
 
 export interface GetResponse {
@@ -30,6 +45,12 @@ export interface GetResponse {
   cardsTotalCount: number;
   minGrade: number;
   maxGrade: number;
+  token: string;
+  tokenDeathTime: number;
+}
+
+export interface PostResponse {
+  newCard: Card;
   token: string;
   tokenDeathTime: number;
 }

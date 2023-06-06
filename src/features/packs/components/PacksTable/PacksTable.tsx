@@ -25,8 +25,8 @@ export function PacksTable() {
   const mappedRows = packs.map((p) => {
     const date = new Date(p.updated).toLocaleString("ru-RU");
     const { _id: packId, name } = p;
-    const isActive = Boolean(p.cardsCount);
     const isMy = userId === p.user_id;
+    const isActive = Boolean(p.cardsCount) || isMy;
 
     return (
       <tr key={packId}>
