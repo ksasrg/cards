@@ -20,6 +20,7 @@ export function PacksTable() {
 
   const onSort = (sortPacks: string) => {
     setSearchParams({ ...params, sortPacks });
+    dispatch(packsThunks.get({ ...params, sortPacks }));
   };
 
   const mappedRows = packs.map((p) => {

@@ -57,10 +57,7 @@ const create = createAppAsyncThunk<
 >("packs/create-pack", async (arg, thunkAPI) => {
   try {
     const res = await packsApi.create(arg.payload);
-
-    const page = thunkAPI.getState().packs.list.page;
-    if (page === 1) await thunkAPI.dispatch(get({ ...arg.query, page: "1" }));
-
+    await thunkAPI.dispatch(get(arg.query));
     return res.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error);

@@ -32,7 +32,12 @@ export function PacksList() {
 
   const onPostPack = (data: Data) => {
     const payload = { ...data, deckCover: "" };
-    const query = { pageCount: pageCount.toString() };
+    let query = {};
+
+    if (params.pageCount) {
+      query = { pageCount: params.pageCount };
+    }
+
     setSearchParams(query);
     dispatch(packsThunks.create({ payload, query }));
   };
@@ -42,7 +47,9 @@ export function PacksList() {
   };
 
   const onChange = (query: PaginationQuery) => {
-    setSearchParams({ ...params, ...(query as Record<string, string>) });
+    const getQuery = { ...params, ...(query as Record<string, string>) };
+    setSearchParams(getQuery);
+    dispatch(packsThunks.get(getQuery));
   };
 
   return (
