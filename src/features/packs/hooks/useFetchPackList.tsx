@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from "app/hooks";
 import { useEffect } from "react";
 import { packsThunks } from "../packs.slice";
 
-export const useFetchPackList = () => {
+export const UseFetchPackList = () => {
   const dispatch = useAppDispatch();
   const forceFetch = useAppSelector((state) => state.packs.forceFetch);
   const min = useAppSelector((state) => state.packs.query.min);
@@ -33,4 +33,5 @@ export const useFetchPackList = () => {
     ]
     /* eslint-enable react-hooks/exhaustive-deps */
   );
+  return <></>;
 };

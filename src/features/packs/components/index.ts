@@ -1,3 +1,4 @@
+export * from "./PacksPagination/PacksPagination";
 export * from "./ActionsIcons/ActionsIcons";
 export * from "./AddPackModal/AddPackModal";
 export * from "./PackCell/PackCell";
