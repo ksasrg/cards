@@ -34,7 +34,7 @@ export function PacksList() {
     const payload = { ...data, deckCover: "" };
     const query = { pageCount: pageCount.toString() };
     setSearchParams(query);
-    dispatch(packsThunks.create({ payload, query }));
+    dispatch(packsThunks.create(payload));
   };
 
   const onPackModal = (open: boolean) => {

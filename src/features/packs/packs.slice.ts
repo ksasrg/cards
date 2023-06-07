@@ -13,6 +13,7 @@ const initialState = {
     token: "",
     tokenDeathTime: 0,
   },
+  forceFetch: "",
 };
 
 export const slice = createSlice({
@@ -20,9 +21,16 @@ export const slice = createSlice({
   initialState,
   reducers: {},
   extraReducers(builder) {
-    builder.addCase(get.fulfilled, (state, action) => {
-      state.list = { ...action.payload };
-    });
+    builder
+      .addCase(get.fulfilled, (state, action) => {
+        state.list = { ...action.payload };
+      })
+      .addCase(create.fulfilled, (state, action) => {
+        state.forceFetch = Date();
+      })
+      .addCase(deletePack.fulfilled, (state, action) => {
+        state.forceFetch = Date();
+      });
   },
 });
 
@@ -38,34 +46,30 @@ const get = createAppAsyncThunk<GetCardPack, ArgGetPacks>(
   }
 );
 
-const deletePack = createAppAsyncThunk<
-  DeleteCardPack,
-  { packId: string; query: ArgGetPacks }
->("packs/delete-pack", async (arg, thunkAPI) => {
-  try {
-    const res = await packsApi.delete(arg.packId);
-    await thunkAPI.dispatch(get(arg.query));
-    return res.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error);
+const deletePack = createAppAsyncThunk<DeleteCardPack, { packId: string }>(
+  "packs/delete-pack",
+  async (arg, thunkAPI) => {
+    try {
+      const res = await packsApi.delete(arg.packId);
+      return res.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
   }
-});
+);
 
-const create = createAppAsyncThunk<
-  CreateCardPack,
-  { payload: ArgCreateCardPack; query: ArgGetPacks }
->("packs/create-pack", async (arg, thunkAPI) => {
-  try {
-    const res = await packsApi.create(arg.payload);
+const create = createAppAsyncThunk<CreateCardPack, ArgCreateCardPack>(
+  "packs/create-pack",
+  async (arg, thunkAPI) => {
+    try {
+      const res = await packsApi.create(arg);
 
-    const page = thunkAPI.getState().packs.list.page;
-    if (page === 1) await thunkAPI.dispatch(get({ ...arg.query, page: "1" }));
-
-    return res.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error);
+      return res.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
   }
-});
+);
 
 export interface GetCardPack {
   cardPacks: CardPack[];
