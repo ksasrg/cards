@@ -1,6 +1,5 @@
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { useSearchParams } from "react-router-dom";
-import { packsThunks } from "features/packs/packs.slice";
+import { packsActions, packsThunks } from "features/packs/packs.slice";
 import { ActionIcons } from "../ActionsIcons/ActionsIcons";
 import { PackCell } from "../PackCell/PackCell";
 import { Th } from "common/components";
@@ -8,9 +7,7 @@ import s from "./style.module.css";
 
 export function PacksTable() {
   const dispatch = useAppDispatch();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const params = Object.fromEntries(searchParams);
-  const sort = params.sortPacks;
+  const sort = useAppSelector((state) => state.packs.query.sortPacks);
   const userId = useAppSelector((state) => state.auth.profile?._id);
   const packs = useAppSelector((state) => state.packs.list.cardPacks);
 
@@ -19,7 +16,7 @@ export function PacksTable() {
   };
 
   const onSort = (sortPacks: string) => {
-    setSearchParams({ ...params, sortPacks });
+    dispatch(packsActions.setQuery({ sortPacks }));
   };
 
   const mappedRows = packs.map((p) => {

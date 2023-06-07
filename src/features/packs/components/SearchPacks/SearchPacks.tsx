@@ -1,15 +1,15 @@
 import { Search } from "common/components";
-import s from "./style.module.css";
+import { packsActions } from "features/packs/packs.slice";
+import { useAppDispatch, useAppSelector } from "app/hooks";
 import search from "assets/search-icon.svg";
-import { useSearchParams } from "react-router-dom";
+import s from "./style.module.css";
 
 export const SearchPacks = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const params = Object.fromEntries(searchParams);
-  const packName = params.packName;
+  const dispatch = useAppDispatch();
+  const packName = useAppSelector((state) => state.packs.query.packName);
 
   const onSearchHandler = (packName: string) => {
-    setSearchParams({ ...params, packName });
+    dispatch(packsActions.setQuery({ packName }));
   };
 
   return (

@@ -1,6 +1,5 @@
 import Button from "@mui/material/Button/Button";
 import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { useFetchPackList } from "features/packs/hooks/useFetchPackList";
 import { AppPagination, PaginationQuery } from "common/components";
@@ -13,18 +12,19 @@ import {
   SearchPacks,
   SliderPacks,
 } from "features/packs/components";
-import { packsThunks } from "features/packs/packs.slice";
+import { packsActions, packsThunks } from "features/packs/packs.slice";
 import s from "./style.module.css";
 
 export function PacksList() {
   const dispatch = useAppDispatch();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const params = Object.fromEntries(searchParams);
   const page = useAppSelector((state) => state.packs.list.page);
   const pageCount = useAppSelector((state) => state.packs.list.pageCount);
   const totalCount = useAppSelector(
     (state) => state.packs.list.cardPacksTotalCount
   );
+
+  console.log("PacksList");
+  console.log(page, pageCount, totalCount);
 
   const [packModal, setPackModal] = useState(false);
 
@@ -32,8 +32,6 @@ export function PacksList() {
 
   const onPostPack = (data: Data) => {
     const payload = { ...data, deckCover: "" };
-    const query = { pageCount: pageCount.toString() };
-    setSearchParams(query);
     dispatch(packsThunks.create(payload));
   };
 
@@ -42,7 +40,7 @@ export function PacksList() {
   };
 
   const onChange = (query: PaginationQuery) => {
-    setSearchParams({ ...params, ...(query as Record<string, string>) });
+    dispatch(packsActions.setQuery(query));
   };
 
   return (

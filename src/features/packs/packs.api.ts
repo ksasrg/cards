@@ -15,8 +15,8 @@ export const packsApi = {
 };
 
 export type ArgGetPacks = {
-  page?: string | number;
-  pageCount?: string;
+  page?: number;
+  pageCount?: number;
   packName?: string;
   min?: number;
   max?: number;

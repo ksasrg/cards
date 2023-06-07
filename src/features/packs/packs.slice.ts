@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { createAppAsyncThunk } from "common/utils/create-app-async-thunk";
 import { ArgCreateCardPack, ArgGetPacks, packsApi } from "./packs.api";
 
@@ -13,13 +13,18 @@ const initialState = {
     token: "",
     tokenDeathTime: 0,
   },
+  query: {} as ArgGetPacks,
   forceFetch: "",
 };
 
 export const slice = createSlice({
   name: "packs",
   initialState,
-  reducers: {},
+  reducers: {
+    setQuery: (state, action: PayloadAction<ArgGetPacks>) => {
+      state.query = { ...state.query, ...action.payload };
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(get.fulfilled, (state, action) => {
@@ -27,6 +32,7 @@ export const slice = createSlice({
       })
       .addCase(create.fulfilled, (state, action) => {
         state.forceFetch = Date();
+        state.query = { pageCount: state.query.pageCount };
       })
       .addCase(deletePack.fulfilled, (state, action) => {
         state.forceFetch = Date();

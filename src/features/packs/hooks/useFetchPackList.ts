@@ -1,19 +1,23 @@
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
 import { packsThunks } from "../packs.slice";
-import { ArgGetPacks } from "../packs.api";
 
 export const useFetchPackList = () => {
   const dispatch = useAppDispatch();
-  const [searchParams] = useSearchParams();
-  const params: ArgGetPacks = Object.fromEntries(searchParams);
-  const { min, max, page, pageCount, packName, user_id, sortPacks } = params;
   const forceFetch = useAppSelector((state) => state.packs.forceFetch);
+  const min = useAppSelector((state) => state.packs.query.min);
+  const max = useAppSelector((state) => state.packs.query.max);
+  const page = useAppSelector((state) => state.packs.query.page);
+  const pageCount = useAppSelector((state) => state.packs.query.pageCount);
+  const packName = useAppSelector((state) => state.packs.query.packName);
+  const user_id = useAppSelector((state) => state.packs.query.user_id);
+  const sortPacks = useAppSelector((state) => state.packs.query.sortPacks);
+
+  const query = { min, max, page, pageCount, packName, user_id, sortPacks };
 
   useEffect(
     () => {
-      dispatch(packsThunks.get(params));
+      dispatch(packsThunks.get(query));
     },
     /* eslint-disable react-hooks/exhaustive-deps */
     [
