@@ -1,14 +1,19 @@
 import Button from "@mui/material/Button/Button";
+import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { useFetchPackList } from "features/packs/hooks/useFetchPackList";
-import { packsThunks } from "features/packs/packs.slice";
-import { PacksTable } from "features/packs/components/PacksTable/PacksTable";
-import { SearchPacks } from "features/packs/components/SearchPacks/SearchPacks";
-import { PackFilter } from "features/packs/components/PackFilter/PackFilter";
-import { ResetFilters } from "features/packs/components/ResetFilters/ResetFilters";
-import { SliderPacks } from "features/packs/components/SliderPacks/SliderPacks";
 import { AppPagination, PaginationQuery } from "common/components";
-import { useSearchParams } from "react-router-dom";
+import {
+  AddPackModal,
+  Data,
+  PackFilter,
+  PacksTable,
+  ResetFilters,
+  SearchPacks,
+  SliderPacks,
+} from "features/packs/components";
+import { packsThunks } from "features/packs/packs.slice";
 import s from "./style.module.css";
 
 export function PacksList() {
@@ -21,13 +26,19 @@ export function PacksList() {
     (state) => state.packs.list.cardPacksTotalCount
   );
 
+  const [packModal, setPackModal] = useState(false);
+
   useFetchPackList();
 
-  const onAddPackHandler = () => {
-    const payload = { name: "test1234", deckCover: "", private: false };
-    const query = { pageCount: pageCount.toString(), page: "1" };
+  const onPostPack = (data: Data) => {
+    const payload = { ...data, deckCover: "" };
+    const query = { pageCount: pageCount.toString() };
     setSearchParams(query);
     dispatch(packsThunks.create({ payload, query }));
+  };
+
+  const onPackModal = (open: boolean) => {
+    setPackModal(open);
   };
 
   const onChange = (query: PaginationQuery) => {
@@ -36,9 +47,14 @@ export function PacksList() {
 
   return (
     <div className="container page">
+      <AddPackModal
+        open={packModal}
+        onClose={onPackModal}
+        onSave={onPostPack}
+      />
       <div className={s.up}>
         <div className={s.title}>Packs list</div>
-        <Button onClick={onAddPackHandler}>Add new pack</Button>
+        <Button onClick={() => onPackModal(true)}>Add new pack</Button>
       </div>
 
       <div className={s.filters}>
