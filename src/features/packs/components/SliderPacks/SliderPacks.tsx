@@ -1,13 +1,16 @@
 import Slider from "@mui/material/Slider/Slider";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { SyntheticEvent, useEffect, useState } from "react";
-import { packsActions } from "features/packs/packs.slice";
+import { useSearchParams } from "react-router-dom";
+import { packsThunks } from "features/packs/packs.slice";
 import s from "./style.module.css";
 
 export const SliderPacks = () => {
   const dispatch = useAppDispatch();
-  const minQuery = useAppSelector((state) => state.packs.query.min);
-  const maxQuery = useAppSelector((state) => state.packs.query.max);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const params = Object.fromEntries(searchParams);
+  const minQuery = Number(params.min);
+  const maxQuery = Number(params.max);
   const minCard = useAppSelector((state) => state.packs.list.minCardsCount);
   const maxCard = useAppSelector((state) => state.packs.list.maxCardsCount);
   const [value, setValue] = useState<number[]>([0, 1]);
@@ -26,7 +29,8 @@ export const SliderPacks = () => {
   ) => {
     const min = (newValue as number[])[0];
     const max = (newValue as number[])[1];
-    dispatch(packsActions.setQuery({ min, max }));
+    setSearchParams({ ...params, min: min.toString(), max: max.toString() });
+    dispatch(packsThunks.get({ ...params, min, max }));
   };
 
   return (

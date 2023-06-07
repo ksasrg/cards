@@ -1,12 +1,13 @@
 import Button from "@mui/material/Button/Button";
 import { useState } from "react";
-import { useAppDispatch } from "app/hooks";
-import { UseFetchPackList } from "features/packs/hooks/useFetchPackList";
+import { useSearchParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import { useFetchPackList } from "features/packs/hooks/useFetchPackList";
+import { AppPagination, PaginationQuery } from "common/components";
 import {
   AddPackModal,
   Data,
   PackFilter,
-  PacksPagination,
   PacksTable,
   ResetFilters,
   SearchPacks,
@@ -15,22 +16,44 @@ import {
 import { packsThunks } from "features/packs/packs.slice";
 import s from "./style.module.css";
 
-export const PacksList = () => {
+export function PacksList() {
   const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const params = Object.fromEntries(searchParams);
+  const page = useAppSelector((state) => state.packs.list.page);
+  const pageCount = useAppSelector((state) => state.packs.list.pageCount);
+  const totalCount = useAppSelector(
+    (state) => state.packs.list.cardPacksTotalCount
+  );
+
   const [packModal, setPackModal] = useState(false);
+
+  useFetchPackList();
 
   const onPostPack = (data: Data) => {
     const payload = { ...data, deckCover: "" };
-    dispatch(packsThunks.create(payload));
+    let query = {};
+
+    if (params.pageCount) {
+      query = { pageCount: params.pageCount };
+    }
+
+    setSearchParams(query);
+    dispatch(packsThunks.create({ payload, query }));
   };
 
   const onPackModal = (open: boolean) => {
     setPackModal(open);
   };
 
+  const onChange = (query: PaginationQuery) => {
+    const getQuery = { ...params, ...(query as Record<string, string>) };
+    setSearchParams(getQuery);
+    dispatch(packsThunks.get(getQuery));
+  };
+
   return (
     <div className="container page">
-      <UseFetchPackList />
       <AddPackModal
         open={packModal}
         onClose={onPackModal}
@@ -48,8 +71,8 @@ export const PacksList = () => {
         <ResetFilters />
       </div>
 
-      <PacksPagination />
+      <AppPagination onChange={onChange} {...{ page, pageCount, totalCount }} />
       <PacksTable />
     </div>
   );
-};
+}

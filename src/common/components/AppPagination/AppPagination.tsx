@@ -1,4 +1,5 @@
 import Pagination from "@mui/material/Pagination/Pagination";
+import { useAppSelector } from "app/hooks";
 import { ChangeEvent } from "react";
 
 export type PaginationQuery = {
@@ -15,7 +16,7 @@ type Props = {
 
 export const AppPagination = (props: Props) => {
   const { page, pageCount, totalCount: cardsTotalCount, onChange } = props;
-  // const isLoading = useAppSelector((state) => state.app.isLoading);
+  const isLoading = useAppSelector((state) => state.app.isLoading);
 
   const totalPages = Math.ceil(cardsTotalCount / +pageCount);
 
@@ -43,7 +44,7 @@ export const AppPagination = (props: Props) => {
         style={{ margin: "0 15px" }}
         onChange={onPageCountChangeHandler}
         value={pageCount}
-        // disabled={isLoading}
+        disabled={isLoading}
       >
         <option value="4">4</option>
         <option value="10">10</option>

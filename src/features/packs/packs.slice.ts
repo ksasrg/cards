@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { createAppAsyncThunk } from "common/utils/create-app-async-thunk";
 import { ArgCreateCardPack, ArgGetPacks, packsApi } from "./packs.api";
 
@@ -13,30 +13,16 @@ const initialState = {
     token: "",
     tokenDeathTime: 0,
   },
-  query: {} as ArgGetPacks,
-  forceFetch: "",
 };
 
 export const slice = createSlice({
   name: "packs",
   initialState,
-  reducers: {
-    setQuery: (state, action: PayloadAction<ArgGetPacks>) => {
-      state.query = { ...state.query, ...action.payload };
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
-    builder
-      .addCase(get.fulfilled, (state, action) => {
-        state.list = { ...action.payload };
-      })
-      .addCase(create.fulfilled, (state, action) => {
-        state.forceFetch = Date();
-        state.query = { pageCount: state.query.pageCount };
-      })
-      .addCase(deletePack.fulfilled, (state, action) => {
-        state.forceFetch = Date();
-      });
+    builder.addCase(get.fulfilled, (state, action) => {
+      state.list = { ...action.payload };
+    });
   },
 });
 
@@ -52,30 +38,31 @@ const get = createAppAsyncThunk<GetCardPack, ArgGetPacks>(
   }
 );
 
-const deletePack = createAppAsyncThunk<DeleteCardPack, { packId: string }>(
-  "packs/delete-pack",
-  async (arg, thunkAPI) => {
-    try {
-      const res = await packsApi.delete(arg.packId);
-      return res.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
+const deletePack = createAppAsyncThunk<
+  DeleteCardPack,
+  { packId: string; query: ArgGetPacks }
+>("packs/delete-pack", async (arg, thunkAPI) => {
+  try {
+    const res = await packsApi.delete(arg.packId);
+    await thunkAPI.dispatch(get(arg.query));
+    return res.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
   }
-);
+});
 
-const create = createAppAsyncThunk<CreateCardPack, ArgCreateCardPack>(
-  "packs/create-pack",
-  async (arg, thunkAPI) => {
-    try {
-      const res = await packsApi.create(arg);
-
-      return res.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
+const create = createAppAsyncThunk<
+  CreateCardPack,
+  { payload: ArgCreateCardPack; query: ArgGetPacks }
+>("packs/create-pack", async (arg, thunkAPI) => {
+  try {
+    const res = await packsApi.create(arg.payload);
+    await thunkAPI.dispatch(get(arg.query));
+    return res.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
   }
-);
+});
 
 export interface GetCardPack {
   cardPacks: CardPack[];
