@@ -23,7 +23,7 @@ export const DeleteModal = (props: Props) => {
   if (open)
     return (
       <Modal title={title} onClose={() => onClose()}>
-        {text}
+        <div className={s.text}>{text}</div>
         <div className={s.buttons}>
           <button onClick={() => onClose()} className={s.cancel} autoFocus>
             Cancel

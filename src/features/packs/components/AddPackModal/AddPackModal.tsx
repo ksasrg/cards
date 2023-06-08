@@ -44,8 +44,17 @@ export const AddPackModal = ({ open, onClose, onSave }: Props) => {
             <Checkbox id="private" {...register("private")} />
             <label htmlFor="private">Private pack</label>
           </div>
-          <div>
-            <button type="submit">Save</button>
+          <div className={s.buttons}>
+            <button
+              onClick={() => onClose(false)}
+              className={s.cancel}
+              autoFocus
+            >
+              Cancel
+            </button>
+            <button type="submit" className={s.save}>
+              Save
+            </button>
           </div>
         </form>
       </Modal>

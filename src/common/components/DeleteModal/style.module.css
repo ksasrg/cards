@@ -1,3 +1,8 @@
+.text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .buttons {
   display: flex;
   justify-content: space-around;
@@ -6,6 +11,7 @@
 .buttons button {
   margin: 35px 0;
   height: 36px;
+  min-width: 120px;
   padding: 0 25px;
 
   font-family: "Montserrat";

@@ -50,8 +50,11 @@ export const CardsList = () => {
       <div className={s.up}>
         {isMy ? (
           <>
-            <div className={s.title}>
-              {packName} <img src={extraIcon} alt="" />
+            <div className={s.titlebox}>
+              <div className={s.title}>{packName}</div>
+              <div>
+                <img src={extraIcon} alt="" />
+              </div>
             </div>
             <Button onClick={onAddPackHandler}>Add new card</Button>
           </>
