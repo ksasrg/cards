@@ -34,17 +34,13 @@ export function PacksTable() {
   const mappedRows = packs.map((pack) => {
     const date = new Date(pack.updated).toLocaleString("ru-RU");
 
-    const onDelete = () => {
-      setDeleteModal({ open: true, id: pack._id, name: pack.name });
-    };
-
     return (
       <tr key={pack._id}>
         <TdPackName pack={pack} />
         <td>{pack.cardsCount}</td>
         <td>{date}</td>
         <td>{pack.user_name}</td>
-        <TdActions {...{ onDelete, pack }} />
+        <TdActions {...{ pack, setDeleteModal }} />
       </tr>
     );
   });
@@ -59,6 +55,7 @@ export function PacksTable() {
       >
         {`Do you really want to remove $name$? All cards will be deleted.`}
       </DeleteModal>
+
       <table className={s.table}>
         <thead>
           <tr>

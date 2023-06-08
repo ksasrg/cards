@@ -26,39 +26,32 @@ export const AddPackModal = ({ open, onClose, onSave }: Props) => {
     reset();
   };
 
-  if (open)
-    return (
-      <Modal title={"Add new pack"} onClose={() => onClose(false)}>
-        <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
-          <TextField
-            label="Name pack"
-            variant="standard"
-            sx={{ marginTop: "30px", width: "100%" }}
-            error={Boolean(errors.name)}
-            helperText={errors.name && errors.name.message}
-            {...register("name", {
-              required: "Required",
-            })}
-          />
-          <div className={s.checkbox}>
-            <Checkbox id="private" {...register("private")} />
-            <label htmlFor="private">Private pack</label>
-          </div>
-          <div className={s.buttons}>
-            <button
-              onClick={() => onClose(false)}
-              className={s.cancel}
-              autoFocus
-            >
-              Cancel
-            </button>
-            <button type="submit" className={s.save}>
-              Save
-            </button>
-          </div>
-        </form>
-      </Modal>
-    );
-
-  return <></>;
+  return (
+    <Modal open={open} title={"Add new pack"} onClose={() => onClose(false)}>
+      <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
+        <TextField
+          label="Name pack"
+          variant="standard"
+          sx={{ marginTop: "30px", width: "100%" }}
+          error={Boolean(errors.name)}
+          helperText={errors.name && errors.name.message}
+          {...register("name", {
+            required: "Required",
+          })}
+        />
+        <div className={s.checkbox}>
+          <Checkbox id="private" {...register("private")} />
+          <label htmlFor="private">Private pack</label>
+        </div>
+        <div className={s.buttons}>
+          <button onClick={() => onClose(false)} className={s.cancel} autoFocus>
+            Cancel
+          </button>
+          <button type="submit" className={s.save}>
+            Save
+          </button>
+        </div>
+      </form>
+    </Modal>
+  );
 };

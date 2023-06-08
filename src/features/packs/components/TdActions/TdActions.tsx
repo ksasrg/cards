@@ -6,15 +6,20 @@ import { RouterPaths } from "common/router/router";
 import { CardPack } from "features/packs/packs.slice";
 import { useAppSelector } from "app/hooks";
 
+type DeleteModal = { open: boolean; id: string; name: string };
 type Props = {
   pack: CardPack;
-  onDelete: () => void;
+  setDeleteModal: ({ open, id, name }: DeleteModal) => void;
 };
 
-export const TdActions = ({ onDelete, pack }: Props) => {
+export const TdActions = ({ setDeleteModal, pack }: Props) => {
   const userId = useAppSelector((state) => state.auth.profile?._id);
   const isMy = userId === pack.user_id;
   const isActive = Boolean(pack.cardsCount) || isMy;
+
+  const onDelete = () => {
+    setDeleteModal({ open: true, id: pack._id, name: pack.name });
+  };
 
   return (
     <td>
@@ -29,7 +34,7 @@ export const TdActions = ({ onDelete, pack }: Props) => {
       {isMy && (
         <>
           <img src={editIconMini} alt="edit" />
-          <img src={trash} alt="delete" onClick={() => onDelete()} />
+          <img src={trash} alt="delete" onClick={onDelete} />
         </>
       )}
     </td>

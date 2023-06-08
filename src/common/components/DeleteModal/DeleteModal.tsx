@@ -20,20 +20,17 @@ export const DeleteModal = (props: Props) => {
 
   const text = children?.replace("$name$", `${name}`);
 
-  if (open)
-    return (
-      <Modal title={title} onClose={() => onClose()}>
-        <div className={s.text}>{text}</div>
-        <div className={s.buttons}>
-          <button onClick={() => onClose()} className={s.cancel} autoFocus>
-            Cancel
-          </button>
-          <button onClick={onDeleteHandler} className={s.delete}>
-            Delete
-          </button>
-        </div>
-      </Modal>
-    );
-
-  return <></>;
+  return (
+    <Modal open={open} title={title} onClose={onClose}>
+      <div className={s.text}>{text}</div>
+      <div className={s.buttons}>
+        <button onClick={onClose} className={s.cancel} autoFocus>
+          Cancel
+        </button>
+        <button onClick={onDeleteHandler} className={s.delete}>
+          Delete
+        </button>
+      </div>
+    </Modal>
+  );
 };
