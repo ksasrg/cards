@@ -3,8 +3,8 @@ import { useAppDispatch, useAppSelector } from "app/hooks";
 import { DeleteModal } from "common/components";
 import { useSearchParams } from "react-router-dom";
 import { packsThunks } from "features/packs/packs.slice";
-import { ActionIcons } from "../ActionsIcons/ActionsIcons";
-import { PackCell } from "../PackCell/PackCell";
+import { TdActions } from "../TdActions/TdActions";
+import { TdPackName } from "../TdPackName/TdPackName";
 import { Th } from "common/components";
 import s from "./style.module.css";
 
@@ -13,7 +13,6 @@ export function PacksTable() {
   const [searchParams, setSearchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams);
   const sort = params.sortPacks;
-  const userId = useAppSelector((state) => state.auth.profile?._id);
   const packs = useAppSelector((state) => state.packs.list.cardPacks);
 
   const init = { open: false, id: "", name: "" };
@@ -23,11 +22,7 @@ export function PacksTable() {
     dispatch(packsThunks.deletePack({ packId, query: params }));
   };
 
-  const onDeleteHandler = (id: string, name: string) => {
-    setDeleteModal({ open: true, id, name });
-  };
-
-  const onCloseModal = () => {
+  const onCloseDeleteModal = () => {
     setDeleteModal({ open: false, id: "", name: "" });
   };
 
@@ -36,27 +31,20 @@ export function PacksTable() {
     dispatch(packsThunks.get({ ...params, sortPacks }));
   };
 
-  const mappedRows = packs.map((p) => {
-    const date = new Date(p.updated).toLocaleString("ru-RU");
-    const { _id: packId, name } = p;
-    const isMy = userId === p.user_id;
-    const isActive = Boolean(p.cardsCount) || isMy;
+  const mappedRows = packs.map((pack) => {
+    const date = new Date(pack.updated).toLocaleString("ru-RU");
 
     const onDelete = () => {
-      onDeleteHandler(packId, name);
+      setDeleteModal({ open: true, id: pack._id, name: pack.name });
     };
 
     return (
-      <tr key={packId}>
-        <td>
-          <PackCell {...{ packId, name, isActive }} />
-        </td>
-        <td>{p.cardsCount}</td>
+      <tr key={pack._id}>
+        <TdPackName pack={pack} />
+        <td>{pack.cardsCount}</td>
         <td>{date}</td>
-        <td>{p.user_name}</td>
-        <td>
-          <ActionIcons {...{ isMy, packId, isActive, onDelete }} />
-        </td>
+        <td>{pack.user_name}</td>
+        <TdActions {...{ onDelete, pack }} />
       </tr>
     );
   });
@@ -66,7 +54,7 @@ export function PacksTable() {
       <DeleteModal
         modal={deleteModal}
         title="Delete Pack"
-        onClose={onCloseModal}
+        onClose={onCloseDeleteModal}
         onDelete={onSubmitDelete}
       >
         {`Do you really want to remove $name$? All cards will be deleted.`}
@@ -74,20 +62,10 @@ export function PacksTable() {
       <table className={s.table}>
         <thead>
           <tr>
-            <Th name="Name" sort={sort} query="name" onSort={onSort} />
-            <Th name="Cards" sort={sort} query="cardsCount" onSort={onSort} />
-            <Th
-              name="Last Updated"
-              sort={sort}
-              query="updated"
-              onSort={onSort}
-            />
-            <Th
-              name="Created by"
-              sort={sort}
-              query="user_name"
-              onSort={onSort}
-            />
+            <Th {...{ sort, onSort, name: "Name", query: "name" }} />
+            <Th {...{ sort, onSort, name: "Cards", query: "cardsCount" }} />
+            <Th {...{ sort, onSort, name: "Last Updated", query: "updated" }} />
+            <Th {...{ sort, onSort, name: "Created by", query: "user_name" }} />
             <th>Actions</th>
           </tr>
         </thead>
