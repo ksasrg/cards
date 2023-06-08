@@ -6,7 +6,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import { ArgLogin } from "features/auth/auth.api";
 import { authThunks } from "features/auth/auth.slice";
-import { AuthCard } from "features/auth/components/AuthCard/AuthCard";
 import { EmailField } from "features/auth/components/EmailField/EmailField";
 import { PassField } from "features/auth/components/PassField/PassField";
 import s from "./style.module.css";
@@ -40,22 +39,24 @@ export function SignIn() {
   }
 
   return (
-    <AuthCard>
-      <h1>Sign In</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <EmailField form={form} />
-        <PassField form={form} />
-        <div className={s.checkbox}>
-          <Checkbox {...register("rememberMe")} id="rememberMe" />
-          <label htmlFor="rememberMe">Remember me</label>
-        </div>
-        <Link to={RouterPaths.forgot}>Forgot Password?</Link>
-        <Button size="large" type="submit" sx={{ marginTop: "68px" }}>
-          Sign In
-        </Button>
-      </form>
-      <div className="auth_text">Don't have an account?</div>
-      <Link to={RouterPaths.signup}>Sign Up</Link>
-    </AuthCard>
+    <div className="container page">
+      <div className="card">
+        <h1>Sign In</h1>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <EmailField form={form} />
+          <PassField form={form} />
+          <div className={s.checkbox}>
+            <Checkbox {...register("rememberMe")} id="rememberMe" />
+            <label htmlFor="rememberMe">Remember me</label>
+          </div>
+          <Link to={RouterPaths.forgot}>Forgot Password?</Link>
+          <Button size="large" type="submit" sx={{ marginTop: "68px" }}>
+            Sign In
+          </Button>
+        </form>
+        <div className="auth_text">Don't have an account?</div>
+        <Link to={RouterPaths.signup}>Sign Up</Link>
+      </div>
+    </div>
   );
 }

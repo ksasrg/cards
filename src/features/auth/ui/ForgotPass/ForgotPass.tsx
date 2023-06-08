@@ -5,7 +5,6 @@ import { RouterPaths } from "common/router/router";
 import { useAppDispatch } from "app/hooks";
 import { ArgForgot } from "features/auth/auth.api";
 import { authThunks } from "features/auth/auth.slice";
-import { AuthCard } from "features/auth/components/AuthCard/AuthCard";
 import { EmailField } from "features/auth/components/EmailField/EmailField";
 
 export function ForgotPass() {
@@ -35,19 +34,21 @@ export function ForgotPass() {
   };
 
   return (
-    <AuthCard>
-      <h1>Forgot your password?</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <EmailField form={form} />
-        <div className="auth_text">
-          Enter your email address and we will send you further instructions
-        </div>
-        <Button size="large" type="submit" sx={{ marginTop: "68px" }}>
-          Send Instructions
-        </Button>
-        <div className="auth_text">Did you remember your password?</div>
-        <Link to={RouterPaths.signin}>Try logging in</Link>
-      </form>
-    </AuthCard>
+    <div className="container page">
+      <div className="card">
+        <h1>Forgot your password?</h1>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <EmailField form={form} />
+          <div className="auth_text">
+            Enter your email address and we will send you further instructions
+          </div>
+          <Button size="large" type="submit" sx={{ marginTop: "68px" }}>
+            Send Instructions
+          </Button>
+          <div className="auth_text">Did you remember your password?</div>
+          <Link to={RouterPaths.signin}>Try logging in</Link>
+        </form>
+      </div>
+    </div>
   );
 }

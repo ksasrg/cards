@@ -1,7 +1,6 @@
 import Button from "@mui/material/Button/Button";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { authThunks } from "features/auth/auth.slice";
-import { AuthCard } from "features/auth/components/AuthCard/AuthCard";
 import { Avatar, BackLink } from "common/components";
 import { Editable } from "features/auth/components/Editable/Editable";
 
@@ -20,9 +19,9 @@ export function Profile() {
   };
 
   return (
-    <>
+    <div className="container page">
       <BackLink />
-      <AuthCard>
+      <div className="card">
         <h1>Personal Information</h1>
         <Avatar size={96} marginTop={30} />
         {name && (
@@ -36,7 +35,7 @@ export function Profile() {
         <Button sx={{ marginTop: "29px" }} onClick={logoutHandler}>
           Log out
         </Button>
-      </AuthCard>
-    </>
+      </div>
+    </div>
   );
 }

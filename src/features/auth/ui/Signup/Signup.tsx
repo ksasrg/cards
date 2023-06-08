@@ -5,7 +5,6 @@ import { RouterPaths } from "common/router/router";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { ArgRegister } from "features/auth/auth.api";
 import { authThunks } from "features/auth/auth.slice";
-import { AuthCard } from "features/auth/components/AuthCard/AuthCard";
 import { EmailField } from "features/auth/components/EmailField/EmailField";
 import { PassField } from "features/auth/components/PassField/PassField";
 import { ConfirmPassField } from "features/auth/components/ConfirmPassField/ConfirmPassField";
@@ -35,18 +34,20 @@ export function Signup() {
   };
 
   return (
-    <AuthCard>
-      <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <EmailField form={form} />
-        <PassField form={form} />
-        <ConfirmPassField form={form} />
-        <Button size="large" type="submit" sx={{ marginTop: "68px" }}>
-          Sign Up
-        </Button>
-      </form>
-      <div className="auth_text">Already have an account?</div>
-      <Link to={RouterPaths.signin}>Sign In</Link>
-    </AuthCard>
+    <div className="container page">
+      <div className="card">
+        <h1>Sign Up</h1>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <EmailField form={form} />
+          <PassField form={form} />
+          <ConfirmPassField form={form} />
+          <Button size="large" type="submit" sx={{ marginTop: "68px" }}>
+            Sign Up
+          </Button>
+        </form>
+        <div className="auth_text">Already have an account?</div>
+        <Link to={RouterPaths.signin}>Sign In</Link>
+      </div>
+    </div>
   );
 }
