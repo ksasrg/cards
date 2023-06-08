@@ -15,6 +15,7 @@ export function CardsTable() {
 
   const onSort = (sortCards: string) => {
     setSearchParams({ ...params, sortCards });
+    dispatch(cardsThunks.get({ ...params, sortCards }));
   };
 
   const mappedRows = cards.map((card) => {

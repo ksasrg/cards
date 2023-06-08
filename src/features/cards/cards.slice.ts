@@ -47,10 +47,7 @@ const create = createAppAsyncThunk<
 >("cards/create", async (arg, thunkAPI) => {
   try {
     const res = await cardsApi.createCard(arg.payload);
-
-    const page = thunkAPI.getState().cards.list.page;
-    if (page === 1) await thunkAPI.dispatch(get(arg.query));
-
+    await thunkAPI.dispatch(get(arg.query));
     return res.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error);

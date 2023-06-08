@@ -4,10 +4,10 @@ import { CardsTable } from "features/cards/components/CardsTable/CardsTable";
 import { AppPagination, BackLink, PaginationQuery } from "common/components";
 import { useCardsFetch } from "features/cards/hooks/useCardsFetch";
 import { useSearchParams } from "react-router-dom";
-import extraIcon from "assets/extra.svg";
 import { cardsThunks } from "features/cards/cards.slice";
 import { ArgPostCard } from "features/cards/cards.api";
 import { SearchCards } from "features/cards/components/SearchCards/SearchCards";
+import extraIcon from "assets/extra.svg";
 import s from "./style.module.css";
 
 export const CardsList = () => {
@@ -30,6 +30,9 @@ export const CardsList = () => {
 
   const onChange = (query: PaginationQuery) => {
     setSearchParams({ ...params, ...(query as Record<string, string>) });
+    dispatch(
+      cardsThunks.get({ ...params, ...(query as Record<string, string>) })
+    );
   };
 
   const onAddPackHandler = () => {

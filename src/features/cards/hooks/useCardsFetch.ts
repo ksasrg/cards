@@ -9,28 +9,16 @@ export const useCardsFetch = () => {
   const [searchParams] = useSearchParams();
   const params: ArgGetCards = Object.fromEntries(searchParams);
 
-  useEffect(() => {
-    return () => {
-      dispatch(cardsActions.resetList());
-    };
-  }, [dispatch]);
-
   useEffect(
     () => {
       dispatch(cardsThunks.get(params));
+
+      return () => {
+        dispatch(cardsActions.resetList());
+      };
     },
     /* eslint-disable react-hooks/exhaustive-deps */
-    [
-      dispatch,
-      params.min,
-      params.max,
-      params.page,
-      params.pageCount,
-      params.cardsPack_id,
-      params.sortCards,
-      params.cardAnswer,
-      params.cardQuestion,
-    ]
+    [dispatch]
     /* eslint-enable react-hooks/exhaustive-deps */
   );
 };
