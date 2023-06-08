@@ -63,6 +63,8 @@
   max-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
+  word-break: normal;
+  white-space: nowrap;
 
   border-bottom: 1px solid #d9d9d9;
 }

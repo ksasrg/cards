@@ -1,10 +1,10 @@
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { Th } from "common/components";
-import s from "./style.module.css";
 import { useSearchParams } from "react-router-dom";
+import { cardsThunks } from "features/cards/cards.slice";
 import editIconMini from "assets/editIconMini.svg";
 import trash from "assets/trash.svg";
-import { cardsThunks } from "features/cards/cards.slice";
+import s from "./style.module.css";
 
 export function CardsTable() {
   const dispatch = useAppDispatch();
@@ -28,10 +28,10 @@ export function CardsTable() {
         <td>{card.answer}</td>
         <td>{date}</td>
         <td>
-          <p className={s.rating}>
+          <span className={s.rating}>
             ★★★★★
-            <p style={{ width }}>★★★★★</p>
-          </p>
+            <span style={{ width }}>★★★★★</span>
+          </span>
           <img src={editIconMini} alt="edit" />
           <img
             src={trash}

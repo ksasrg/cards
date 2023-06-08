@@ -82,9 +82,10 @@
   height: 16px;
   font-size: 20px;
   color: #dadada;
+  user-select: none;
 }
 
-.rating p {
+.rating span {
   top: 0;
   left: 0;
   position: absolute;

@@ -9,6 +9,7 @@ import { SetPass } from "features/auth/ui/SetPass/SetPass";
 import { PacksList } from "features/packs/ui/PacksList/PacksList";
 import { AuthRedirect } from "common/components";
 import { CardsList } from "features/cards/ui/CardsList/CardsList";
+import { Error404 } from "common/components/404/Error404";
 
 export const RouterPaths = {
   main: "/",
@@ -25,6 +26,7 @@ export const router = createHashRouter([
   // export const router = createBrowserRouter([
   {
     element: <App />,
+    errorElement: <Error404 />,
     children: [
       {
         path: RouterPaths.main,
