@@ -12,5 +12,4 @@ export const useFetchPackList = () => {
   useEffect(() => {
     dispatch(packsThunks.get(params));
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-  // ignore setSearchParams
 };

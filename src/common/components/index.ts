@@ -1,3 +1,4 @@
+export * from "./DeleteModal/DeleteModal";
 export * from "./AppLink/AppLink";
 export * from "./AppPagination/AppPagination";
 export * from "./AppSnackBar/AppSnackBar";

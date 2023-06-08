@@ -8,7 +8,7 @@ type Props = {
   isMy: boolean;
   isActive: boolean;
   packId: string;
-  onDelete: (packId: string) => void;
+  onDelete: () => void;
 };
 
 export const ActionIcons = ({ isMy, isActive, packId, onDelete }: Props) => {
@@ -25,7 +25,7 @@ export const ActionIcons = ({ isMy, isActive, packId, onDelete }: Props) => {
       {isMy && (
         <>
           <img src={editIconMini} alt="edit" />
-          <img src={trash} alt="delete" onClick={() => onDelete(packId)} />
+          <img src={trash} alt="delete" onClick={() => onDelete()} />
         </>
       )}
     </>
