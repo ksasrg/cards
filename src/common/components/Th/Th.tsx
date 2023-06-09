@@ -7,12 +7,12 @@ type Props = {
 
 export const Th = (props: Props) => {
   const { name, sort, query, onSort } = props;
-  const up = "1" + query;
-  const down = "0" + query;
+  const up = "0" + query;
+  const down = "1" + query;
 
   const sortCol = (sortBy: string) => {
-    const down = "0" + sortBy;
-    const up = "1" + sortBy;
+    const up = "0" + sortBy;
+    const down = "1" + sortBy;
     const sortPacks = sort === down ? up : sort === up ? down : up;
     onSort(sortPacks);
   };
