@@ -20,13 +20,12 @@ export const RouterPaths = {
   profile: "/profile",
   checkemail: "/checkemail",
   setpass: "/set-new-password/:token",
-};
+} as const;
 
 export const router = createHashRouter([
   // export const router = createBrowserRouter([
   {
     element: <App />,
-    errorElement: <Error404 />,
     children: [
       {
         path: RouterPaths.main,
@@ -45,18 +44,6 @@ export const router = createHashRouter([
         ),
       },
       {
-        path: RouterPaths.signup,
-        element: <Signup />,
-      },
-      {
-        path: RouterPaths.signin,
-        element: <SignIn />,
-      },
-      {
-        path: RouterPaths.forgot,
-        element: <ForgotPass />,
-      },
-      {
         path: RouterPaths.profile,
         element: (
           <AuthRedirect>
@@ -64,14 +51,12 @@ export const router = createHashRouter([
           </AuthRedirect>
         ),
       },
-      {
-        path: RouterPaths.checkemail,
-        element: <CheckEmail />,
-      },
-      {
-        path: RouterPaths.setpass,
-        element: <SetPass />,
-      },
+      { path: RouterPaths.signup, element: <Signup /> },
+      { path: RouterPaths.signin, element: <SignIn /> },
+      { path: RouterPaths.forgot, element: <ForgotPass /> },
+      { path: RouterPaths.checkemail, element: <CheckEmail /> },
+      { path: RouterPaths.setpass, element: <SetPass /> },
+      { path: "*", element: <Error404 /> },
     ],
   },
 ]);
