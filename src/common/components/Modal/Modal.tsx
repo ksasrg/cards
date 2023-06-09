@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, KeyboardEvent } from "react";
 import s from "./style.module.css";
 
 type Props = {
@@ -9,9 +9,13 @@ type Props = {
 };
 
 export const Modal = ({ open, title, children, onClose }: Props) => {
+  const onKeyDownHandler = (e: KeyboardEvent<HTMLDivElement>) => {
+    if (e.code === "Escape") onClose();
+  };
+
   if (open)
     return (
-      <div className={s.modal}>
+      <div className={s.modal} onKeyDown={onKeyDownHandler}>
         <div className={s.box}>
           <div className={s.header}>
             <div>{title}</div>
