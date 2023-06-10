@@ -26,8 +26,13 @@ export const AddPackModal = ({ open, onClose, onSave }: Props) => {
     reset();
   };
 
+  const onCloseHandler = () => {
+    onClose(false);
+    reset();
+  };
+
   return (
-    <Modal open={open} title={"Add new pack"} onClose={() => onClose(false)}>
+    <Modal open={open} title={"Add new pack"} onClose={onCloseHandler}>
       <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
         <TextField
           label="Name pack"
@@ -44,7 +49,7 @@ export const AddPackModal = ({ open, onClose, onSave }: Props) => {
           <label htmlFor="private">Private pack</label>
         </div>
         <div className={s.buttons}>
-          <button onClick={() => onClose(false)} className={s.cancel} autoFocus>
+          <button onClick={onCloseHandler} className={s.cancel} type="button">
             Cancel
           </button>
           <button type="submit" className={s.save}>
