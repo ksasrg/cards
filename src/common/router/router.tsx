@@ -1,5 +1,5 @@
 import { Signup } from "features/auth/ui/Signup/Signup";
-import { createHashRouter } from "react-router-dom";
+import { Navigate, createHashRouter } from "react-router-dom";
 import { SignIn } from "features/auth/ui/SignIn/SignIn";
 import { ForgotPass } from "features/auth/ui/ForgotPass/ForgotPass";
 import { App } from "app/App";
@@ -14,7 +14,7 @@ import { Learn } from "features/cards/ui/Learn/Learn";
 
 export const RouterPaths = {
   main: "/",
-  packs: "/",
+  packs: "/packs",
   cards: "/cards",
   learn: "/learn",
   signup: "/signup",
@@ -31,7 +31,11 @@ export const router = createHashRouter([
     element: <App />,
     children: [
       {
-        path: RouterPaths.main,
+        path: "/",
+        element: <Navigate to={RouterPaths.packs} />,
+      },
+      {
+        path: RouterPaths.packs,
         element: (
           <AuthRedirect>
             <PacksList />

@@ -13,9 +13,13 @@ export function CardsTable() {
   const params = Object.fromEntries(searchParams);
   const sort = params.sortCards;
   const cards = useAppSelector((state) => state.cards.list.cards);
+  const userId = useAppSelector((state) => state.auth.profile?._id);
+  const packUserId = useAppSelector((state) => state.cards.list.packUserId);
 
   const init = { open: false, id: "", name: "" };
   const [deleteModal, setDeleteModal] = useState(init);
+
+  const isMy = userId === packUserId;
 
   const onSubmitDelete = (cardId: string) => {
     dispatch(cardsThunks.deleteCard({ cardId, query: params }));
@@ -49,12 +53,16 @@ export function CardsTable() {
             ★★★★★
             <span style={{ width }}>★★★★★</span>
           </span>
-          <img src={editIconMini} alt="edit" />
-          <img
-            src={trash}
-            alt="delete"
-            onClick={() => onDeleteHandler(card._id)}
-          />
+          {isMy && (
+            <>
+              <img src={editIconMini} alt="edit" />
+              <img
+                src={trash}
+                alt="delete"
+                onClick={() => onDeleteHandler(card._id)}
+              />
+            </>
+          )}
         </td>
       </tr>
     );

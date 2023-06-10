@@ -7,7 +7,7 @@ export const BackLink = () => {
 
   const backlink =
     location.state?.from.pathname + location.state?.from.search ||
-    RouterPaths.main;
+    RouterPaths.packs;
 
   return (
     <Link to={backlink} className={s.link}>

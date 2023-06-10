@@ -3,15 +3,17 @@ import { useAppDispatch, useAppSelector } from "app/hooks";
 import { CardsTable } from "features/cards/components/CardsTable/CardsTable";
 import { AppPagination, BackLink, PaginationQuery } from "common/components";
 import { useCardsFetch } from "features/cards/hooks/useCardsFetch";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { cardsThunks } from "features/cards/cards.slice";
 import { ArgPostCard } from "features/cards/cards.api";
 import { SearchCards } from "features/cards/components/SearchCards/SearchCards";
 import extraIcon from "assets/extra.svg";
 import s from "./style.module.css";
+import { RouterPaths } from "common/router/router";
 
 export const CardsList = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams);
   const { cardsPack_id } = params;
@@ -61,12 +63,21 @@ export const CardsList = () => {
                 <img src={extraIcon} alt="" />
               </div>
             </div>
+            <Button
+              onClick={() => navigate(`${RouterPaths.learn}/${cardsPack_id}`)}
+            >
+              Learn
+            </Button>
             <Button onClick={onAddPackHandler}>Add new card</Button>
           </>
         ) : (
           <>
             <div className={s.title}>{packName}</div>
-            <Button>Learn</Button>
+            <Button
+              onClick={() => navigate(`${RouterPaths.learn}/${cardsPack_id}`)}
+            >
+              Learn
+            </Button>
           </>
         )}
       </div>
