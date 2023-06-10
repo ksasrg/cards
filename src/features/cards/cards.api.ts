@@ -10,6 +10,9 @@ export const cardsApi = {
   deleteCard: (cardId: string) => {
     return instance.delete<DeleteResponse>(`cards/card/?id=${cardId}`);
   },
+  putGrade: (card_id: string, grade: number) => {
+    return instance.put<PutGradeResponse>(`/cards/grade`, { card_id, grade });
+  },
 };
 
 export type ArgGetCards = {
@@ -77,6 +80,25 @@ export interface Card {
   comments: string;
   type: string;
   rating: number;
+  more_id: string;
+  created: string;
+  updated: string;
+  __v: number;
+}
+
+export interface PutGradeResponse {
+  updatedGrade: UpdatedGrade;
+  token: string;
+  tokenDeathTime: number;
+}
+
+export interface UpdatedGrade {
+  _id: string;
+  cardsPack_id: string;
+  card_id: string;
+  user_id: string;
+  grade: number;
+  shots: number;
   more_id: string;
   created: string;
   updated: string;

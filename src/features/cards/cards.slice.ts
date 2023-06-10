@@ -7,6 +7,7 @@ import {
   DeleteResponse,
   GetResponse,
   PostResponse,
+  PutGradeResponse,
   cardsApi,
 } from "./cards.api";
 
@@ -67,6 +68,18 @@ const deleteCard = createAppAsyncThunk<
   }
 });
 
+const putGrade = createAppAsyncThunk<
+  PutGradeResponse,
+  { card_id: string; grade: number }
+>("cards/put-grade", async (arg, thunkAPI) => {
+  try {
+    const res = await cardsApi.putGrade(arg.card_id, arg.grade);
+    return res.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
 export const cardsReducers = slice.reducer;
 export const cardsActions = slice.actions;
-export const cardsThunks = { get, create, deleteCard };
+export const cardsThunks = { get, create, deleteCard, putGrade };

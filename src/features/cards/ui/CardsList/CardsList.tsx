@@ -38,8 +38,10 @@ export const CardsList = () => {
   const onAddPackHandler = () => {
     const payload: ArgPostCard = {
       cardsPack_id,
-      question: "question",
-      answer: "answer",
+      question:
+        "question question questionquestionquestionquesti onquestionquestionq uestionquestionquest ionquestion questionquestionquestionquest ionquestionque stionquestionquestion questionquestion",
+      answer:
+        "answer answeransw eransweranswe ransweran sweransweransweran sweranswera nsweranswerans weranswerans weranswerans weransweransweransweransw eransweransweranswe ransweranswera nsweransweranswer",
     };
 
     delete params["page"];
