@@ -10,10 +10,13 @@ import { PacksList } from "features/packs/ui/PacksList/PacksList";
 import { AuthRedirect } from "common/components";
 import { CardsList } from "features/cards/ui/CardsList/CardsList";
 import { Error404 } from "common/components/404/Error404";
+import { Learn } from "features/cards/ui/Learn/Learn";
 
 export const RouterPaths = {
   main: "/",
+  packs: "/",
   cards: "/cards",
+  learn: "/learn",
   signup: "/signup",
   signin: "/signin",
   forgot: "/forgot",
@@ -32,6 +35,14 @@ export const router = createHashRouter([
         element: (
           <AuthRedirect>
             <PacksList />
+          </AuthRedirect>
+        ),
+      },
+      {
+        path: RouterPaths.learn + "/:cardsPack_id",
+        element: (
+          <AuthRedirect>
+            <Learn />
           </AuthRedirect>
         ),
       },

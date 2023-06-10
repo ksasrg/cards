@@ -24,7 +24,7 @@ export const TdActions = ({ setDeleteModal, pack }: Props) => {
   return (
     <td>
       {isActive ? (
-        <AppLink to={`${RouterPaths.cards}/?cardsPack_id=${pack._id}`}>
+        <AppLink to={`${RouterPaths.learn}/${pack._id}`}>
           <img src={teacher} alt="learn" />
         </AppLink>
       ) : (

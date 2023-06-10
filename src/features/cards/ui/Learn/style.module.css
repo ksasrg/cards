@@ -1,0 +1,57 @@
+.title {
+  margin-top: 27px;
+  margin-bottom: 18px;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 27px;
+  text-align: center;
+}
+
+.title span {
+  display: inline-block;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 27px;
+  vertical-align: bottom;
+}
+.card {
+  text-align: left;
+
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.repititions {
+  margin: 13px 0 35px 0;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  opacity: 0.5;
+}
+
+.card .radio {
+}
+
+.radio div {
+  margin-top: 12px;
+}
+.radio label {
+  display: block;
+  margin-top: 12px;
+  width: fit-content;
+  cursor: pointer;
+}
+
+.radio span {
+  padding-left: 12px;
+}
+
+.radio input {
+  width: auto;
+}
+
+.button {
+  margin-top: 42px;
+}
