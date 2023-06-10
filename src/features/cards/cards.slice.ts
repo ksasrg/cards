@@ -56,10 +56,10 @@ const create = createAppAsyncThunk<
 
 const deleteCard = createAppAsyncThunk<
   DeleteResponse,
-  { packId: string; query: ArgGetCards }
+  { cardId: string; query: ArgGetCards }
 >("cards/delete", async (arg, thunkAPI) => {
   try {
-    const res = await cardsApi.deleteCard(arg.packId);
+    const res = await cardsApi.deleteCard(arg.cardId);
     await thunkAPI.dispatch(get(arg.query));
     return res.data;
   } catch (error) {
