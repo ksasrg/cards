@@ -44,8 +44,16 @@ export function CardsTable() {
 
     return (
       <tr key={card._id}>
-        <td>{card.question}</td>
-        <td>{card.answer}</td>
+        <td>
+          {card.questionImg ? (
+            <img src={card.questionImg} alt="" />
+          ) : (
+            card.question
+          )}
+        </td>
+        <td>
+          {card.answerImg ? <img src={card.answerImg} alt="" /> : card.answer}
+        </td>
         <td>{date}</td>
         <td>
           <span className={s.rating}>
