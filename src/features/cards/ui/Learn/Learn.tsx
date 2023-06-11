@@ -27,7 +27,7 @@ export const Learn = () => {
   );
 
   useEffect(() => {
-    dispatch(cardsThunks.get({ cardsPack_id }))
+    dispatch(cardsThunks.fetch({ cardsPack_id }))
       .unwrap()
       .then((res) => {
         res.cardsTotalCount &&
@@ -71,13 +71,16 @@ export const Learn = () => {
     return <Navigate to={RouterPaths.packs} />;
   }
 
-  if (isLoading || cards.length === 0) {
+  if (cards.length === 0) {
     return <Preloader />;
   }
 
   return (
     <div className="container page">
-      <BackLink />
+      <span onClick={() => navigate(-1)} className={s.link}>
+        {" "}
+        🡰 Back{" "}
+      </span>
       <div className={s.title}>
         Learn "<span>{packName}</span>"
       </div>

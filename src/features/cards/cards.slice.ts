@@ -42,6 +42,18 @@ const get = createAppAsyncThunk<GetResponse, ArgGetCards>(
   }
 );
 
+const fetch = createAppAsyncThunk<GetResponse, ArgGetCards>(
+  "cards/fetch",
+  async (arg, thunkAPI) => {
+    try {
+      const res = await cardsApi.getCards(arg);
+      return res.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 const create = createAppAsyncThunk<
   PostResponse,
   { payload: ArgPostCard; query: ArgGetCards }
@@ -82,4 +94,4 @@ const putGrade = createAppAsyncThunk<
 
 export const cardsReducers = slice.reducer;
 export const cardsActions = slice.actions;
-export const cardsThunks = { get, create, deleteCard, putGrade };
+export const cardsThunks = { get, fetch, create, deleteCard, putGrade };

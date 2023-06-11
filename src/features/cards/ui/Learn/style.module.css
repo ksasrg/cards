@@ -1,3 +1,7 @@
+.link {
+  cursor: pointer;
+}
+
 .title {
   margin-top: 27px;
   margin-bottom: 18px;
