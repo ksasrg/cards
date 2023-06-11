@@ -1,10 +1,11 @@
-import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { DeleteModal, Th } from "common/components";
+import { Th } from "common/components";
 import { useSearchParams } from "react-router-dom";
 import { cardsThunks } from "features/cards/cards.slice";
+import { TableQuestion } from "../TableQuestion/TableQuestion";
+import { TableAnswer } from "../TableAnswer/TableAnswer";
+import { IconActionDeleteCard } from "../IconActionDeleteCard/IconActionDeleteCard";
 import editIconMini from "assets/editIconMini.svg";
-import trash from "assets/trash.svg";
 import s from "./style.module.css";
 
 export function CardsTable() {
@@ -16,21 +17,7 @@ export function CardsTable() {
   const userId = useAppSelector((state) => state.auth.profile?._id);
   const packUserId = useAppSelector((state) => state.cards.list.packUserId);
 
-  const [open, setOpen] = useState(false);
-
   const isMy = userId === packUserId;
-
-  const onSubmitDelete = (cardId: string) => {
-    dispatch(cardsThunks.deleteCard({ cardId, query: params }));
-  };
-
-  const onCloseDeleteModal = () => {
-    setOpen(false);
-  };
-
-  const onDeleteHandler = () => {
-    setOpen(true);
-  };
 
   const onSort = (sortCards: string) => {
     setSearchParams({ ...params, sortCards });
@@ -45,14 +32,10 @@ export function CardsTable() {
     return (
       <tr key={card._id}>
         <td>
-          {card.questionImg ? (
-            <img src={card.questionImg} alt="" />
-          ) : (
-            card.question
-          )}
+          <TableQuestion card={card} />
         </td>
         <td>
-          {card.answerImg ? <img src={card.answerImg} alt="" /> : card.answer}
+          <TableAnswer card={card} />
         </td>
         <td>{date}</td>
         <td>
@@ -62,17 +45,8 @@ export function CardsTable() {
           </span>
           {isMy && (
             <>
-              <DeleteModal
-                open={open}
-                id={card._id}
-                title="Delete Card"
-                onClose={onCloseDeleteModal}
-                onDelete={onSubmitDelete}
-              >
-                {`Do you really want to remove Card? All cards will be deleted.`}
-              </DeleteModal>
               <img src={editIconMini} alt="edit" />
-              <img src={trash} alt="delete" onClick={onDeleteHandler} />
+              <IconActionDeleteCard card={card} />
             </>
           )}
         </td>
@@ -85,15 +59,10 @@ export function CardsTable() {
       <table className={s.table}>
         <thead>
           <tr>
-            <Th name="Question" sort={sort} query="question" onSort={onSort} />
-            <Th name="Answer" sort={sort} query="answer" onSort={onSort} />
-            <Th
-              name="Last Updated"
-              sort={sort}
-              query="updated"
-              onSort={onSort}
-            />
-            <Th name="Grade" sort={sort} query="grade" onSort={onSort} />
+            <Th sort={sort} onSort={onSort} name="Question" query="question" />
+            <Th sort={sort} onSort={onSort} name="Answer" query="answer" />
+            <Th {...{ sort, onSort, name: "Last Updated", query: "updated" }} />
+            <Th sort={sort} onSort={onSort} name="Grade" query="grade" />
           </tr>
         </thead>
         <tbody>{mappedRows}</tbody>
