@@ -45,7 +45,11 @@ export const QuestionsAnswers = ({ index, setIndex }: Props) => {
         <>
           <div className={s.qna}>
             <b>Answer: </b>
-            {cards[index].answer}
+            {cards[index].questionImg ? (
+              <img src={cards[index].answerImg} alt="" />
+            ) : (
+              cards[index].answer
+            )}
           </div>
           <form className={s.radio}>
             <div>Rate yourself:</div>

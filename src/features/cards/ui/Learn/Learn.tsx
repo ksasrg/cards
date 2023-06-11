@@ -35,7 +35,11 @@ export const Learn = () => {
         </div>
         <div className={s.qna}>
           <b>Question: </b>
-          {cards[index].question}
+          {cards[index].questionImg ? (
+            <img src={cards[index].questionImg} alt="" />
+          ) : (
+            cards[index].question
+          )}
         </div>
         <div className={s.repititions}>
           Number of repetitions: {cards[index].shots}

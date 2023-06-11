@@ -8,6 +8,13 @@
   text-overflow: ellipsis;
 }
 
+.qna img {
+  display: inline-block;
+  max-width: 250px;
+  vertical-align: middle;
+  margin: 0 auto;
+}
+
 .radio div {
   margin-top: 12px;
 }
