@@ -18,7 +18,7 @@ export const Choices = (props: Props) => {
   return (
     <>
       {choices.map((choice, i) => (
-        <label>
+        <label key={i}>
           <input
             type="radio"
             name="grade"

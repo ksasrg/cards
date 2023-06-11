@@ -1,0 +1,31 @@
+.link {
+  cursor: pointer;
+}
+
+.qna {
+  word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.radio div {
+  margin-top: 12px;
+}
+.radio label {
+  display: block;
+  margin-top: 12px;
+  width: fit-content;
+  cursor: pointer;
+}
+
+.radio span {
+  padding-left: 12px;
+}
+
+.radio input {
+  width: auto;
+}
+
+.button {
+  margin-top: 42px;
+}
