@@ -1,36 +1,47 @@
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { BackLink, Preloader } from "common/components";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { Button } from "@mui/material";
 import { RouterPaths } from "common/router/router";
 import { ChangeEvent, useEffect, useState } from "react";
 import { cardsActions, cardsThunks } from "features/cards/cards.slice";
-import { Choices } from "./Choices";
+import { Choices } from "../../components/Choices/Choices";
 import s from "./style.module.css";
 
 export const Learn = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { cardsPack_id } = useParams();
   const [index, setIndex] = useState(0);
   const [grade, setGrade] = useState(0);
   const [show, setShow] = useState(false);
 
+  const isLoading = useAppSelector((state) => state.app.isLoading);
   const cards = useAppSelector((state) => state.cards.list.cards);
   const cardsTotalCount = useAppSelector(
     (state) => state.cards.list.cardsTotalCount
   );
-  const packName = useAppSelector(
-    (state) =>
-      state.packs.list.cardPacks.find((p) => p._id === cardsPack_id)?.name
-  );
+  const packName = useAppSelector((state) => state.cards.list.packName);
   const cardsCount = useAppSelector(
-    (state) =>
-      state.packs.list.cardPacks.find((p) => p._id === cardsPack_id)?.cardsCount
+    (state) => state.cards.list.cardsTotalCount
   );
 
   useEffect(() => {
-    dispatch(cardsThunks.get({ cardsPack_id, pageCount: cardsCount }));
-
+    dispatch(cardsThunks.get({ cardsPack_id }))
+      .unwrap()
+      .then((res) => {
+        res.cardsTotalCount &&
+          dispatch(
+            cardsThunks.get({
+              cardsPack_id,
+              pageCount: res.cardsTotalCount,
+              sortCards: "0grade",
+            })
+          );
+      })
+      .catch((e) => {
+        if (e.response?.status === 400) navigate(RouterPaths.packs);
+      });
     return () => {
       dispatch(cardsActions.resetList());
     };
@@ -56,11 +67,11 @@ export const Learn = () => {
     setGrade(+e.currentTarget.value);
   };
 
-  if (!packName || cardsTotalCount === 0) {
+  if (cardsTotalCount === 0) {
     return <Navigate to={RouterPaths.packs} />;
   }
 
-  if (cards.length === 0) {
+  if (isLoading || cards.length === 0) {
     return <Preloader />;
   }
 
@@ -71,6 +82,9 @@ export const Learn = () => {
         Learn "<span>{packName}</span>"
       </div>
       <div className={`card ${s.card}`}>
+        <div className={s.progress}>
+          {index + 1} of {cardsCount}
+        </div>
         <div className={s.qna}>
           <b>Question: </b>
           {cards[index].question}

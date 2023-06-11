@@ -37,6 +37,15 @@
   opacity: 0.5;
 }
 
+.progress {
+  text-align: center;
+  margin: -20px 0 15px 0;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  opacity: 0.5;
+}
+
 .radio div {
   margin-top: 12px;
 }
