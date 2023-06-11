@@ -2,9 +2,10 @@ import { useAppDispatch, useAppSelector } from "app/hooks";
 import { Th } from "common/components";
 import { useSearchParams } from "react-router-dom";
 import { cardsThunks } from "features/cards/cards.slice";
-import { TableQuestion } from "../TableQuestion/TableQuestion";
-import { TableAnswer } from "../TableAnswer/TableAnswer";
+import { TdQuestion } from "../TdQuestion/TdQuestion";
+import { TdAnswer } from "../TdAnswer/TdAnswer";
 import { IconActionDeleteCard } from "../IconActionDeleteCard/IconActionDeleteCard";
+import { Rating } from "../Rating/Rating";
 import editIconMini from "assets/editIconMini.svg";
 import s from "./style.module.css";
 
@@ -27,22 +28,14 @@ export function CardsTable() {
   const mappedRows = cards.map((card) => {
     const updated = new Date(card.updated);
     const date = updated.toLocaleString("ru-RU");
-    const width = (card.grade / 5) * 100 + "%";
 
     return (
       <tr key={card._id}>
-        <td>
-          <TableQuestion card={card} />
-        </td>
-        <td>
-          <TableAnswer card={card} />
-        </td>
+        <TdQuestion card={card} />
+        <TdAnswer card={card} />
         <td>{date}</td>
         <td>
-          <span className={s.rating}>
-            ★★★★★
-            <span style={{ width }}>★★★★★</span>
-          </span>
+          <Rating card={card} />
           {isMy && (
             <>
               <img src={editIconMini} alt="edit" />
@@ -55,18 +48,16 @@ export function CardsTable() {
   });
 
   return (
-    <>
-      <table className={s.table}>
-        <thead>
-          <tr>
-            <Th sort={sort} onSort={onSort} name="Question" query="question" />
-            <Th sort={sort} onSort={onSort} name="Answer" query="answer" />
-            <Th {...{ sort, onSort, name: "Last Updated", query: "updated" }} />
-            <Th sort={sort} onSort={onSort} name="Grade" query="grade" />
-          </tr>
-        </thead>
-        <tbody>{mappedRows}</tbody>
-      </table>
-    </>
+    <table className={s.table}>
+      <thead>
+        <tr>
+          <Th sort={sort} onSort={onSort} name="Question" query="question" />
+          <Th sort={sort} onSort={onSort} name="Answer" query="answer" />
+          <Th {...{ sort, onSort, name: "Last Updated", query: "updated" }} />
+          <Th sort={sort} onSort={onSort} name="Grade" query="grade" />
+        </tr>
+      </thead>
+      <tbody>{mappedRows}</tbody>
+    </table>
   );
 }

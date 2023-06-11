@@ -1,0 +1,18 @@
+.rating {
+  position: relative;
+  display: inline-block;
+  width: 84px;
+  height: 16px;
+  font-size: 20px;
+  color: #dadada;
+  user-select: none;
+}
+
+.rating span {
+  top: 0;
+  left: 0;
+  position: absolute;
+  overflow: hidden;
+  font-size: 20px;
+  color: #ffc700;
+}

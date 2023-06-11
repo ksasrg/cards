@@ -4,10 +4,10 @@ type Props = {
   card: Card;
 };
 
-export const TableQuestion = ({ card }: Props) => {
+export const TdQuestion = ({ card }: Props) => {
   return (
-    <>
+    <td>
       {card.questionImg ? <img src={card.questionImg} alt="" /> : card.question}
-    </>
+    </td>
   );
 };
