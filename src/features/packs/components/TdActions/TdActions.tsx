@@ -1,51 +1,22 @@
 import teacher from "assets/teacher.svg";
-import trash from "assets/trash.svg";
-import { AppLink, DeleteModal } from "common/components";
+import { AppLink } from "common/components";
 import { RouterPaths } from "common/router/router";
-import { CardPack, packsThunks } from "features/packs/packs.slice";
-import { useAppDispatch, useAppSelector } from "app/hooks";
-import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { CardPack } from "features/packs/packs.slice";
+import { useAppSelector } from "app/hooks";
 import { PackActionEditName } from "../PackActionEditName/PackActionEditName";
+import { PackActionDeletePack } from "../PackActionDeletePack/PackActionDeletePack";
 
 type Props = {
   pack: CardPack;
 };
 
 export const TdActions = ({ pack }: Props) => {
-  const dispatch = useAppDispatch();
-  const [searchParams] = useSearchParams();
-  const params = Object.fromEntries(searchParams);
   const userId = useAppSelector((state) => state.auth.profile?._id);
   const isMy = userId === pack.user_id;
   const isActive = Boolean(pack.cardsCount) || isMy;
 
-  const [open, setOpen] = useState(false);
-
-  const onDelete = () => {
-    setOpen(true);
-  };
-
-  const onSubmitDelete = (packId: string) => {
-    dispatch(packsThunks.deletePack({ packId, query: params }));
-  };
-
-  const onCloseDeleteModal = () => {
-    setOpen(false);
-  };
-
   return (
     <>
-      <DeleteModal
-        open={open}
-        id={pack._id}
-        name={pack.name}
-        title="Delete Pack"
-        onClose={onCloseDeleteModal}
-        onDelete={onSubmitDelete}
-      >
-        {`Do you really want to remove $name$? All cards will be deleted.`}
-      </DeleteModal>
       <td>
         {isActive ? (
           <AppLink to={`${RouterPaths.learn}/${pack._id}`}>
@@ -54,11 +25,10 @@ export const TdActions = ({ pack }: Props) => {
         ) : (
           <img src={teacher} alt="learn" style={{ opacity: "0.5" }} />
         )}
-
         {isMy && (
           <>
             <PackActionEditName pack={pack} />
-            <img src={trash} alt="delete" onClick={onDelete} />
+            <PackActionDeletePack pack={pack} />
           </>
         )}
       </td>
