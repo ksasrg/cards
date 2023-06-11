@@ -57,7 +57,6 @@ export function CardsTable() {
               <DeleteModal
                 open={open}
                 id={card._id}
-                name=""
                 title="Delete Card"
                 onClose={onCloseDeleteModal}
                 onDelete={onSubmitDelete}

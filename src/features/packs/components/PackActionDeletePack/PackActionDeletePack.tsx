@@ -32,12 +32,12 @@ export const PackActionDeletePack = ({ pack }: Props) => {
       <DeleteModal
         open={open}
         id={pack._id}
-        name={pack.name}
         title="Delete Pack"
         onClose={onCloseDeleteModal}
         onDelete={onSubmitDelete}
       >
-        {`Do you really want to remove $name$? All cards will be deleted.`}
+        Do you really want to remove <b>"{pack.name}"</b> pack? All cards will
+        be deleted.
       </DeleteModal>
       <img src={trash} alt="delete" onClick={onDelete} />
     </>
