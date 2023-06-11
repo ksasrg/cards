@@ -5,6 +5,7 @@ import { Button } from "@mui/material";
 import { RouterPaths } from "common/router/router";
 import { ChangeEvent, useEffect, useState } from "react";
 import { cardsActions, cardsThunks } from "features/cards/cards.slice";
+import { Choices } from "./Choices";
 import s from "./style.module.css";
 
 export const Learn = () => {
@@ -15,6 +16,9 @@ export const Learn = () => {
   const [show, setShow] = useState(false);
 
   const cards = useAppSelector((state) => state.cards.list.cards);
+  const cardsTotalCount = useAppSelector(
+    (state) => state.cards.list.cardsTotalCount
+  );
   const packName = useAppSelector(
     (state) =>
       state.packs.list.cardPacks.find((p) => p._id === cardsPack_id)?.name
@@ -32,28 +36,32 @@ export const Learn = () => {
     };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const onNextHandler = () => {
+  const onNextHandler = async () => {
     const card_id = cards[index]._id;
-    dispatch(cardsThunks.putGrade({ card_id, grade }));
-    setIndex((index) => ++index);
-    setGrade(0);
+
+    await dispatch(cardsThunks.putGrade({ card_id, grade }));
     setShow(false);
+    setGrade(0);
+
+    if (index === cards.length - 1) {
+      setIndex(0);
+      dispatch(cardsActions.resetList());
+      await dispatch(cardsThunks.get({ cardsPack_id, pageCount: cardsCount }));
+    } else {
+      setIndex(index + 1);
+    }
   };
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setGrade(+e.currentTarget.value);
   };
 
-  if (!packName) {
+  if (!packName || cardsTotalCount === 0) {
     return <Navigate to={RouterPaths.packs} />;
   }
 
   if (cards.length === 0) {
     return <Preloader />;
-  }
-
-  if (index >= cards.length) {
-    return <div>end</div>;
   }
 
   return (
@@ -79,56 +87,7 @@ export const Learn = () => {
             </div>
             <form className={s.radio}>
               <div>Rate yourself:</div>
-              <label>
-                <input
-                  type="radio"
-                  name="grade"
-                  value={1}
-                  checked={1 === grade}
-                  onChange={onChangeHandler}
-                />
-                <span>Did not know</span>
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="grade"
-                  value={2}
-                  checked={2 === grade}
-                  onChange={onChangeHandler}
-                />
-                <span>Forgot</span>
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="grade"
-                  value={3}
-                  checked={3 === grade}
-                  onChange={onChangeHandler}
-                />
-                <span>A lot of thought</span>
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="grade"
-                  value={4}
-                  checked={4 === grade}
-                  onChange={onChangeHandler}
-                />
-                <span>Confused</span>
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="grade"
-                  value={5}
-                  checked={5 === grade}
-                  onChange={onChangeHandler}
-                />
-                <span>Knew the answer</span>
-              </label>
+              <Choices grade={grade} onChange={onChangeHandler} />
             </form>
             <div className={s.button}>
               <Button size="large" onClick={onNextHandler} disabled={!grade}>
