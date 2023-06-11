@@ -1,4 +1,5 @@
-import { ReactNode, KeyboardEvent } from "react";
+import { createPortal } from "react-dom";
+import { ReactNode, useEffect, useCallback } from "react";
 import s from "./style.module.css";
 
 type Props = {
@@ -9,13 +10,21 @@ type Props = {
 };
 
 export const Modal = ({ open, title, children, onClose }: Props) => {
-  const onKeyDownHandler = (e: KeyboardEvent<HTMLDivElement>) => {
-    if (e.code === "Escape") onClose();
-  };
+  const onKeyDownHandler = useCallback(() => onClose(), []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflowY = "hidden";
+      document.body.addEventListener("keydown", onKeyDownHandler);
+    } else {
+      document.body.style.overflowY = "";
+      document.body.removeEventListener("keydown", onKeyDownHandler);
+    }
+  }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (open)
-    return (
-      <div className={s.modal} onKeyDown={onKeyDownHandler}>
+    return createPortal(
+      <div className={s.modal}>
         <div className={s.box}>
           <div className={s.header}>
             <div>{title}</div>
@@ -25,7 +34,8 @@ export const Modal = ({ open, title, children, onClose }: Props) => {
           </div>
           <div className={s.content}>{children}</div>
         </div>
-      </div>
+      </div>,
+      document.body
     );
 
   return <></>;

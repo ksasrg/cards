@@ -16,7 +16,7 @@ import {
 import { packsThunks } from "features/packs/packs.slice";
 import s from "./style.module.css";
 
-export function PacksList() {
+export const PacksList = () => {
   const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams);
@@ -75,4 +75,4 @@ export function PacksList() {
       <PacksTable />
     </div>
   );
-}
+};
