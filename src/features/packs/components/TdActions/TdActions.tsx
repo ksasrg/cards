@@ -13,7 +13,7 @@ type Props = {
 export const TdActions = ({ pack }: Props) => {
   const userId = useAppSelector((state) => state.auth.profile?._id);
   const isMy = userId === pack.user_id;
-  const isActive = Boolean(pack.cardsCount) || isMy;
+  const isActive = Boolean(pack.cardsCount);
 
   return (
     <>
