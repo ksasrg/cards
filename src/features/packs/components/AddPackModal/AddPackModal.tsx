@@ -11,11 +11,15 @@ export type Data = {
 
 type Props = {
   open: boolean;
+  title: string;
+  name?: string;
+  IsPrivate?: boolean;
   onClose: (open: boolean) => void;
   onSave: (data: Data) => void;
 };
 
-export const AddPackModal = ({ open, onClose, onSave }: Props) => {
+export const AddPackModal = (props: Props) => {
+  const { open, title, name, IsPrivate, onClose, onSave } = props;
   const form = useForm<Data>();
   const { handleSubmit, register, formState, reset } = form;
   const { errors } = formState;
@@ -32,11 +36,12 @@ export const AddPackModal = ({ open, onClose, onSave }: Props) => {
   };
 
   return (
-    <Modal open={open} title={"Add new pack"} onClose={onCloseHandler}>
+    <Modal open={open} title={title} onClose={onCloseHandler}>
       <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
         <TextField
           label="Name pack"
           variant="standard"
+          defaultValue={name}
           sx={{ marginTop: "30px", width: "100%" }}
           error={Boolean(errors.name)}
           helperText={errors.name && errors.name.message}
@@ -45,7 +50,11 @@ export const AddPackModal = ({ open, onClose, onSave }: Props) => {
           })}
         />
         <div className={s.checkbox}>
-          <Checkbox id="private" {...register("private")} />
+          <Checkbox
+            id="private"
+            defaultChecked={IsPrivate}
+            {...register("private")}
+          />
           <label htmlFor="private">Private pack</label>
         </div>
         <div className={s.buttons}>

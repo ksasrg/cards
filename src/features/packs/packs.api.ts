@@ -12,6 +12,9 @@ export const packsApi = {
   delete: (packId: string) => {
     return instance.delete(`cards/pack?id=${packId}`);
   },
+  changePack: (payload: ArgChangeCardPack) => {
+    return instance.put(`cards/pack`, { cardsPack: { ...payload } });
+  },
 };
 
 export type ArgGetPacks = {
@@ -25,6 +28,13 @@ export type ArgGetPacks = {
 };
 
 export interface ArgCreateCardPack {
+  name: string;
+  deckCover: string;
+  private: boolean;
+}
+
+export interface ArgChangeCardPack {
+  _id: string;
   name: string;
   deckCover: string;
   private: boolean;

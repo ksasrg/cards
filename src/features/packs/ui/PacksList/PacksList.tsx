@@ -26,7 +26,7 @@ export const PacksList = () => {
     (state) => state.packs.list.cardPacksTotalCount
   );
 
-  const [packModal, setPackModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useFetchPackList();
 
@@ -43,7 +43,7 @@ export const PacksList = () => {
   };
 
   const onPackModal = (open: boolean) => {
-    setPackModal(open);
+    setShowModal(open);
   };
 
   const onChange = (query: PaginationQuery) => {
@@ -55,7 +55,8 @@ export const PacksList = () => {
   return (
     <div className="container page">
       <AddPackModal
-        open={packModal}
+        open={showModal}
+        title="Add new pack"
         onClose={onPackModal}
         onSave={onPostPack}
       />

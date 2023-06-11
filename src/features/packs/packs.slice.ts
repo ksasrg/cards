@@ -1,6 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAppAsyncThunk } from "common/utils/create-app-async-thunk";
-import { ArgCreateCardPack, ArgGetPacks, packsApi } from "./packs.api";
+import {
+  ArgChangeCardPack,
+  ArgCreateCardPack,
+  ArgGetPacks,
+  packsApi,
+} from "./packs.api";
 
 const initialState = {
   list: {
@@ -64,6 +69,19 @@ const create = createAppAsyncThunk<
   }
 });
 
+const change = createAppAsyncThunk<
+  CreateCardPack,
+  { payload: ArgChangeCardPack; query: ArgGetPacks }
+>("packs/create-pack", async (arg, thunkAPI) => {
+  try {
+    const res = await packsApi.changePack(arg.payload);
+    await thunkAPI.dispatch(get(arg.query));
+    return res.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
 export interface GetCardPack {
   cardPacks: CardPack[];
   page: number;
@@ -108,4 +126,4 @@ export interface CardPack {
 
 export const packsReducers = slice.reducer;
 export const packsActions = slice.actions;
-export const packsThunks = { get, deletePack, create };
+export const packsThunks = { get, deletePack, create, change };

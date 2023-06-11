@@ -1,5 +1,4 @@
 import teacher from "assets/teacher.svg";
-import editIconMini from "assets/editIconMini.svg";
 import trash from "assets/trash.svg";
 import { AppLink, DeleteModal } from "common/components";
 import { RouterPaths } from "common/router/router";
@@ -7,6 +6,7 @@ import { CardPack, packsThunks } from "features/packs/packs.slice";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { PackActionEditName } from "../PackActionEditName/PackActionEditName";
 
 type Props = {
   pack: CardPack;
@@ -57,7 +57,7 @@ export const TdActions = ({ pack }: Props) => {
 
         {isMy && (
           <>
-            <img src={editIconMini} alt="edit" />
+            <PackActionEditName pack={pack} />
             <img src={trash} alt="delete" onClick={onDelete} />
           </>
         )}
