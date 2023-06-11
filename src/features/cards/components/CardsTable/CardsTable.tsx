@@ -16,8 +16,7 @@ export function CardsTable() {
   const userId = useAppSelector((state) => state.auth.profile?._id);
   const packUserId = useAppSelector((state) => state.cards.list.packUserId);
 
-  const init = { open: false, id: "", name: "" };
-  const [deleteModal, setDeleteModal] = useState(init);
+  const [open, setOpen] = useState(false);
 
   const isMy = userId === packUserId;
 
@@ -26,11 +25,11 @@ export function CardsTable() {
   };
 
   const onCloseDeleteModal = () => {
-    setDeleteModal({ open: false, id: "", name: "" });
+    setOpen(false);
   };
 
-  const onDeleteHandler = (cardId: string) => {
-    setDeleteModal({ open: true, id: cardId, name: "" });
+  const onDeleteHandler = () => {
+    setOpen(true);
   };
 
   const onSort = (sortCards: string) => {
@@ -55,12 +54,18 @@ export function CardsTable() {
           </span>
           {isMy && (
             <>
+              <DeleteModal
+                open={open}
+                id={card._id}
+                name=""
+                title="Delete Card"
+                onClose={onCloseDeleteModal}
+                onDelete={onSubmitDelete}
+              >
+                {`Do you really want to remove Card? All cards will be deleted.`}
+              </DeleteModal>
               <img src={editIconMini} alt="edit" />
-              <img
-                src={trash}
-                alt="delete"
-                onClick={() => onDeleteHandler(card._id)}
-              />
+              <img src={trash} alt="delete" onClick={onDeleteHandler} />
             </>
           )}
         </td>
@@ -70,15 +75,6 @@ export function CardsTable() {
 
   return (
     <>
-      <DeleteModal
-        modal={deleteModal}
-        title="Delete Card"
-        onClose={onCloseDeleteModal}
-        onDelete={onSubmitDelete}
-      >
-        {`Do you really want to remove Card? All cards will be deleted.`}
-      </DeleteModal>
-
       <table className={s.table}>
         <thead>
           <tr>

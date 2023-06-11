@@ -2,7 +2,9 @@ import { Modal } from "common/components/Modal/Modal";
 import s from "./style.module.css";
 
 type Props = {
-  modal: { open: boolean; id: string; name: string };
+  open: boolean;
+  id: string;
+  name: string;
   title: string;
   onClose: () => void;
   onDelete: (id: string) => void;
@@ -10,8 +12,7 @@ type Props = {
 };
 
 export const DeleteModal = (props: Props) => {
-  const { modal, title, children, onClose, onDelete } = props;
-  const { open, id, name } = modal;
+  const { open, id, name, title, children, onClose, onDelete } = props;
 
   const onDeleteHandler = () => {
     onClose();

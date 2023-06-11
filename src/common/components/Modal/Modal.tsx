@@ -10,7 +10,11 @@ type Props = {
 };
 
 export const Modal = ({ open, title, children, onClose }: Props) => {
-  const onKeyDownHandler = useCallback(() => onClose(), []); // eslint-disable-line react-hooks/exhaustive-deps
+  const onKeyDownHandler = useCallback((e: KeyboardEvent) => {
+    if (e.code === "Escape") {
+      onClose();
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (open) {
