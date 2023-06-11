@@ -21,11 +21,8 @@ export const PackActionEditName = ({ pack }: Props) => {
 
   const onPostPack = (data: Data) => {
     const payload = { ...data, _id: pack._id, deckCover: "" };
-    let query = {};
 
-    if (params.pageCount) {
-      query = { pageCount: params.pageCount };
-    }
+    const query = { ...params, page: "1" };
 
     dispatch(packsThunks.change({ payload, query }));
   };

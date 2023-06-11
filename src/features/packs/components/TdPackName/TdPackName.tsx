@@ -13,9 +13,12 @@ export const TdPackName = ({ pack }: Props) => {
   return (
     <td>
       {isActive ? (
-        <AppLink to={`${RouterPaths.cards}/?cardsPack_id=${pack._id}`}>
-          {pack.name}
-        </AppLink>
+        <>
+          {pack.private && <b> P </b>}
+          <AppLink to={`${RouterPaths.cards}/?cardsPack_id=${pack._id}`}>
+            {pack.name}
+          </AppLink>
+        </>
       ) : (
         pack.name
       )}

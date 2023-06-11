@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { BackLink, Preloader } from "common/components";
+import { Preloader } from "common/components";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { Button } from "@mui/material";
 import { RouterPaths } from "common/router/router";
@@ -16,7 +16,6 @@ export const Learn = () => {
   const [grade, setGrade] = useState(0);
   const [show, setShow] = useState(false);
 
-  const isLoading = useAppSelector((state) => state.app.isLoading);
   const cards = useAppSelector((state) => state.cards.list.cards);
   const cardsTotalCount = useAppSelector(
     (state) => state.cards.list.cardsTotalCount
