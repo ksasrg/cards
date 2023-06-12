@@ -10,6 +10,11 @@ import { SearchCards } from "features/cards/components/SearchCards/SearchCards";
 import extraIcon from "assets/extra.svg";
 import s from "./style.module.css";
 import { RouterPaths } from "common/router/router";
+import { useState } from "react";
+import {
+  CardData,
+  EditCardModal,
+} from "features/cards/components/EditCardModal/EditCardModal";
 
 export const CardsList = () => {
   const dispatch = useAppDispatch();
@@ -25,6 +30,7 @@ export const CardsList = () => {
     (state) => state.cards.list.cardsTotalCount
   );
   const packName = useAppSelector((state) => state.cards.list.packName);
+  const [showModal, setShowModal] = useState(false);
 
   const isMy = userId === packUserId;
 
@@ -37,22 +43,26 @@ export const CardsList = () => {
     );
   };
 
-  const onAddPackHandler = () => {
-    const payload: ArgPostCard = {
-      cardsPack_id,
-      question:
-        "question question questionquestionquestionquesti onquestionquestionq uestionquestionquest ionquestion questionquestionquestionquest ionquestionque stionquestionquestion questionquestion",
-      answer:
-        "answer answeransw eransweranswe ransweran sweransweransweran sweranswera nsweranswerans weranswerans weranswerans weransweransweransweransw eransweransweranswe ransweranswera nsweransweranswer",
-    };
+  const onAddPackHandler = ({ answer, question }: CardData) => {
+    const payload: ArgPostCard = { cardsPack_id, question, answer };
 
     delete params["page"];
     setSearchParams(params);
     dispatch(cardsThunks.create({ payload, query: params }));
   };
 
+  const onCardModal = (open: boolean) => {
+    setShowModal(open);
+  };
+
   return (
     <div className="container page">
+      <EditCardModal
+        open={showModal}
+        title="Add new card"
+        onClose={onCardModal}
+        onSave={onAddPackHandler}
+      />
       <BackLink />
       <div className={s.up}>
         {isMy ? (
@@ -68,7 +78,7 @@ export const CardsList = () => {
             >
               Learn
             </Button>
-            <Button onClick={onAddPackHandler}>Add new card</Button>
+            <Button onClick={() => onCardModal(true)}>Add new card</Button>
           </>
         ) : (
           <>
