@@ -13,6 +13,9 @@ export const cardsApi = {
   putGrade: (card_id: string, grade: number) => {
     return instance.put<PutGradeResponse>(`/cards/grade`, { card_id, grade });
   },
+  putCard: (payload: ArgPutCard) => {
+    return instance.put<PutCardResponse>(`/cards/card`, { card: payload });
+  },
 };
 
 export type ArgGetCards = {
@@ -32,6 +35,16 @@ export type ArgPostCard = {
   answer?: string;
   grade?: number;
   shots?: number;
+  answerImg?: string;
+  questionImg?: string;
+  questionVideo?: string;
+  answerVideo?: string;
+};
+
+export type ArgPutCard = {
+  _id: string;
+  question?: string;
+  answer?: string;
   answerImg?: string;
   questionImg?: string;
   questionVideo?: string;
@@ -67,23 +80,10 @@ export interface DeleteResponse {
   tokenDeathTime: number;
 }
 
-export interface Card {
-  _id: string;
-  cardsPack_id: string;
-  user_id: string;
-  answer: string;
-  question: string;
-  grade: number;
-  shots: number;
-  questionImg: string;
-  answerImg: string;
-  comments: string;
-  type: string;
-  rating: number;
-  more_id: string;
-  created: string;
-  updated: string;
-  __v: number;
+export interface PutCardResponse {
+  updatedCard: Card;
+  token: string;
+  tokenDeathTime: number;
 }
 
 export interface PutGradeResponse {
@@ -99,6 +99,25 @@ export interface UpdatedGrade {
   user_id: string;
   grade: number;
   shots: number;
+  more_id: string;
+  created: string;
+  updated: string;
+  __v: number;
+}
+
+export interface Card {
+  _id: string;
+  cardsPack_id: string;
+  user_id: string;
+  answer: string;
+  question: string;
+  grade: number;
+  shots: number;
+  questionImg: string;
+  answerImg: string;
+  comments: string;
+  type: string;
+  rating: number;
   more_id: string;
   created: string;
   updated: string;

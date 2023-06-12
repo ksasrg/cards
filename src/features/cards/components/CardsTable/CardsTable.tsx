@@ -5,8 +5,8 @@ import { cardsThunks } from "features/cards/cards.slice";
 import { TdQuestion } from "../TdQuestion/TdQuestion";
 import { TdAnswer } from "../TdAnswer/TdAnswer";
 import { IconActionDeleteCard } from "../IconActionDeleteCard/IconActionDeleteCard";
+import { IconActionEditCard } from "../IconActionEditCard/IconActionEditCard";
 import { Rating } from "../Rating/Rating";
-import editIconMini from "assets/editIconMini.svg";
 import s from "./style.module.css";
 
 export function CardsTable() {
@@ -38,7 +38,7 @@ export function CardsTable() {
           <Rating card={card} />
           {isMy && (
             <>
-              <img src={editIconMini} alt="edit" />
+              <IconActionEditCard card={card} />
               <IconActionDeleteCard card={card} />
             </>
           )}

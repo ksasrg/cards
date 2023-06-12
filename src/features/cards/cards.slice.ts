@@ -3,10 +3,12 @@ import { createAppAsyncThunk } from "common/utils/create-app-async-thunk";
 import {
   ArgGetCards,
   ArgPostCard,
+  ArgPutCard,
   Card,
   DeleteResponse,
   GetResponse,
   PostResponse,
+  PutCardResponse,
   PutGradeResponse,
   cardsApi,
 } from "./cards.api";
@@ -92,6 +94,26 @@ const putGrade = createAppAsyncThunk<
   }
 });
 
+const putCard = createAppAsyncThunk<
+  PutCardResponse,
+  { payload: ArgPutCard; query: ArgGetCards }
+>("cards/put-card", async (arg, thunkAPI) => {
+  try {
+    const res = await cardsApi.putCard(arg.payload);
+    await thunkAPI.dispatch(get(arg.query));
+    return res.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
 export const cardsReducers = slice.reducer;
 export const cardsActions = slice.actions;
-export const cardsThunks = { get, fetch, create, deleteCard, putGrade };
+export const cardsThunks = {
+  get,
+  fetch,
+  create,
+  deleteCard,
+  putGrade,
+  putCard,
+};
