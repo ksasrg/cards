@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Button from "@mui/material/Button/Button";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { CardsTable } from "features/cards/components/CardsTable/CardsTable";
@@ -7,14 +8,17 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { cardsThunks } from "features/cards/cards.slice";
 import { ArgPostCard } from "features/cards/cards.api";
 import { SearchCards } from "features/cards/components/SearchCards/SearchCards";
-import extraIcon from "assets/extra.svg";
-import s from "./style.module.css";
+import { usePopover } from "common/hooks/usePopover";
 import { RouterPaths } from "common/router/router";
-import { useState } from "react";
+import extraIcon from "assets/extra.svg";
+import teacher from "assets/teacher.svg";
+import editIconMini from "assets/editIconMini.svg";
+import trash from "assets/trash.svg";
 import {
   CardData,
   EditCardModal,
-} from "features/cards/components/EditCardModal/EditCardModal";
+} from "../../components/EditCardModal/EditCardModal";
+import s from "./style.module.css";
 
 export const CardsList = () => {
   const dispatch = useAppDispatch();
@@ -31,6 +35,7 @@ export const CardsList = () => {
   );
   const packName = useAppSelector((state) => state.cards.list.packName);
   const [showModal, setShowModal] = useState(false);
+  const [clickbox, popover] = usePopover("extra", "actions");
 
   const isMy = userId === packUserId;
 
@@ -69,15 +74,26 @@ export const CardsList = () => {
           <>
             <div className={s.titlebox}>
               <div className={s.title}>{packName}</div>
-              <div>
-                <img src={extraIcon} alt="" />
+              <div className={s.extra}>
+                <img id={clickbox} src={extraIcon} alt="" />
+                <div id={popover} className={s.popover}>
+                  <div
+                    onClick={() =>
+                      navigate(`${RouterPaths.learn}/${cardsPack_id}`)
+                    }
+                  >
+                    <img src={teacher} alt="Learn" />
+                    Learn
+                  </div>
+                  <div>
+                    <img src={editIconMini} alt="" /> Edit
+                  </div>
+                  <div>
+                    <img src={trash} alt="" /> Delete
+                  </div>
+                </div>
               </div>
             </div>
-            <Button
-              onClick={() => navigate(`${RouterPaths.learn}/${cardsPack_id}`)}
-            >
-              Learn
-            </Button>
             <Button onClick={() => onCardModal(true)}>Add new card</Button>
           </>
         ) : (

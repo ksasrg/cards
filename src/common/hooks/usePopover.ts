@@ -23,12 +23,13 @@ export const usePopover = (clickbox: string, popover: string) => {
     const _popover = document.getElementById(popover);
     const _clickbox = document.getElementById(clickbox);
     _clickbox?.addEventListener("click", onPopover);
+    console.log(_clickbox);
 
     return () => {
       document.body.removeEventListener("click", onClose);
       _clickbox?.removeEventListener("click", onPopover);
     };
-  }, [clickbox, popover]);
+  });
 
   return [clickbox, popover];
 };
