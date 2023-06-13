@@ -12,7 +12,7 @@ export const HeaderProfileBlock = ({ name }: { name: string }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const [clickbox, popover] = usePopover("box", "popover");
+  const [clickbox, popover] = usePopover("box", "popover", []);
 
   return (
     <div className={s.block} id={clickbox}>

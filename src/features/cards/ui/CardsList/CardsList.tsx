@@ -33,11 +33,10 @@ export const CardsList = () => {
   const totalCount = useAppSelector(
     (state) => state.cards.list.cardsTotalCount
   );
+  const isMy = userId === packUserId;
   const packName = useAppSelector((state) => state.cards.list.packName);
   const [showModal, setShowModal] = useState(false);
-  const [clickbox, popover] = usePopover("extra", "actions");
-
-  const isMy = userId === packUserId;
+  const [clickbox, popover] = usePopover("extra", "actions", [isMy]);
 
   useCardsFetch();
 

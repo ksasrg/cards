@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 
-export const usePopover = (clickbox: string, popover: string) => {
+export const usePopover = (
+  clickbox: string,
+  popover: string,
+  deps?: unknown[] | undefined
+) => {
   useEffect(() => {
     let stopPropagation = false;
 
@@ -23,13 +27,12 @@ export const usePopover = (clickbox: string, popover: string) => {
     const _popover = document.getElementById(popover);
     const _clickbox = document.getElementById(clickbox);
     _clickbox?.addEventListener("click", onPopover);
-    console.log(_clickbox);
 
     return () => {
       document.body.removeEventListener("click", onClose);
       _clickbox?.removeEventListener("click", onPopover);
     };
-  });
+  }, deps); // eslint-disable-line react-hooks/exhaustive-deps
 
   return [clickbox, popover];
 };
