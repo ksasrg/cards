@@ -26,7 +26,7 @@ export const CardsListHeader = () => {
   const packUserId = useAppSelector((state) => state.cards.list.packUserId);
   const userId = useAppSelector((state) => state.auth.profile?._id);
   const [showModal, setShowModal] = useState(false);
-
+  const learn = `${RouterPaths.learn}/${cardsPack_id}`;
   const isMy = userId === packUserId;
   const [clickbox, popover] = usePopover("extra", "actions", [isMy]);
 
@@ -50,41 +50,30 @@ export const CardsListHeader = () => {
         onClose={onCardModal}
         onSave={onAddPackHandler}
       />
-      {isMy ? (
-        <>
-          <div className={s.titlebox}>
-            <div className={s.title}>{packName}</div>
-            <div className={s.extra}>
-              <img id={clickbox} src={extraIcon} alt="" />
-              <div id={popover} className={s.popover}>
-                <div
-                  onClick={() =>
-                    navigate(`${RouterPaths.learn}/${cardsPack_id}`)
-                  }
-                >
-                  <img src={teacher} alt="Learn" />
-                  Learn
-                </div>
-                <div>
-                  <img src={editIconMini} alt="" /> Edit
-                </div>
-                <div>
-                  <img src={trash} alt="" /> Delete
-                </div>
+      <div className={s.titlebox}>
+        <div className={s.title}>{packName}</div>
+        {isMy && (
+          <div className={s.extra}>
+            <img id={clickbox} src={extraIcon} alt="extra" />
+            <div id={popover} className={s.popover}>
+              <div onClick={() => navigate(learn)}>
+                <img src={teacher} alt="learn" />
+                Learn
+              </div>
+              <div>
+                <img src={editIconMini} alt="edit" /> Edit
+              </div>
+              <div>
+                <img src={trash} alt="delete" /> Delete
               </div>
             </div>
           </div>
-          <Button onClick={() => onCardModal(true)}>Add new card</Button>
-        </>
+        )}
+      </div>
+      {isMy ? (
+        <Button onClick={() => onCardModal(true)}>Add new card</Button>
       ) : (
-        <>
-          <div className={s.title}>{packName}</div>
-          <Button
-            onClick={() => navigate(`${RouterPaths.learn}/${cardsPack_id}`)}
-          >
-            Learn
-          </Button>
-        </>
+        <Button onClick={() => navigate(learn)}>Learn</Button>
       )}
     </div>
   );
