@@ -1,4 +1,4 @@
-import { useAppDispatch } from "app/hooks";
+import { useAppDispatch, useAppSelector } from "app/hooks";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { ArgGetCards } from "../cards.api";
 import { useEffect } from "react";
@@ -10,21 +10,19 @@ export const useCardsFetch = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const params: ArgGetCards = Object.fromEntries(searchParams);
+  const editUpdate = useAppSelector((state) => state.packs.editUpdate);
 
-  useEffect(
-    () => {
-      dispatch(cardsThunks.get(params))
-        .unwrap()
-        .catch((e) => {
-          if (e.response?.status === 400) navigate(RouterPaths.packs);
-        });
+  useEffect(() => {
+    return () => {
+      dispatch(cardsActions.resetList());
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-      return () => {
-        dispatch(cardsActions.resetList());
-      };
-    },
-    /* eslint-disable react-hooks/exhaustive-deps */
-    [dispatch]
-    /* eslint-enable react-hooks/exhaustive-deps */
-  );
+  useEffect(() => {
+    dispatch(cardsThunks.get(params))
+      .unwrap()
+      .catch((e) => {
+        if (e.response?.status === 400) navigate(RouterPaths.packs);
+      });
+  }, [editUpdate]); // eslint-disable-line react-hooks/exhaustive-deps
 };

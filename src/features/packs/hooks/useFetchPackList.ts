@@ -9,8 +9,9 @@ export const useFetchPackList = () => {
   const [searchParams] = useSearchParams();
   const params: ArgGetPacks = Object.fromEntries(searchParams);
   const checkUpdate = useAppSelector((state) => state.packs.checkUpdate);
+  const editUpdate = useAppSelector((state) => state.packs.editUpdate);
 
   useEffect(() => {
     dispatch(packsThunks.get(params));
-  }, [checkUpdate]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [checkUpdate, editUpdate]); // eslint-disable-line react-hooks/exhaustive-deps
 };

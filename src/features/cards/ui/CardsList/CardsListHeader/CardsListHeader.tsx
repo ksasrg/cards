@@ -16,18 +16,20 @@ import teacher from "assets/teacher.svg";
 import editIconMini from "assets/editIconMini.svg";
 import trash from "assets/trash.svg";
 import s from "./style.module.css";
+import { PackActionEditName } from "features/packs/components/PackActionEditName/PackActionEditName";
 
 export const CardsListHeader = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams);
-  const { cardsPack_id } = params;
+  const { cardsPack_id: packId } = params;
   const packName = useAppSelector((state) => state.cards.list.packName);
+  const isPrivate = useAppSelector((state) => state.cards.list.packPrivate);
   const packUserId = useAppSelector((state) => state.cards.list.packUserId);
   const userId = useAppSelector((state) => state.auth.profile?._id);
   const [showModal, setShowModal] = useState(false);
-  const learn = `${RouterPaths.learn}/${cardsPack_id}`;
+  const learn = `${RouterPaths.learn}/${packId}`;
   const isMy = userId === packUserId;
   const [clickbox, popover] = usePopover("extra", "actions", [isMy]);
 
@@ -36,7 +38,7 @@ export const CardsListHeader = () => {
   };
 
   const onAddPackHandler = ({ answer, question }: CardData) => {
-    const payload: ArgPostCard = { cardsPack_id, question, answer };
+    const payload: ArgPostCard = { cardsPack_id: packId, question, answer };
 
     delete params["page"];
     setSearchParams(params);
@@ -62,10 +64,12 @@ export const CardsListHeader = () => {
                 Learn
               </div>
               <div>
-                <img src={editIconMini} alt="edit" /> Edit
+                <PackActionEditName {...{ packId, packName, isPrivate }}>
+                  <img src={editIconMini} alt="edit" /> Edit
+                </PackActionEditName>
               </div>
               <div>
-                <PackActionDeletePack packId={cardsPack_id} packName={packName}>
+                <PackActionDeletePack packId={packId} packName={packName}>
                   <img src={trash} alt="delete" /> Delete
                 </PackActionDeletePack>
               </div>

@@ -13,13 +13,13 @@ type Props = {
   open: boolean;
   title: string;
   name?: string;
-  IsPrivate?: boolean;
+  isPrivate?: boolean;
   onClose: (open: boolean) => void;
   onSave: (data: Data) => void;
 };
 
 export const AddPackModal = (props: Props) => {
-  const { open, title, name, IsPrivate, onClose, onSave } = props;
+  const { open, title, name, isPrivate, onClose, onSave } = props;
   const form = useForm<Data>();
   const { handleSubmit, register, formState, reset } = form;
   const { errors } = formState;
@@ -52,7 +52,7 @@ export const AddPackModal = (props: Props) => {
         <div className={s.checkbox}>
           <Checkbox
             id="private"
-            defaultChecked={IsPrivate}
+            defaultChecked={isPrivate}
             {...register("private")}
           />
           <label htmlFor="private">Private pack</label>

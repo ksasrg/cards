@@ -1,18 +1,19 @@
-import editIconMini from "assets/editIconMini.svg";
 import { AddPackModal, Data } from "../AddPackModal/AddPackModal";
-import { useState } from "react";
-import { CardPack, packsThunks } from "features/packs/packs.slice";
+import { ReactNode, useState } from "react";
+import { packsThunks } from "features/packs/packs.slice";
 import { useAppDispatch } from "app/hooks";
-import { useSearchParams } from "react-router-dom";
 
 type Props = {
-  pack: CardPack;
+  packId: string;
+  packName?: string;
+  isPrivate?: boolean;
+  deckCover?: string;
+  children: ReactNode;
 };
 
-export const PackActionEditName = ({ pack }: Props) => {
+export const PackActionEditName = (props: Props) => {
+  const { packId, packName, isPrivate, deckCover = "", children } = props;
   const dispatch = useAppDispatch();
-  const [searchParams] = useSearchParams();
-  const params = Object.fromEntries(searchParams);
   const [showModal, setShowModal] = useState(false);
 
   const onPackModal = (open: boolean) => {
@@ -20,11 +21,8 @@ export const PackActionEditName = ({ pack }: Props) => {
   };
 
   const onPostPack = (data: Data) => {
-    const payload = { ...data, _id: pack._id, deckCover: "" };
-
-    const query = { ...params, page: "1" };
-
-    dispatch(packsThunks.change({ payload, query }));
+    const payload = { ...data, _id: packId, deckCover };
+    dispatch(packsThunks.change({ payload }));
   };
 
   return (
@@ -32,12 +30,12 @@ export const PackActionEditName = ({ pack }: Props) => {
       <AddPackModal
         open={showModal}
         title="Edit pack"
-        name={pack.name}
-        IsPrivate={pack.private}
+        name={packName}
+        isPrivate={isPrivate}
         onClose={onPackModal}
         onSave={onPostPack}
       />
-      <img src={editIconMini} alt="edit" onClick={() => onPackModal(true)} />
+      <span onClick={() => onPackModal(true)}>{children}</span>
     </>
   );
 };

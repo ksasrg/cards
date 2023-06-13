@@ -6,12 +6,14 @@ import { useAppSelector } from "app/hooks";
 import { PackActionEditName } from "../PackActionEditName/PackActionEditName";
 import { PackActionDeletePack } from "../PackActionDeletePack/PackActionDeletePack";
 import trash from "assets/trash.svg";
+import editIconMini from "assets/editIconMini.svg";
 
 type Props = {
   pack: CardPack;
 };
 
 export const TdActions = ({ pack }: Props) => {
+  const { _id: packId, name: packName, private: isPrivate } = pack;
   const userId = useAppSelector((state) => state.auth.profile?._id);
   const isMy = userId === pack.user_id;
   const isActive = Boolean(pack.cardsCount);
@@ -20,7 +22,7 @@ export const TdActions = ({ pack }: Props) => {
     <>
       <td>
         {isActive ? (
-          <AppLink to={`${RouterPaths.learn}/${pack._id}`}>
+          <AppLink to={`${RouterPaths.learn}/${packId}`}>
             <img src={teacher} alt="learn" />
           </AppLink>
         ) : (
@@ -28,8 +30,10 @@ export const TdActions = ({ pack }: Props) => {
         )}
         {isMy && (
           <>
-            <PackActionEditName pack={pack} />
-            <PackActionDeletePack packId={pack._id} packName={pack.name}>
+            <PackActionEditName {...{ packId, packName, isPrivate }}>
+              <img src={editIconMini} alt="edit" />
+            </PackActionEditName>
+            <PackActionDeletePack packId={packId} packName={packName}>
               <img src={trash} alt="delete" />
             </PackActionDeletePack>
           </>

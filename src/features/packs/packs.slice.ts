@@ -19,6 +19,7 @@ const initialState = {
     tokenDeathTime: 0,
   },
   checkUpdate: 0,
+  editUpdate: 0,
 };
 
 export const slice = createSlice({
@@ -32,6 +33,9 @@ export const slice = createSlice({
       })
       .addCase(deletePack.fulfilled, (state, action) => {
         state.checkUpdate = state.checkUpdate + 1;
+      })
+      .addCase(change.fulfilled, (state, action) => {
+        state.editUpdate = state.editUpdate + 1;
       });
   },
 });
@@ -75,11 +79,10 @@ const create = createAppAsyncThunk<
 
 const change = createAppAsyncThunk<
   CreateCardPack,
-  { payload: ArgChangeCardPack; query: ArgGetPacks }
+  { payload: ArgChangeCardPack }
 >("packs/create-pack", async (arg, thunkAPI) => {
   try {
     const res = await packsApi.changePack(arg.payload);
-    await thunkAPI.dispatch(get(arg.query));
     return res.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
