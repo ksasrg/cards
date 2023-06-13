@@ -6,6 +6,8 @@
   font-size: 20px;
   color: #dadada;
   user-select: none;
+  margin-top: -2px;
+  vertical-align: middle;
 }
 
 .rating span {

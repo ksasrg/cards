@@ -11,11 +11,23 @@ export const TdPackName = ({ pack }: Props) => {
   const isActive = Boolean(pack.cardsCount) || isMy;
 
   return (
-    <td>
+    <td style={{ textAlign: "justify" }}>
       {isActive ? (
         <>
           {pack.private && <b> P </b>}
           <AppLink to={`${RouterPaths.cards}/?cardsPack_id=${pack._id}`}>
+            {pack.deckCover && (
+              <img
+                src={pack.deckCover}
+                alt=""
+                style={{
+                  maxHeight: "30px",
+                  maxWidth: "50px",
+                  verticalAlign: "middle",
+                  marginRight: "10px",
+                }}
+              />
+            )}
             {pack.name}
           </AppLink>
         </>

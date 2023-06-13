@@ -45,7 +45,7 @@ export const QuestionsAnswers = ({ index, setIndex }: Props) => {
         <>
           <div className={s.qna}>
             <b>Answer: </b>
-            {cards[index].questionImg ? (
+            {cards[index].answerImg ? (
               <img src={cards[index].answerImg} alt="" />
             ) : (
               cards[index].answer
