@@ -1,8 +1,9 @@
 import { ReactNode, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "app/hooks";
 import { DeleteModal } from "common/components";
 import { packsThunks } from "features/packs/packs.slice";
+import { RouterPaths } from "common/router/router";
 
 type Props = {
   packId: string;
@@ -12,8 +13,7 @@ type Props = {
 
 export const PackActionDeletePack = ({ packId, packName, children }: Props) => {
   const dispatch = useAppDispatch();
-  const [searchParams] = useSearchParams();
-  const params = Object.fromEntries(searchParams);
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
   const onDelete = () => {
@@ -21,7 +21,12 @@ export const PackActionDeletePack = ({ packId, packName, children }: Props) => {
   };
 
   const onSubmitDelete = (packId: string) => {
-    dispatch(packsThunks.deletePack({ packId, query: params }));
+    dispatch(packsThunks.deletePack({ packId }))
+      .unwrap()
+      .then(() => {
+        navigate(RouterPaths.packs);
+      })
+      .catch(() => {});
   };
 
   const onCloseDeleteModal = () => {

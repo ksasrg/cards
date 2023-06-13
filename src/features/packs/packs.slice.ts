@@ -18,6 +18,7 @@ const initialState = {
     token: "",
     tokenDeathTime: 0,
   },
+  checkUpdate: 0,
 };
 
 export const slice = createSlice({
@@ -25,9 +26,13 @@ export const slice = createSlice({
   initialState,
   reducers: {},
   extraReducers(builder) {
-    builder.addCase(get.fulfilled, (state, action) => {
-      state.list = { ...action.payload };
-    });
+    builder
+      .addCase(get.fulfilled, (state, action) => {
+        state.list = { ...action.payload };
+      })
+      .addCase(deletePack.fulfilled, (state, action) => {
+        state.checkUpdate = state.checkUpdate + 1;
+      });
   },
 });
 
@@ -43,18 +48,17 @@ const get = createAppAsyncThunk<GetCardPack, ArgGetPacks>(
   }
 );
 
-const deletePack = createAppAsyncThunk<
-  DeleteCardPack,
-  { packId: string; query: ArgGetPacks }
->("packs/delete-pack", async (arg, thunkAPI) => {
-  try {
-    const res = await packsApi.delete(arg.packId);
-    await thunkAPI.dispatch(get(arg.query));
-    return res.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error);
+const deletePack = createAppAsyncThunk<DeleteCardPack, { packId: string }>(
+  "packs/delete-pack",
+  async (arg, thunkAPI) => {
+    try {
+      const res = await packsApi.delete(arg.packId);
+      return res.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
   }
-});
+);
 
 const create = createAppAsyncThunk<
   CreateCardPack,
