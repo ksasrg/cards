@@ -27,6 +27,9 @@ export const CardsListHeader = () => {
   const packName = useAppSelector((state) => state.cards.list.packName);
   const isPrivate = useAppSelector((state) => state.cards.list.packPrivate);
   const packUserId = useAppSelector((state) => state.cards.list.packUserId);
+  const cardsTotalCount = useAppSelector(
+    (state) => state.cards.list.cardsTotalCount
+  );
   const userId = useAppSelector((state) => state.auth.profile?._id);
   const [showModal, setShowModal] = useState(false);
   const learn = `${RouterPaths.learn}/${packId}`;
@@ -59,7 +62,10 @@ export const CardsListHeader = () => {
           <div className={s.extra}>
             <img id={clickbox} src={extraIcon} alt="extra" />
             <div id={popover} className={s.popover}>
-              <div onClick={() => navigate(learn)}>
+              <div
+                onClick={() => cardsTotalCount && navigate(learn)}
+                className={cardsTotalCount ? "" : s.disable}
+              >
                 <img src={teacher} alt="learn" />
                 Learn
               </div>

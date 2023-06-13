@@ -36,7 +36,7 @@
   visibility: hidden;
   position: absolute;
   top: 22px;
-  right: 0;
+  left: 0;
   z-index: 10;
   padding: 20px;
   margin-top: 15px;
@@ -70,7 +70,7 @@
   position: absolute;
   width: 10px;
   height: 10px;
-  right: 5px;
+  left: 5px;
   top: -6px;
   z-index: 1;
   transform: rotate(45deg);
@@ -87,4 +87,14 @@
 .popover img {
   display: inline;
   margin-right: 10px;
+}
+
+.disable {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.disable img {
+  opacity: 0.5;
+  cursor: default;
 }
