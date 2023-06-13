@@ -85,6 +85,6 @@
   cursor: pointer;
 }
 
-.table td:last-child img:nth-child(3) {
+.table td:last-child span {
   cursor: pointer;
 }

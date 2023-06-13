@@ -59,7 +59,7 @@
   cursor: default;
 }
 
-.popover div {
+.popover * {
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -80,7 +80,7 @@
 }
 
 .popover div:nth-child(2),
-div:nth-child(3) {
+.popover div:nth-child(3) {
   margin-top: 16px;
 }
 

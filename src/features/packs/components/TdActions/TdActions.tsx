@@ -5,6 +5,7 @@ import { CardPack } from "features/packs/packs.slice";
 import { useAppSelector } from "app/hooks";
 import { PackActionEditName } from "../PackActionEditName/PackActionEditName";
 import { PackActionDeletePack } from "../PackActionDeletePack/PackActionDeletePack";
+import trash from "assets/trash.svg";
 
 type Props = {
   pack: CardPack;
@@ -28,7 +29,9 @@ export const TdActions = ({ pack }: Props) => {
         {isMy && (
           <>
             <PackActionEditName pack={pack} />
-            <PackActionDeletePack pack={pack} />
+            <PackActionDeletePack packId={pack._id} packName={pack.name}>
+              <img src={trash} alt="delete" />
+            </PackActionDeletePack>
           </>
         )}
       </td>

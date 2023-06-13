@@ -1,15 +1,16 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useAppDispatch } from "app/hooks";
 import { DeleteModal } from "common/components";
-import { CardPack, packsThunks } from "features/packs/packs.slice";
-import trash from "assets/trash.svg";
+import { packsThunks } from "features/packs/packs.slice";
 
 type Props = {
-  pack: CardPack;
+  packId: string;
+  packName: string;
+  children: ReactNode;
 };
 
-export const PackActionDeletePack = ({ pack }: Props) => {
+export const PackActionDeletePack = ({ packId, packName, children }: Props) => {
   const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams);
@@ -31,15 +32,15 @@ export const PackActionDeletePack = ({ pack }: Props) => {
     <>
       <DeleteModal
         open={open}
-        id={pack._id}
+        id={packId}
         title="Delete Pack"
         onClose={onCloseDeleteModal}
         onDelete={onSubmitDelete}
       >
-        Do you really want to remove <b>"{pack.name}"</b> pack? All cards will
-        be deleted.
+        Do you really want to remove <b>"{packName}"</b> pack? All cards will be
+        deleted.
       </DeleteModal>
-      <img src={trash} alt="delete" onClick={onDelete} />
+      <span onClick={onDelete}>{children}</span>
     </>
   );
 };

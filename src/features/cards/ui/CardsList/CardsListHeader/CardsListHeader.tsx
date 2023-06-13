@@ -10,6 +10,7 @@ import {
 import { useState } from "react";
 import { ArgPostCard } from "features/cards/cards.api";
 import { cardsThunks } from "features/cards/cards.slice";
+import { PackActionDeletePack } from "features/packs/components/PackActionDeletePack/PackActionDeletePack";
 import extraIcon from "assets/extra.svg";
 import teacher from "assets/teacher.svg";
 import editIconMini from "assets/editIconMini.svg";
@@ -64,7 +65,9 @@ export const CardsListHeader = () => {
                 <img src={editIconMini} alt="edit" /> Edit
               </div>
               <div>
-                <img src={trash} alt="delete" /> Delete
+                <PackActionDeletePack packId={cardsPack_id} packName={packName}>
+                  <img src={trash} alt="delete" /> Delete
+                </PackActionDeletePack>
               </div>
             </div>
           </div>
