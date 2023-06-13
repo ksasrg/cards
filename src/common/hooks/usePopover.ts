@@ -3,7 +3,7 @@ import { useEffect } from "react";
 export const usePopover = (
   clickbox: string,
   popover: string,
-  deps?: unknown[] | undefined
+  deps: unknown[] | undefined
 ) => {
   useEffect(() => {
     let stopPropagation = false;
