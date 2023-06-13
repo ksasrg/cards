@@ -2,8 +2,7 @@ import { useAppDispatch, useAppSelector } from "app/hooks";
 import { Th } from "common/components";
 import { useSearchParams } from "react-router-dom";
 import { cardsThunks } from "features/cards/cards.slice";
-import { TdQuestion } from "../TdQuestion/TdQuestion";
-import { TdAnswer } from "../TdAnswer/TdAnswer";
+import { TdCardTExt } from "../TdCardTExt/TdCardTExt";
 import { IconActionDeleteCard } from "../IconActionDeleteCard/IconActionDeleteCard";
 import { IconActionEditCard } from "../IconActionEditCard/IconActionEditCard";
 import { Rating } from "../Rating/Rating";
@@ -31,8 +30,8 @@ export function CardsTable() {
 
     return (
       <tr key={card._id}>
-        <TdQuestion card={card} />
-        <TdAnswer card={card} />
+        <TdCardTExt text={card.question} img={card.questionImg} />
+        <TdCardTExt text={card.answer} img={card.answerImg} />
         <td>{date}</td>
         <td>
           <Rating card={card} />
