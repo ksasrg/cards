@@ -6,7 +6,7 @@ import { useSearchParams } from "react-router-dom";
 import { cardsThunks } from "features/cards/cards.slice";
 import { SearchCards } from "features/cards/components/SearchCards/SearchCards";
 import { CardsListHeader } from "./CardsListHeader/CardsListHeader";
-import { Select } from "common/components/AppPagination/Select";
+import { Select } from "common/components/Select/Select";
 import s from "./style.module.css";
 
 export const CardsList = () => {

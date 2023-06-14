@@ -1,14 +1,11 @@
-import Button from "@mui/material/Button/Button";
-import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { useFetchPackList } from "features/packs/hooks/useFetchPackList";
 import { AppPagination } from "common/components";
-import { Select } from "common/components/AppPagination/Select";
+import { Select } from "common/components/Select/Select";
 import { packsThunks } from "features/packs/packs.slice";
+import { AddNewPack } from "features/packs/components/AddNewPack/AddNewPack";
 import {
-  AddPackModal,
-  Data,
   PackFilter,
   PacksTable,
   ResetFilters,
@@ -27,25 +24,7 @@ export const PacksList = () => {
     (state) => state.packs.list.cardPacksTotalCount
   );
 
-  const [showModal, setShowModal] = useState(false);
-
   useFetchPackList();
-
-  const onPostPack = (data: Data) => {
-    const payload = { ...data, deckCover: "" };
-    let query = {};
-
-    if (params.pageCount) {
-      query = { pageCount: params.pageCount };
-    }
-
-    setSearchParams(query);
-    dispatch(packsThunks.create({ payload, query }));
-  };
-
-  const onPackModal = (open: boolean) => {
-    setShowModal(open);
-  };
 
   const onPage = (page: number) => {
     const query = { ...params, page: page.toString() };
@@ -61,15 +40,9 @@ export const PacksList = () => {
 
   return (
     <div className="container page">
-      <AddPackModal
-        open={showModal}
-        title="Add new pack"
-        onClose={onPackModal}
-        onSave={onPostPack}
-      />
       <div className={s.up}>
         <div className={s.title}>Packs list</div>
-        <Button onClick={() => onPackModal(true)}>Add new pack</Button>
+        <AddNewPack />
       </div>
 
       <div className={s.filters}>
