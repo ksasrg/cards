@@ -3,3 +3,10 @@
   display: flex;
   justify-content: space-between;
 }
+
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}

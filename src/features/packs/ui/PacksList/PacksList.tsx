@@ -3,7 +3,9 @@ import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { useFetchPackList } from "features/packs/hooks/useFetchPackList";
-import { AppPagination, PaginationQuery } from "common/components";
+import { AppPagination } from "common/components";
+import { Select } from "common/components/AppPagination/Select";
+import { packsThunks } from "features/packs/packs.slice";
 import {
   AddPackModal,
   Data,
@@ -13,7 +15,6 @@ import {
   SearchPacks,
   SliderPacks,
 } from "features/packs/components";
-import { packsThunks } from "features/packs/packs.slice";
 import s from "./style.module.css";
 
 export const PacksList = () => {
@@ -46,10 +47,16 @@ export const PacksList = () => {
     setShowModal(open);
   };
 
-  const onChange = (query: PaginationQuery) => {
-    const getQuery = { ...params, ...(query as Record<string, string>) };
-    setSearchParams(getQuery);
-    dispatch(packsThunks.get(getQuery));
+  const onPage = (page: number) => {
+    const query = { ...params, page: page.toString() };
+    setSearchParams(query);
+    dispatch(packsThunks.get(query));
+  };
+
+  const onPageCount = (pageCount: number) => {
+    const query = { ...params, page: "1", pageCount: pageCount.toString() };
+    setSearchParams(query);
+    dispatch(packsThunks.get(query));
   };
 
   return (
@@ -72,7 +79,11 @@ export const PacksList = () => {
         <ResetFilters />
       </div>
 
-      <AppPagination onChange={onChange} {...{ page, pageCount, totalCount }} />
+      <div className={s.pagination}>
+        <AppPagination {...{ page, pageCount, totalCount, onPage }} />
+        <Select pageCount={pageCount} onChange={onPageCount} />
+      </div>
+
       <PacksTable />
     </div>
   );
