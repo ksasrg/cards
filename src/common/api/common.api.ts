@@ -1,6 +1,10 @@
 import axios from "axios";
 
 let url = "";
+
+if (process.env.REACT_APP_IP)
+  url = `http://${process.env.REACT_APP_IP}:7542/2.0/`;
+
 // url = "https://neko-back.herokuapp.com/2.0/";
 
 export const instance = axios.create({
