@@ -1,3 +1,8 @@
+.box {
+  width: 100%;
+  max-width: 413px;
+}
+
 .title {
   font-weight: 500;
   font-size: 14px;
@@ -9,15 +14,11 @@
 
 .search {
   margin-top: 8px;
-  width: 413px;
   height: 36px;
-
   display: flex;
-
   background: #ffffff;
   border: 1px solid #d9d9d9;
   border-radius: 2px;
-
   text-align-last: left;
 }
 

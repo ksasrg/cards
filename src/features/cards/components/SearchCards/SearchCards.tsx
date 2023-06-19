@@ -17,7 +17,7 @@ export const SearchCards = () => {
   };
 
   return (
-    <div>
+    <div className={s.box}>
       <div className={s.title}>Search</div>
       <div className={s.search}>
         <img src={search} alt="" />

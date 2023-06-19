@@ -1,13 +1,14 @@
 .block {
   display: flex;
   align-items: center;
+  max-width: 300px;
 }
 
 .name {
   border-bottom: 1px dashed #000000;
   line-height: 24px;
   margin-right: 12px;
-  max-width: 300px;
+
   overflow: hidden;
   display: inline-block;
   text-overflow: ellipsis;

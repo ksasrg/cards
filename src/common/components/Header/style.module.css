@@ -10,8 +10,9 @@
 .header {
   display: flex;
   justify-content: space-between;
-  height: 60px;
+  min-height: 60px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .header img {
