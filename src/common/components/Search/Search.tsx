@@ -1,4 +1,5 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
+import { useDebounceSearch } from "./useDebounceSearch";
 
 type Props = {
   onSearch: (text: string) => void;
@@ -7,26 +8,14 @@ type Props = {
 };
 
 export const Search = (props: Props) => {
-  const [text, setText] = useState("");
-  const [timerId, setTimerId] = useState<NodeJS.Timeout>();
-
-  useEffect(() => {
-    setText(props.value);
-  }, [props.value]);
+  const { value, placeholder, onSearch } = props;
+  const [text, setText] = useState(value);
+  const debounceSearch = useDebounceSearch(onSearch, 1000);
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const input = e.currentTarget.value;
-
     setText(input);
-    clearTimeout(timerId);
-
-    setTimerId(
-      setTimeout(() => {
-        if (input.trim() !== text) {
-          props.onSearch(input.trim());
-        }
-      }, 1000)
-    );
+    debounceSearch(input);
   };
 
   return (
@@ -34,7 +23,7 @@ export const Search = (props: Props) => {
       type="text"
       value={text}
       onChange={onChangeHandler}
-      placeholder={props.placeholder}
+      placeholder={placeholder}
     />
   );
 };
