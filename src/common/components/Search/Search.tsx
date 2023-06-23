@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useDebounceSearch } from "./useDebounceSearch";
 
 type Props = {
@@ -11,6 +11,10 @@ export const Search = (props: Props) => {
   const { value, placeholder, onSearch } = props;
   const [text, setText] = useState(value);
   const debounceSearch = useDebounceSearch(onSearch, 1000);
+
+  useEffect(() => {
+    setText(value);
+  }, [value]);
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const input = e.currentTarget.value;
