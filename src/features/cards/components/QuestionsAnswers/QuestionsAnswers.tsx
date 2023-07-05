@@ -53,7 +53,7 @@ export const QuestionsAnswers = ({ index, setIndex }: Props) => {
           </div>
           <form className={s.radio}>
             <div>Rate yourself:</div>
-            <Choices grade={grade} onChange={onChangeHandler} />
+            <Choices onChange={onChangeHandler} />
           </form>
           <div className={s.button}>
             <Button size="large" onClick={onNextHandler} disabled={!grade}>

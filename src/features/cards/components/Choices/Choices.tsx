@@ -1,11 +1,10 @@
 import { ChangeEvent } from "react";
 
 type Props = {
-  grade: number;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 export const Choices = (props: Props) => {
-  const { grade, onChange } = props;
+  const { onChange } = props;
 
   const choices = [
     "Did not know",
@@ -19,13 +18,7 @@ export const Choices = (props: Props) => {
     <>
       {choices.map((choice, i) => (
         <label key={i}>
-          <input
-            type="radio"
-            name="grade"
-            value={i + 1}
-            checked={i + 1 === grade}
-            onChange={onChange}
-          />
+          <input type="radio" name="grade" value={i + 1} onChange={onChange} />
           <span>{choice}</span>
         </label>
       ))}
